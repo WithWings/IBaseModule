@@ -16,6 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="UMENG_CHANNEL" android:value="${UMENG_CHANNEL_VALUE}" />
+
+        <!--// 代码获得渠道包值-->
+        <!--ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);-->
+        <!--String msg=appInfo.metaData.getString("UMENG_CHANNEL");-->
+
     </application>
 
 </manifest>

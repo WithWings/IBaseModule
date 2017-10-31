@@ -1,21 +1,101 @@
 apply plugin: 'com.android.application'
 
+def appName = 'BaseDemo'
+
+def x = 1
+def y = 0
+def z = 0
+def sub = 0
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion Integer.parseInt(ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
+
     defaultConfig {
         applicationId "com.withwings.ibasemodule"
-        minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion Integer.parseInt(ANDROID_BUILD_MIN_SDK)
+        targetSdkVersion Integer.parseInt(ANDROID_BUILD_TARGET_SDK)
+        versionCode x * 1000000 + y * 10000 + z * 100 + sub
+        if(sub > 0) {
+            versionName x + "." + y + "." + z + "." + sub
+        } else {
+            versionName x + "." + y + "." + z
+        }
+        flavorDimensions "versionCode"
+
+        // Dex 分包依赖
+        multiDexEnabled true
     }
+
+    // 秘钥配置
+    signingConfigs {
+        release_by_keystore {
+            keyAlias SIGNATURE_FILE_ALIAS
+            keyPassword SIGNATURE_FILE_KEY_PASSWORD
+            storeFile file(SIGNATURE_FILE_PATH)
+            storePassword SIGNATURE_FILE_STORE_PASSWORD
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 引用打包秘钥
+            signingConfig signingConfigs.release_by_keystore
         }
     }
+
+    // 渠道包支持
+    productFlavors {
+
+        baidu {}
+//        wandoujia {}
+//        c360 {}
+//        uc {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+
+    }
+
+//    // 另一种写法
+//    productFlavors{
+//        wandoujia {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+//        }
+//
+//        baidu {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]       }
+//
+//        c360 {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "c360"]
+//        }
+//
+//        uc {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "uc"]
+//        }
+//    }
+
+    // apk文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputApkName
+
+            outputApkName = appName + "_" +
+                    variant.versionName + "_" +
+                    packageTime() + "_" +
+                    variant.buildType.name + ".apk".toLowerCase()
+
+            outputFileName = new File(outputApkName)
+        }
+    }
+}
+
+// 获得时间戳
+def packageTime() {
+    return new Date().format("yyyy.MM.dd",TimeZone.getDefault())
 }
 
 dependencies {
