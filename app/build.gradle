@@ -57,6 +57,9 @@ android {
         productFlavors.all { flavor ->
 //            // 修改包名
 //            flavor.applicationId "com.withwings." + name
+            // 修改版本号等等
+//            flavor.versionName "version 1.0"
+//            flavor.versionCode 1
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
 
@@ -65,11 +68,15 @@ android {
 //    // 另一种写法
 //    productFlavors{
 //        wandoujia {
+//            versionName "wandoujia_version 1.0"
+//            versionCode 1
 //            applicationId "com.withwings.wandoujia"
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
 //        }
 //
 //        baidu {
+//            versionName "baidu_version 1.0"
+//            versionCode 1
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]       }
 //
 //        c360 {
@@ -111,4 +118,7 @@ dependencies {
     implementation project(':baselibs')
     implementation project(':baseutils')
     implementation project(':basewidgets')
+
+    // 依赖库也可以通过 productFlavors 区别依赖
+    baiduImplementation 'com.android.support:appcompat-v7:26.1.0'
 }
