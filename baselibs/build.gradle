@@ -1,5 +1,10 @@
 apply plugin: 'com.android.library'
 
+def x = 1
+def y = 0
+def z = 0
+def sub = 0
+
 android {
     compileSdkVersion 26
 
@@ -8,8 +13,12 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode x * 1000000 + y * 10000 + z * 100 + sub
+        if(sub > 0) {
+            versionName x + "." + y + "." + z + "." + sub
+        } else {
+            versionName x + "." + y + "." + z
+        }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -29,3 +38,26 @@ dependencies {
 
     implementation 'com.android.support:appcompat-v7:26.1.0'
 }
+
+// 打 jar 包
+//Copy类型
+task makeJar(type: Copy) {
+    //删除存在的
+    delete 'build/libs/mysdk.jar'
+    //设置拷贝的文件
+    from('build/intermediates/bundles/release/')
+    //打进jar包后的文件目录
+    into('build/libs/')
+    //将classes.jar放入build/libs/目录下
+    //include ,exclude参数来设置过滤
+    //（我们只关心classes.jar这个文件）
+    include('classes.jar')
+    //重命名
+    rename ('classes.jar', 'mysdk.jar')
+}
+
+makeJar.dependsOn(build)
+//在终端执行生成JAR包
+// gradlew makeJar
+
+// arr 包默认就会生成在 build->outputs->arr 目录下
