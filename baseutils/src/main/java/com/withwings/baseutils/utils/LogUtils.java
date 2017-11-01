@@ -18,7 +18,7 @@ public class LogUtils {
     private static String mTag;
 
     private LogUtils() {
-        mShowLog = BuildConfig.BUILD_TYPE.equals("debug");
+        mShowLog = BuildConfig.show_log;
     }
 
     public synchronized static LogUtils getInstance(String tag){

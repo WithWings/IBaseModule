@@ -38,11 +38,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            // BuildType 可以根据 BuildConfig.BUILD_TYPE 获取，这里只是举例
+            buildConfigField "String", "build_type", "debug"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // 引用打包秘钥
             signingConfig signingConfigs.release_by_keystore
+            // BuildType 可以根据 BuildConfig.BUILD_TYPE 获取，这里只是举例
+            buildConfigField "String", "build_type", "release"
         }
     }
 
