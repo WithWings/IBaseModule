@@ -41,6 +41,7 @@ android {
         debug {
             // BuildType 可以根据 BuildConfig.BUILD_TYPE 获取，这里只是举例
             buildConfigField "String", "build_type", "debug"
+            buildConfigField "boolean", "IS_DEBUG", "true"
         }
         release {
             minifyEnabled false
@@ -49,6 +50,7 @@ android {
             signingConfig signingConfigs.release_by_keystore
             // BuildType 可以根据 BuildConfig.BUILD_TYPE 获取，这里只是举例
             buildConfigField "String", "build_type", "release"
+            buildConfigField "boolean", "IS_DEBUG", "false"
         }
     }
 
