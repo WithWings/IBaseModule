@@ -55,6 +55,8 @@ android {
 //        uc {}
 
         productFlavors.all { flavor ->
+//            // 修改包名
+//            flavor.applicationId "com.withwings." + name
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
 
@@ -63,6 +65,7 @@ android {
 //    // 另一种写法
 //    productFlavors{
 //        wandoujia {
+//            applicationId "com.withwings.wandoujia"
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
 //        }
 //
