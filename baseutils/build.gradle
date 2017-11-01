@@ -16,6 +16,7 @@ android {
     }
 
     buildTypes {
+        // 备注：关于依赖 Module 的编译类型，已经被 implementation 标签解决了，所以不需要我们单独设置
         debug {
             buildConfigField "boolean", "show_log", "true"
         }
@@ -32,7 +33,4 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
