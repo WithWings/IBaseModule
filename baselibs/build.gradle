@@ -1,10 +1,5 @@
 apply plugin: 'com.android.library'
 
-def x = 1
-def y = 0
-def z = 0
-def sub = 0
-
 android {
     compileSdkVersion 26
 
@@ -13,12 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode x * 1000000 + y * 10000 + z * 100 + sub
-        if(sub > 0) {
-            versionName x + "." + y + "." + z + "." + sub
-        } else {
-            versionName x + "." + y + "." + z
-        }
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
