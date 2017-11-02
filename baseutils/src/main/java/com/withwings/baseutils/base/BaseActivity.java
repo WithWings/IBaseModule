@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 /**
  * 基本 Activity 封装
  * 创建：WithWings 时间：2017/10/25.
@@ -20,20 +22,24 @@ public abstract class BaseActivity extends Activity {
 
         mActivity = this;
 
-        setContentView(getLayoutId());
+        if (BaseApplication.mActivitys != null ) {
+            BaseApplication.mActivitys.add(this);
+        }
 
-        initView();
+        setContentView(setLayout());
 
         initData();
+
+        initView();
 
         initListener();
     }
 
-    protected abstract int getLayoutId();
-
-    protected abstract void initView();
+    protected abstract int setLayout();
 
     protected abstract void initData();
+
+    protected abstract void initView();
 
     protected abstract void initListener();
 
@@ -87,6 +93,15 @@ public abstract class BaseActivity extends Activity {
             startActivityForResult(intent,requestCode);
         } else {
             startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (BaseApplication.mActivitys != null ) {
+            BaseApplication.mActivitys.remove(this);
         }
     }
 }
