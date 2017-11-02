@@ -111,18 +111,18 @@ android {
 }
 
 // 获得时间戳
-def packageTime() {
+static def packageTime() {
     return new Date().format("yyyy.MM.dd",TimeZone.getDefault())
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation project(':baselibs')
     implementation project(':baseutils')
     implementation project(':basewidgets')
 
     // 依赖库也可以通过 productFlavors 区别依赖
-    baiduImplementation 'com.android.support:appcompat-v7:26.1.0'
+//    baiduImplementation 'com.android.support:appcompat-v7:26.1.0'
 }
