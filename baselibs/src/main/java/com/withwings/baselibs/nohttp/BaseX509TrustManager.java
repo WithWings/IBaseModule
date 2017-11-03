@@ -10,7 +10,7 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * TODO
+ * 证书验证器
  * 创建：WithWings 时间：2017/11/3.
  * Email:wangtong1175@sina.com
  */
@@ -46,24 +46,25 @@ public class BaseX509TrustManager implements X509TrustManager {
 
     /**
      * 验证客户端证书
-     * @param chain
-     * @param authType
-     * @throws CertificateException
+     * @param chain 证书链
+     * @param authType 认证类型
+     * @throws CertificateException 证书异常
      */
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
         try {
             mX509TrustManager.checkClientTrusted(chain, authType);
-        } catch (CertificateException excep) {
+        } catch (CertificateException e) {
+            e.printStackTrace();
             // do any special handling here, or rethrow exception.
         }
     }
 
     /**
      * 验证服务端证书
-     * @param chain
-     * @param authType
-     * @throws CertificateException
+     * @param chain 证书链
+     * @param authType 认证类型
+     * @throws CertificateException 证书异常
      */
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {

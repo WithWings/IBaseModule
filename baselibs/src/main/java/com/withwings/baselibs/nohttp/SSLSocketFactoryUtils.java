@@ -17,7 +17,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
 /**
- * TODO
+ * 获得 SSLSockeFactory
  * 创建：WithWings 时间：2017/11/3.
  * Email:wangtong1175@sina.com
  */

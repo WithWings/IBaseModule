@@ -13,13 +13,14 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 
 /**
- * TODO
+ * 初始化NoHttp
  * 创建：WithWings 时间：2017/11/3.
  * Email:wangtong1175@sina.com
  */
 public class InitNoHttpConfig {
 
     private static InitNoHttpConfig mInitNoHttpConfig;
+
     private final InitializationConfig mInitializationConfig;
 
     private InitNoHttpConfig(Context context){
