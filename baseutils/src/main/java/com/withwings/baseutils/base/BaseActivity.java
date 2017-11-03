@@ -4,15 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
-import java.util.List;
+import android.view.View;
 
 /**
  * 基本 Activity 封装
  * 创建：WithWings 时间：2017/10/25.
  * Email:wangtong1175@sina.com
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity implements View.OnClickListener {
 
     protected Activity mActivity;
 
@@ -42,6 +41,9 @@ public abstract class BaseActivity extends Activity {
     protected abstract void initView();
 
     protected abstract void initListener();
+
+    @Override
+    public abstract void onClick(View v);
 
     /**
      * 打开某个界面 singleTask 效果
