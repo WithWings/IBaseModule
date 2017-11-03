@@ -108,11 +108,9 @@ public class StringUtils {
 
         char c = str.charAt(0);
         return (!Character.isLetter(c) || Character.isUpperCase(c))
-               ? str
-               : new StringBuilder(str.length()).append(
-                       Character.toUpperCase(c))
-                                                .append(str.substring(1))
-                                                .toString();
+                ? str
+                : String.valueOf(Character.toUpperCase(c)) +
+                str.substring(1);
     }
 
 
@@ -336,7 +334,7 @@ public class StringUtils {
      * @return 分割后的字符串数组
      */
     public static String[] split(String string, char ch) {
-        ArrayList<String> stringList = new ArrayList<String>();
+        ArrayList<String> stringList = new ArrayList<>();
         char chars[] = string.toCharArray();
         int nextStart = 0;
         for (int w = 0; w < chars.length; w++) {
@@ -402,8 +400,8 @@ public class StringUtils {
      */
     public static boolean isAllDigital(char[] chars) {
         boolean result = true;
-        for (int w = 0; w < chars.length; w++) {
-            if (!Character.isDigit(chars[w])) {
+        for (char aChar : chars) {
+            if (!Character.isDigit(aChar)) {
                 result = false;
                 break;
             }
@@ -422,7 +420,7 @@ public class StringUtils {
      * @return 删除后的字符串
      */
     public static String removeChar(String string, char ch) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (char cha : string.toCharArray()) {
             if (cha != '-') {
                 sb.append(cha);
@@ -439,7 +437,7 @@ public class StringUtils {
      * @param index 给定位置
      */
     public static String removeChar(String string, int index) {
-        String result = null;
+        String result;
         char[] chars = string.toCharArray();
         if (index == 0) {
             result = new String(chars, 1, chars.length - 1);
@@ -450,7 +448,6 @@ public class StringUtils {
         else {
             result = new String(chars, 0, index) +
                     new String(chars, index + 1, chars.length - index);
-            ;
         }
         return result;
     }
@@ -464,7 +461,7 @@ public class StringUtils {
      * @param ch 如果同给定位置处的字符相同，则将给定位置处的字符删除
      */
     public static String removeChar(String string, int index, char ch) {
-        String result = null;
+        String result;
         char[] chars = string.toCharArray();
         if (chars.length > 0 && chars[index] == ch) {
             if (index == 0) {
@@ -476,7 +473,6 @@ public class StringUtils {
             else {
                 result = new String(chars, 0, index) +
                         new String(chars, index + 1, chars.length - index);
-                ;
             }
         }
         else {
@@ -569,11 +565,11 @@ public class StringUtils {
                 byteArray[i] = (byte) charArray[i];
             }
 
-            StringBuffer hexValue = new StringBuffer();
+            StringBuilder hexValue = new StringBuilder();
             byte[] md5Bytes = MessageDigest.getInstance("MD5")
                                            .digest(byteArray);
-            for (int i = 0; i < md5Bytes.length; i++) {
-                int val = ((int) md5Bytes[i]) & 0xff;
+            for (byte md5Byte : md5Bytes) {
+                int val = ((int) md5Byte) & 0xff;
                 if (val < 16) {
                     hexValue.append("0");
                 }
@@ -660,8 +656,8 @@ public class StringUtils {
      /**
      * 删除Html标签
      *
-     * @param inputString
-     * @return
+     * @param inputString 字符串内的html标签
+     * @return 处理后的字符串
      */
     public static String htmlRemoveTag(String inputString) {
         if (inputString == null)

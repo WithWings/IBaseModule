@@ -21,6 +21,10 @@ public class LogUtils {
         mShowLog = BuildConfig.show_log;
     }
 
+    public static LogUtils getInstance(){
+        return getInstance("WithWings");
+    }
+
     public synchronized static LogUtils getInstance(String tag){
         return getInstance(tag,false);
     }

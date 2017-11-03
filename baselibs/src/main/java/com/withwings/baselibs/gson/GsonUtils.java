@@ -75,26 +75,66 @@ public class GsonUtils {
 
     /**
      * 将数据解析存入 File 文件
-     * @param object
-     * @param file
+     * @param object 数据类
+     * @param file 文件
      */
     public static boolean toFile(Object object, File file){
         if(!file.exists()) {
             return false;
         }
-        Gson gson = new Gson();
         FileWriter fileWriter;
         try {
             fileWriter = new FileWriter(file);
-            JsonElement jsonElement = gson.toJsonTree(object);
-            JsonWriter jsonWriter = gson.newJsonWriter(fileWriter);
-            gson.toJson(jsonElement,jsonWriter);
+            return toFile(object,fileWriter);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
+    }
 
-        return true;
+    public static boolean toFile(Object object, Writer writer){
+        Gson gson = new Gson();
+        String s = gson.toJson(object);
+        try {
+            writer.write(s);
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    /**
+     * 将数据解析存入 File 文件
+     * @param tList 数据类
+     * @param file 文件
+     */
+    public static boolean toFileList(List tList, File file){
+        if(!file.exists()) {
+            return false;
+        }
+        FileWriter fileWriter;
+        try {
+            fileWriter = new FileWriter(file);
+            return toFileList(tList,fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean toFileList(List tList, Writer writer){
+        Gson gson = new Gson();
+        String s = gson.toJson(tList);
+        try {
+            writer.write(s);
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

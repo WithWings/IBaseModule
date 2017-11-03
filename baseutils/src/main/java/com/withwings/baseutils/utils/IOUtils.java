@@ -56,7 +56,9 @@ public class IOUtils {
 
         try {
             File textFile = new File(fileName);
-            if (!append && textFile.exists()) textFile.delete();
+            if (!append && textFile.exists()) {
+                boolean delete = textFile.delete();
+            }
 
             FileOutputStream os = new FileOutputStream(textFile);
             os.write(content.getBytes("UTF-8"));
@@ -84,7 +86,7 @@ public class IOUtils {
                     System.out.println(tfi.getName());
                 }
                 else {
-                    tfi.delete();
+                    boolean delete = tfi.delete();
                 }
             }
         }
