@@ -31,6 +31,8 @@ dependencies {
     implementation 'net.lingala.zip4j:zip4j:1.3.2'
     // json 解析
     implementation 'com.google.code.gson:gson:2.8.2'
+    // nohttp 联网
+    implementation 'com.yanzhenjie.nohttp:okhttp:1.1.4'
 }
 
 // 打 jar 包
