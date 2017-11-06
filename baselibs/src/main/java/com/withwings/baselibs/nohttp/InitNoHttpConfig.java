@@ -2,7 +2,7 @@ package com.withwings.baselibs.nohttp;
 
 import android.content.Context;
 
-import com.yanzhenjie.nohttp.BuildConfig;
+import com.withwings.baselibs.BuildConfig;
 import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
