@@ -6,7 +6,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 子线程类
+ * 多线程工具类
  * 创建：WithWings 时间：2017/11/3.
  * Email:wangtong1175@sina.com
  */
@@ -64,6 +64,7 @@ public class ThreadUtils {
             case NULL_USE_THREAD_POOL:
                 return null;
             case SCHEDULED_THREAD_POOL:
+                // 线程池容量
                 scheduledExecutorService = Executors.newScheduledThreadPool(5);
                 break;
             case SINGLE_THREAD_SCHEDULED_EXECUTOR:
@@ -86,6 +87,7 @@ public class ThreadUtils {
             case NULL_USE_THREAD_POOL:
                 return null;
             case FIXED_THREAD_POOL:
+                // 线程池容量
                 executorService = Executors.newFixedThreadPool(5);
                 break;
             case CACHED_THREAD_POOL:
