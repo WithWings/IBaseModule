@@ -1,5 +1,8 @@
 package com.withwings.baseutils.utils;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,6 +14,9 @@ import java.util.concurrent.TimeUnit;
  * Email:wangtong1175@sina.com
  */
 public class ThreadUtils {
+
+    private static Handler mMainHandler = new Handler(Looper.getMainLooper());
+
 
     /**
      * 未使用线程池
@@ -164,9 +170,10 @@ public ThreadPoolExecutor(
 
     /**
      * 延迟执行
-     * @param runnable 线程任务
+     *
+     * @param runnable     线程任务
      * @param initialDelay 第一次延迟时间
-     * @param period 每次启动线程间隔，如果为0，则默认只延迟执行一次
+     * @param period       每次启动线程间隔，如果为0，则默认只延迟执行一次
      */
     public static void scheduleAtFixedRate(Runnable runnable, long initialDelay, long period) {
         if (mScheduledExecutorService == null) {
@@ -181,9 +188,10 @@ public ThreadPoolExecutor(
 
     /**
      * 延迟执行
-     * @param runnable 线程任务
+     *
+     * @param runnable     线程任务
      * @param initialDelay 第一次延迟时间
-     * @param delay 每次线程结束到下次开始，如果为0，则默认只延迟执行一次
+     * @param delay        每次线程结束到下次开始，如果为0，则默认只延迟执行一次
      */
     public static void scheduleWithFixedDelay(Runnable runnable, long initialDelay, long delay) {
         if (mScheduledExecutorService == null) {
@@ -196,8 +204,20 @@ public ThreadPoolExecutor(
         }
     }
 
-    public static int getCPUCount(){
+    public static int getCPUCount() {
         return Runtime.getRuntime().availableProcessors();
+    }
+
+    public static void runOnUiThread(Runnable runnable) {
+        mMainHandler.post(runnable);
+    }
+
+    public static void runOnUiThreadByUptime(Runnable runnable, long uptimeMillis) {
+        mMainHandler.postAtTime(runnable, uptimeMillis);
+    }
+
+    public static void runOnUiThreadByDelay(Runnable runnable, long delayMillis) {
+        mMainHandler.postDelayed(runnable, delayMillis);
     }
 
 }
