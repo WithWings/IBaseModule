@@ -1,5 +1,6 @@
 package com.withwings.baselibs.nohttp;
 
+import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
@@ -43,6 +44,10 @@ public class RequestQueueNetWork {
 
             @Override
             public void onSucceed(int what, Response<T> response) {
+                Logger.i("=============response start(onSucceed)=============");
+                Logger.i("what:" + what);
+                Logger.i(response);
+                Logger.i("=============response end=============");
                 if (netWorkRequestListener != null) {
                     if (response.getHeaders().getResponseCode() == 200) {
                         netWorkRequestListener.onSucceed(what, response.get());
@@ -54,6 +59,10 @@ public class RequestQueueNetWork {
 
             @Override
             public void onFailed(int what, Response<T> response) {
+                Logger.i("=============response start(onFailed)=============");
+                Logger.i("what:" + what);
+                Logger.i(response);
+                Logger.i("=============response end=============");
                 if (netWorkRequestListener != null) {
                     netWorkRequestListener.onFailed(what, response.get());
                 }
