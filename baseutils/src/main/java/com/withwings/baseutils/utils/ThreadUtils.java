@@ -65,7 +65,7 @@ public class ThreadUtils {
                 return null;
             case SCHEDULED_THREAD_POOL:
                 // 线程池容量
-                scheduledExecutorService = Executors.newScheduledThreadPool(5);
+                scheduledExecutorService = Executors.newScheduledThreadPool(getCPUCount() + 1);
                 break;
             case SINGLE_THREAD_SCHEDULED_EXECUTOR:
                 scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -88,7 +88,7 @@ public class ThreadUtils {
                 return null;
             case FIXED_THREAD_POOL:
                 // 线程池容量
-                executorService = Executors.newFixedThreadPool(5);
+                executorService = Executors.newFixedThreadPool(getCPUCount() + 1);
                 break;
             case CACHED_THREAD_POOL:
                 executorService = Executors.newCachedThreadPool();
@@ -194,6 +194,10 @@ public ThreadPoolExecutor(
         } else {
             mScheduledExecutorService.scheduleWithFixedDelay(runnable, initialDelay, delay, TimeUnit.MILLISECONDS);
         }
+    }
+
+    public static int getCPUCount(){
+        return Runtime.getRuntime().availableProcessors();
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 优先级线程池
+ * 优先级线程池:会先执行前几个，生下来的通过优先级排进去
  * 创建：WithWings 时间：2017/11/6.
  * Email:wangtong1175@sina.com
  */
@@ -25,7 +25,7 @@ public class PriorityExecutorService {
      */
     public static synchronized ExecutorService getInstance() {
         if (mExecutorService == null) {
-            mExecutorService = new ThreadPoolExecutor(3, 3, 0L, TimeUnit.MILLISECONDS, new PriorityBlockingQueue<Runnable>());
+            mExecutorService = new ThreadPoolExecutor(getCPUCount() + 1,  getCPUCount() * 2 + 1, 0L, TimeUnit.MILLISECONDS, new PriorityBlockingQueue<Runnable>());
         }
         return mExecutorService;
     }
@@ -40,10 +40,13 @@ public class PriorityExecutorService {
     public static synchronized ExecutorService getInstance(int corePoolSize, int maximumPoolSize, long keepAliveTime) {
         if (mExecutorService == null) {
             if (corePoolSize == 0) {
-                corePoolSize = 3;
+                corePoolSize = getCPUCount() + 1;
             }
             if (maximumPoolSize == 0) {
-                maximumPoolSize = 3;
+                maximumPoolSize = getCPUCount() * 2 + 1;
+            }
+            if (maximumPoolSize < corePoolSize) {
+                maximumPoolSize = corePoolSize;
             }
             mExecutorService = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.MILLISECONDS, new PriorityBlockingQueue<Runnable>());
         }
@@ -52,10 +55,14 @@ public class PriorityExecutorService {
 
     /**
      * 执行线程任务
-     * @param runnable 线程任务
+     * @param priorityRunnable 线程任务
      */
-    public void run(Runnable runnable) {
-        mExecutorService.execute(runnable);
+    public void run(PriorityRunnable priorityRunnable) {
+        mExecutorService.execute(priorityRunnable);
+    }
+
+    public static int getCPUCount(){
+        return Runtime.getRuntime().availableProcessors();
     }
 
 }
