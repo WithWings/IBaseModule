@@ -116,6 +116,12 @@ static def packageTime() {
 }
 
 dependencies {
+    /**
+     * 关于 implementation compile api 三种之间的关系
+     * compile 过时
+     * api 相当于之前的 compile
+     * implementation 类似于私有，仅对当前module 有效
+     */
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'

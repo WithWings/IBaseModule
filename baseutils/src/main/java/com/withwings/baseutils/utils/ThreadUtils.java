@@ -204,18 +204,36 @@ public ThreadPoolExecutor(
         }
     }
 
+    /**
+     * 获得手机 CPU 数
+     * @return
+     */
     public static int getCPUCount() {
         return Runtime.getRuntime().availableProcessors();
     }
 
+    /**
+     * 跳转主线程
+     * @param runnable
+     */
     public static void runOnUiThread(Runnable runnable) {
         mMainHandler.post(runnable);
     }
 
+    /**
+     * 主线程定时任务
+     * @param runnable 主线程
+     * @param uptimeMillis 定时
+     */
     public static void runOnUiThreadByUptime(Runnable runnable, long uptimeMillis) {
         mMainHandler.postAtTime(runnable, uptimeMillis);
     }
 
+    /**
+     * 主线程延时任务
+     * @param runnable 主线程
+     * @param delayMillis 延时
+     */
     public static void runOnUiThreadByDelay(Runnable runnable, long delayMillis) {
         mMainHandler.postDelayed(runnable, delayMillis);
     }
