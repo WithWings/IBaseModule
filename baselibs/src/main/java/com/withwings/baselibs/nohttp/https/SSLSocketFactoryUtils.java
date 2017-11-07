@@ -38,7 +38,7 @@ public class SSLSocketFactoryUtils {
 
     private static synchronized SSLSocketFactory getSSLSocketFactory() {
         try {
-//            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+            //            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, new TrustManager[]{new BaseX509TrustManager()}, null);
             return SSLUtils.fixSSLLowerThanLollipop(sslContext.getSocketFactory());

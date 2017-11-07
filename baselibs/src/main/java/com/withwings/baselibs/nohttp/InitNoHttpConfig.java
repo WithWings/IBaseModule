@@ -30,7 +30,7 @@ public class InitNoHttpConfig {
 
     private final InitializationConfig.Builder mBuilder;
 
-    private InitNoHttpConfig(Context context){
+    private InitNoHttpConfig(Context context) {
         // 全局连接服务器超时时间，单位毫秒，默认10s。
         // 全局等待服务器响应超时时间，单位毫秒，默认10s。
         // 配置缓存，默认保存数据库DBCacheStore，保存到SD卡使用DiskCacheStore。
@@ -89,8 +89,8 @@ public class InitNoHttpConfig {
         NoHttp.initialize(initializationConfig);
     }
 
-    public synchronized static InitNoHttpConfig getInstance(Context context){
-        if(mInitNoHttpConfig == null) {
+    public synchronized static InitNoHttpConfig getInstance(Context context) {
+        if (mInitNoHttpConfig == null) {
             mInitNoHttpConfig = new InitNoHttpConfig(context);
         }
         return mInitNoHttpConfig;
@@ -98,6 +98,7 @@ public class InitNoHttpConfig {
 
     /**
      * Https 证书
+     *
      * @return 为null 时使用默认
      */
     private SSLSocketFactory setSocketFact() {
@@ -105,7 +106,6 @@ public class InitNoHttpConfig {
     }
 
     /**
-     *
      * @return 为null 时使用默认
      */
     private HostnameVerifier setHostnameVerifier() {
@@ -115,37 +115,39 @@ public class InitNoHttpConfig {
     /**
      * 添加请求头
      */
-    public void addHeader(){
-//        mBuilder.addHeader("key","value");
+    public void addHeader() {
+        //        mBuilder.addHeader("key","value");
     }
 
     /**
      * 添加公共参数
      */
-    public void addParam(){
-//        mBuilder.addParam("key","value");
+    public void addParam() {
+        //        mBuilder.addParam("key","value");
     }
 
     /**
      * 这个方法会重新初始化 NoHttp，如果不是有参数在运行后才会生成，尽量不要调用
+     *
      * @param hashMap 参数
      */
-    public void addHeader(HashMap<String,String> hashMap){
+    public void addHeader(HashMap<String, String> hashMap) {
         Set<String> strings = hashMap.keySet();
         for (String string : strings) {
-            mBuilder.addHeader(string,hashMap.get(string));
+            mBuilder.addHeader(string, hashMap.get(string));
         }
         init();
     }
 
     /**
      * 这个方法会重新初始化 NoHttp，如果不是有参数在运行后才会生成，尽量不要调用
+     *
      * @param hashMap 参数
      */
-    public void addParam(HashMap<String,String> hashMap){
+    public void addParam(HashMap<String, String> hashMap) {
         Set<String> strings = hashMap.keySet();
         for (String string : strings) {
-            mBuilder.addParam(string,hashMap.get(string));
+            mBuilder.addParam(string, hashMap.get(string));
         }
         init();
     }

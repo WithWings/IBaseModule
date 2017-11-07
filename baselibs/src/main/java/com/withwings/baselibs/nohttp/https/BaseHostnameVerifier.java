@@ -31,8 +31,9 @@ public class BaseHostnameVerifier implements HostnameVerifier {
 
     /**
      * 验证逻辑
+     *
      * @param hostname 主机名
-     * @param session 版本
+     * @param session  版本
      * @return 是否通过校验
      */
     public boolean verify(String hostname, SSLSession session) {
@@ -59,7 +60,6 @@ public class BaseHostnameVerifier implements HostnameVerifier {
         }
         return false;
     }
-
 
 
 }

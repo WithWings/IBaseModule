@@ -1,7 +1,7 @@
 package com.withwings.baselibs.nohttp.network;
 
 import com.withwings.baselibs.BuildConfig;
-import com.withwings.baselibs.nohttp.NetWorkRequestListener;
+import com.withwings.baselibs.nohttp.listener.NetWorkRequestListener;
 import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
@@ -38,7 +38,7 @@ public class RequestQueueNetWork {
     }
 
     public <T> void doRequest(Request<T> request, int what, final NetWorkRequestListener<T> netWorkRequestListener) {
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Logger.i("=============request start=============");
             Logger.i("RequestMethod:" + request.getRequestMethod());
             Logger.i("Priority:" + request.getPriority());
@@ -48,12 +48,14 @@ public class RequestQueueNetWork {
         mRequestQueue.add(what, request, new OnResponseListener<T>() {
             @Override
             public void onStart(int what) {
-
+                if (netWorkRequestListener != null) {
+                    netWorkRequestListener.onStart(what);
+                }
             }
 
             @Override
             public void onSucceed(int what, Response<T> response) {
-                if(BuildConfig.DEBUG) {
+                if (BuildConfig.DEBUG) {
                     Logger.i("=============response start(onSucceed)=============");
                     Logger.i("what:" + what);
                     Logger.i(response.get());
@@ -61,29 +63,31 @@ public class RequestQueueNetWork {
                 }
                 if (netWorkRequestListener != null) {
                     if (response.getHeaders().getResponseCode() == 200) {
-                        netWorkRequestListener.onSucceed(what, response.get());
+                        netWorkRequestListener.onSucceed(what, response);
                     } else {
-                        netWorkRequestListener.onFailed(what, response.get());
+                        netWorkRequestListener.onFailed(what, response);
                     }
                 }
             }
 
             @Override
             public void onFailed(int what, Response<T> response) {
-                if(BuildConfig.DEBUG) {
+                if (BuildConfig.DEBUG) {
                     Logger.i("=============response start(onFailed)=============");
                     Logger.i("what:" + what);
                     Logger.i(response);
                     Logger.i("=============response end=============");
                 }
                 if (netWorkRequestListener != null) {
-                    netWorkRequestListener.onFailed(what, response.get());
+                    netWorkRequestListener.onFailed(what, response);
                 }
             }
 
             @Override
             public void onFinish(int what) {
-
+                if (netWorkRequestListener != null) {
+                    netWorkRequestListener.onFinish(what);
+                }
             }
         });
     }
@@ -93,6 +97,7 @@ public class RequestQueueNetWork {
      */
     public void stop() {
         mRequestQueue.stop();
+        mRequestQueueNetWork = null;
     }
 
 }

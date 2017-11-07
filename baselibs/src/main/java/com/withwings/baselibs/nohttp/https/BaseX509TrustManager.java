@@ -46,7 +46,8 @@ public class BaseX509TrustManager implements X509TrustManager {
 
     /**
      * 验证客户端证书
-     * @param chain 证书链
+     *
+     * @param chain    证书链
      * @param authType 认证类型
      * @throws CertificateException 证书异常
      */
@@ -62,7 +63,8 @@ public class BaseX509TrustManager implements X509TrustManager {
 
     /**
      * 验证服务端证书
-     * @param chain 证书链
+     *
+     * @param chain    证书链
      * @param authType 认证类型
      * @throws CertificateException 证书异常
      */

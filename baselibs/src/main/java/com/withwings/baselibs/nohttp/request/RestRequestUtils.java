@@ -1,8 +1,9 @@
-package com.withwings.baselibs.nohttp;
+package com.withwings.baselibs.nohttp.request;
 
 import android.graphics.Bitmap;
 
 import com.withwings.baselibs.BuildConfig;
+import com.withwings.baselibs.nohttp.HttpConfig;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.Priority;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -123,9 +124,10 @@ public class RestRequestUtils {
 
     /**
      * 添加公共参数
+     *
      * @param tRequest 请求
      * @param priority 优先级
-     * @param url url
+     * @param url      url
      */
     public static void setDefault(Request tRequest, Priority priority, String url) {
         priority = checkPriority(priority);
@@ -134,17 +136,18 @@ public class RestRequestUtils {
         tRequest.path(url);
         // 请求体
         for (String s : REQUEST_PARAMS.keySet()) {
-            tRequest.add(s,REQUEST_PARAMS.get(s));
+            tRequest.add(s, REQUEST_PARAMS.get(s));
         }
         // 请求头
         for (String s : REQUEST_HEADERS.keySet()) {
-            tRequest.addHeader(s,REQUEST_HEADERS.get(s));
+            tRequest.addHeader(s, REQUEST_HEADERS.get(s));
         }
     }
 
     /**
      * 设置默认参数
-     * @param params 请求体
+     *
+     * @param params  请求体
      * @param headers 请求头
      */
     public static void defaultParams(Map<String, String> params, Map<String, String> headers) {
