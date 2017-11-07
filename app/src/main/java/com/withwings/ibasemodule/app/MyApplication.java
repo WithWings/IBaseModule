@@ -4,7 +4,7 @@ import com.withwings.baselibs.nohttp.InitNoHttpConfig;
 import com.withwings.baseutils.base.BaseApplication;
 
 /**
- * TODO
+ * 自定义 Application
  * 创建：WithWings 时间：2017/11/6.
  * Email:wangtong1175@sina.com
  */

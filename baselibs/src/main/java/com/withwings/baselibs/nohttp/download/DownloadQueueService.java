@@ -59,7 +59,7 @@ public class DownloadQueueService {
      * @param what 队列标记
      * @param downloadRequestListener 下载监听
      */
-    public void doDown(final DownloadRequest downloadRequest, int what, final DownloadRequestListener downloadRequestListener) {
+    public void doDown(DownloadRequest downloadRequest, int what, final DownloadRequestListener downloadRequestListener) {
         mDownloadQueue.add(what, downloadRequest, new DownloadListener() {
             @Override
             public void onDownloadError(int what, Exception exception) {

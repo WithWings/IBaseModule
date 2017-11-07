@@ -136,7 +136,17 @@ public class RestRequestUtils {
      * @param url      url
      */
     public static void setDefault(Request tRequest, Priority priority, String url) {
-        priority = checkPriority(priority);
+        if(url.contains(SERVICE_URL)){
+            if (!url.endsWith("/")) {
+                url = url.replace(SERVICE_URL + "/", "");
+            } else {
+                url = url.replace(SERVICE_URL, "");
+            }
+
+        }
+        if (priority == null) {
+            priority = DEFAULT_PRIORITY;
+        }
         tRequest.setPriority(priority);
         tRequest.setCacheMode(DEFAULT_CACHE_MODE);
         tRequest.path(url);
@@ -179,18 +189,6 @@ public class RestRequestUtils {
             requestMethod = DEFAULT_REQUEST_METHOD;
         }
         return requestMethod;
-    }
-
-    /**
-     * 默认优先级
-     * @param priority 优先级
-     * @return 优先级
-     */
-    private static Priority checkPriority(Priority priority) {
-        if (priority == null) {
-            priority = DEFAULT_PRIORITY;
-        }
-        return priority;
     }
 
 }

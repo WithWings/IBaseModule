@@ -5,7 +5,7 @@ import android.util.Log;
 import com.withwings.baseutils.BuildConfig;
 
 /**
- * TODO
+ * Log 工具
  * 创建：WithWings 时间：2017/10/30.
  * Email:wangtong1175@sina.com
  */
