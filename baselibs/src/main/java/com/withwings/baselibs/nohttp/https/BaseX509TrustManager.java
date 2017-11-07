@@ -1,4 +1,4 @@
-package com.withwings.baselibs.nohttp;
+package com.withwings.baselibs.nohttp.https;
 
 import java.io.FileInputStream;
 import java.security.KeyStore;

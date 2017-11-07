@@ -1,5 +1,6 @@
-package com.withwings.baselibs.nohttp;
+package com.withwings.baselibs.nohttp.network;
 
+import com.withwings.baselibs.nohttp.NetWorkRequestListener;
 import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
@@ -8,7 +9,7 @@ import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
 /**
- * TODO
+ * 请求队列，异步操作请打开子线程
  * 创建：WithWings 时间：2017/11/6.
  * Email:wangtong1175@sina.com
  */
@@ -36,6 +37,11 @@ public class RequestQueueNetWork {
     }
 
     public <T> void doRequest(final Request<T> request, int what, final NetWorkRequestListener<T> netWorkRequestListener) {
+        Logger.i("=============request start=============");
+        Logger.i("RequestMethod:" + request.getRequestMethod());
+        Logger.i("Priority:" + request.getPriority());
+        Logger.i("CacheMode:" + request.getCacheMode());
+        Logger.i("=============request end=============");
         mRequestQueue.add(what, request, new OnResponseListener<T>() {
             @Override
             public void onStart(int what) {

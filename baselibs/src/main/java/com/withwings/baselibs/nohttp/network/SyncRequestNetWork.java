@@ -1,4 +1,4 @@
-package com.withwings.baselibs.nohttp;
+package com.withwings.baselibs.nohttp.network;
 
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.Response;

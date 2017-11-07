@@ -1,4 +1,4 @@
-package com.withwings.baselibs.nohttp;
+package com.withwings.baselibs.nohttp.https;
 
 import java.security.cert.X509Certificate;
 
