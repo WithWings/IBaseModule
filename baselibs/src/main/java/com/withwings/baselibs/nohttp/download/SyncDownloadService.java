@@ -14,7 +14,8 @@ import com.yanzhenjie.nohttp.download.SyncDownloadExecutor;
 public class SyncDownloadService {
 
     /**
-     * 执行下载
+     * 执行下载：想要断点续传，使用 request 的 cancel() 方法放弃本次提交，
+     * 下次重新启动一个 request 的时候设置允许断点续传即可
      * @param downloadRequest 下载配置
      * @param what 队列标记
      * @param downloadRequestListener 下载监听
