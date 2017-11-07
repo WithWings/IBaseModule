@@ -43,8 +43,14 @@ public class RestRequestUtils {
      */
     private static final CacheMode DEFAULT_CACHE_MODE = CacheMode.DEFAULT;
 
+    /**
+     * 默认请求参数
+     */
     private static final Map<String, String> REQUEST_PARAMS = new HashMap<>();
 
+    /**
+     * 默认请求头
+     */
     private static final Map<String, String> REQUEST_HEADERS = new HashMap<>();
 
     public static Request<String> getRequestString(String url) {
@@ -163,6 +169,11 @@ public class RestRequestUtils {
         }
     }
 
+    /**
+     * 默认请求方法
+     * @param requestMethod 请求方式
+     * @return 请求方式
+     */
     private static RequestMethod checkMethod(RequestMethod requestMethod) {
         if (requestMethod == null) {
             requestMethod = DEFAULT_REQUEST_METHOD;
@@ -170,6 +181,11 @@ public class RestRequestUtils {
         return requestMethod;
     }
 
+    /**
+     * 默认优先级
+     * @param priority 优先级
+     * @return 优先级
+     */
     private static Priority checkPriority(Priority priority) {
         if (priority == null) {
             priority = DEFAULT_PRIORITY;

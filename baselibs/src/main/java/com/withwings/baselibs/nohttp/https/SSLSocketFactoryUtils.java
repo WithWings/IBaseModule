@@ -26,6 +26,10 @@ public class SSLSocketFactoryUtils {
     // 如果证书需要密码
     private static final String KEY_STORE_PASSWORD = "";
 
+    /**
+     * 一个默认的证书
+     * @return 证书
+     */
     private static synchronized SSLSocketFactory getDefaultSSLSocketFactory() {
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -36,6 +40,10 @@ public class SSLSocketFactoryUtils {
         }
     }
 
+    /**
+     * 获得证书，自己配置的证书
+     * @return 证书
+     */
     private static synchronized SSLSocketFactory getSSLSocketFactory() {
         try {
             //            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
@@ -47,6 +55,11 @@ public class SSLSocketFactoryUtils {
         }
     }
 
+    /**
+     * 从文件取得证书
+     * @param filePath 证书所在文件路径
+     * @return 证书
+     */
     private static synchronized SSLSocketFactory getSSLSocketFactoryByFile(String filePath) {
         // 取到证书的输入流
         try {

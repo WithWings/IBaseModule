@@ -14,6 +14,12 @@ import com.yanzhenjie.nohttp.rest.SyncRequestExecutor;
  */
 public class SyncRequestNetWork {
 
+    /**
+     * 同步请求
+     * @param request 通过 RestRequestUtils 获得的请求接口信息
+     * @param netWorkRequestListener 状态监听
+     * @param <T> 请求数据类型
+     */
     public static  <T> void doRequest(Request<T> request, NetWorkRequestListener<T> netWorkRequestListener) {
         if(BuildConfig.DEBUG) {
             Logger.i("=============request start=============");

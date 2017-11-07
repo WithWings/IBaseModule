@@ -26,10 +26,17 @@ public class RequestQueueNetWork {
      */
     private static RequestQueue mRequestQueue;
 
+    /**
+     * 单例模式
+     */
     private RequestQueueNetWork() {
         mRequestQueue = NoHttp.newRequestQueue(5);
     }
 
+    /**
+     * 实例化对象
+     * @return 工具类
+     */
     public static synchronized RequestQueueNetWork getInstance() {
         if (mRequestQueueNetWork == null) {
             mRequestQueueNetWork = new RequestQueueNetWork();
@@ -37,7 +44,15 @@ public class RequestQueueNetWork {
         return mRequestQueueNetWork;
     }
 
+    /**
+     * 请求接口
+     * @param request 通过 RestRequestUtils 获得的请求接口信息
+     * @param what 队列标记
+     * @param netWorkRequestListener 状态监听
+     * @param <T> 请求数据类型
+     */
     public <T> void doRequest(Request<T> request, int what, final NetWorkRequestListener<T> netWorkRequestListener) {
+        // release 环境不要打印 log
         if (BuildConfig.DEBUG) {
             Logger.i("=============request start=============");
             Logger.i("RequestMethod:" + request.getRequestMethod());

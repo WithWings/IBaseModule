@@ -8,24 +8,44 @@ import com.yanzhenjie.nohttp.download.DownloadQueue;
 import com.yanzhenjie.nohttp.download.DownloadRequest;
 
 /**
- * TODO
+ * 下载队列
  * 创建：WithWings 时间：2017/11/7.
  * Email:wangtong1175@sina.com
  */
 public class DownloadQueueService {
 
+    /**
+     * 单例对象
+     */
     private static DownloadQueueService mDownloadQueueService;
 
+    /**
+     * 下载队列
+     */
     private DownloadQueue mDownloadQueue;
 
+    /**
+     * 单例模式
+     * @param size 队列大小
+     */
     private DownloadQueueService(int size) {
         mDownloadQueue = NoHttp.newDownloadQueue(size);
     }
 
+    /**
+     * 实例化对象
+     * @return 对象
+     */
     public static DownloadQueueService getInstance() {
         return getInstance(3);
     }
 
+
+    /**
+     * 实例化对象
+     * @param size 队列大小
+     * @return 对象
+     */
     public static synchronized DownloadQueueService getInstance(int size) {
         if (mDownloadQueueService == null) {
             mDownloadQueueService = new DownloadQueueService(size);
@@ -33,6 +53,12 @@ public class DownloadQueueService {
         return mDownloadQueueService;
     }
 
+    /**
+     * 执行下载
+     * @param downloadRequest 下载配置
+     * @param what 队列标记
+     * @param downloadRequestListener 下载监听
+     */
     public void doDown(final DownloadRequest downloadRequest, int what, final DownloadRequestListener downloadRequestListener) {
         mDownloadQueue.add(what, downloadRequest, new DownloadListener() {
             @Override

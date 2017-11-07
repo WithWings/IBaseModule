@@ -15,7 +15,15 @@ import com.yanzhenjie.nohttp.rest.Response;
  */
 public class AsyncRequestNetWork {
 
+    /**
+     * 异步访问接口
+     * @param request 通过 RestRequestUtils 获得的请求接口信息
+     * @param what 队列标记
+     * @param netWorkRequestListener 状态监听
+     * @param <T> 请求数据类型
+     */
     public static <T> void doRequest(Request<T> request, int what, final NetWorkRequestListener<T> netWorkRequestListener) {
+        // release 环境不要打印 log
         if (BuildConfig.DEBUG) {
             Logger.i("=============request start=============");
             Logger.i("RequestMethod:" + request.getRequestMethod());

@@ -89,6 +89,11 @@ public class InitNoHttpConfig {
         NoHttp.initialize(initializationConfig);
     }
 
+    /**
+     * 初始化NoHttp
+     * @param context 上下文对象，建议初始化位置 Application
+     * @return 操作对象
+     */
     public synchronized static InitNoHttpConfig getInstance(Context context) {
         if (mInitNoHttpConfig == null) {
             mInitNoHttpConfig = new InitNoHttpConfig(context);
