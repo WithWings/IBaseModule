@@ -17,7 +17,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 获得请求对象
+ * 获得请求对象：关于上传文件，只要使用指定的参数既可以上传各种文件了
+ *
+ * *    单个文件
+ *   StringRequest request = ...
+ *   request.add("file", new FileBinary(file));
+ * *    多文件，以不同的key上传不同的多个文件
+ *   这里可以添加各种形式的文件，File、Bitmap、InputStream、ByteArray。
+ *   StringRequest request = ...
+ *   request.add("file1", new FileBinary(File));
+ *   request.add("file2", new FileBinary(File));
+ *   request.add("file3", new InputStreamBinary(InputStream));
+ *   request.add("file4", new ByteArrayBinary(byte[]));
+ *   request.add("file5", new BitmapBinary(Bitmap));
+ * *    多文件，以相同的key上传相同的多个文件
+ *   StringRequest request = ...
+ *   fileList.add("image", new FileBinary(File));
+ *   fileList.add("image", new InputStreamBinary(InputStream));
+ *   fileList.add("image", new ByteArrayBinary(byte[]));
+ *   fileList.add("image", new BitmapBinary(Bitmap));
  * 创建：WithWings 时间：2017/11/6.
  * Email:wangtong1175@sina.com
  */
