@@ -35,7 +35,10 @@ dependencies {
     // nohttp 联网
     api 'com.yanzhenjie.nohttp:nohttp:1.1.4'
     implementation 'com.yanzhenjie.nohttp:okhttp:1.1.4'
+    // andpermission 未抽取
     implementation 'com.yanzhenjie:permission:1.1.2'
+    //
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 }
 
 // 打 jar 包
@@ -52,7 +55,7 @@ task makeJar(type: Copy) {
     //（我们只关心classes.jar这个文件）
     include('classes.jar')
     //重命名
-    rename ('classes.jar', 'mysdk.jar')
+    rename('classes.jar', 'mysdk.jar')
 }
 
 makeJar.dependsOn(build)

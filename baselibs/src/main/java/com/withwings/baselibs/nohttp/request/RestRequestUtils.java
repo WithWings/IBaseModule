@@ -1,6 +1,7 @@
 package com.withwings.baselibs.nohttp.request;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 
 import com.withwings.baselibs.BuildConfig;
 import com.withwings.baselibs.nohttp.HttpConfig;
@@ -18,24 +19,24 @@ import java.util.Map;
 
 /**
  * 获得请求对象：关于上传文件，只要使用指定的参数既可以上传各种文件了
- *
+ * <p>
  * *    单个文件
- *   StringRequest request = ...
- *   request.add("file", new FileBinary(file));
+ * StringRequest request = ...
+ * request.add("file", new FileBinary(file));
  * *    多文件，以不同的key上传不同的多个文件
- *   这里可以添加各种形式的文件，File、Bitmap、InputStream、ByteArray。
- *   StringRequest request = ...
- *   request.add("file1", new FileBinary(File));
- *   request.add("file2", new FileBinary(File));
- *   request.add("file3", new InputStreamBinary(InputStream));
- *   request.add("file4", new ByteArrayBinary(byte[]));
- *   request.add("file5", new BitmapBinary(Bitmap));
+ * 这里可以添加各种形式的文件，File、Bitmap、InputStream、ByteArray。
+ * StringRequest request = ...
+ * request.add("file1", new FileBinary(File));
+ * request.add("file2", new FileBinary(File));
+ * request.add("file3", new InputStreamBinary(InputStream));
+ * request.add("file4", new ByteArrayBinary(byte[]));
+ * request.add("file5", new BitmapBinary(Bitmap));
  * *    多文件，以相同的key上传相同的多个文件
- *   StringRequest request = ...
- *   fileList.add("image", new FileBinary(File));
- *   fileList.add("image", new InputStreamBinary(InputStream));
- *   fileList.add("image", new ByteArrayBinary(byte[]));
- *   fileList.add("image", new BitmapBinary(Bitmap));
+ * StringRequest request = ...
+ * fileList.add("image", new FileBinary(File));
+ * fileList.add("image", new InputStreamBinary(InputStream));
+ * fileList.add("image", new ByteArrayBinary(byte[]));
+ * fileList.add("image", new BitmapBinary(Bitmap));
  * 创建：WithWings 时间：2017/11/6.
  * Email:wangtong1175@sina.com
  */
@@ -72,77 +73,98 @@ public class RestRequestUtils {
     private static final Map<String, String> REQUEST_HEADERS = new HashMap<>();
 
     public static Request<String> getRequestString(String url) {
-        return getRequestString(url, DEFAULT_REQUEST_METHOD);
+        return getRequestString(url, "");
     }
 
-    public static Request<String> getRequestString(String url, RequestMethod requestMethod) {
-        return getRequestString(url, requestMethod, DEFAULT_PRIORITY);
+    public static Request<String> getRequestString(String url, String body) {
+        return getRequestString(url, body, DEFAULT_REQUEST_METHOD);
     }
 
-    public static Request<String> getRequestString(String url, RequestMethod requestMethod, Priority priority) {
+    public static Request<String> getRequestString(String url, String body, RequestMethod requestMethod) {
+        return getRequestString(url, body, requestMethod, DEFAULT_PRIORITY);
+    }
+
+    public static Request<String> getRequestString(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
         Request<String> stringRequest = NoHttp.createStringRequest(SERVICE_URL, requestMethod);
-        setDefault(stringRequest, priority, url);
+        setDefault(stringRequest, priority, url, body);
         return stringRequest;
     }
 
     public static Request<Bitmap> getRequestBitmap(String url) {
-        return getRequestBitmap(url, DEFAULT_REQUEST_METHOD);
+        return getRequestBitmap(url, "");
     }
 
-    public static Request<Bitmap> getRequestBitmap(String url, RequestMethod requestMethod) {
-        return getRequestBitmap(url, requestMethod, DEFAULT_PRIORITY);
+    public static Request<Bitmap> getRequestBitmap(String url, String body) {
+        return getRequestBitmap(url, body, DEFAULT_REQUEST_METHOD);
     }
 
-    public static Request<Bitmap> getRequestBitmap(String url, RequestMethod requestMethod, Priority priority) {
+    public static Request<Bitmap> getRequestBitmap(String url, String body, RequestMethod requestMethod) {
+        return getRequestBitmap(url, body, requestMethod, DEFAULT_PRIORITY);
+    }
+
+    public static Request<Bitmap> getRequestBitmap(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
         Request<Bitmap> imageRequest = NoHttp.createImageRequest(SERVICE_URL, requestMethod);
-        setDefault(imageRequest, priority, url);
+        setDefault(imageRequest, priority, url, body);
         return imageRequest;
     }
 
     public static Request<JSONObject> getRequestJsonObject(String url) {
-        return getRequestJsonObject(url, DEFAULT_REQUEST_METHOD);
+        return getRequestJsonObject(url, "");
     }
 
-    public static Request<JSONObject> getRequestJsonObject(String url, RequestMethod requestMethod) {
-        return getRequestJsonObject(url, requestMethod, DEFAULT_PRIORITY);
+
+    public static Request<JSONObject> getRequestJsonObject(String url, String body) {
+        return getRequestJsonObject(url, body, DEFAULT_REQUEST_METHOD);
     }
 
-    public static Request<JSONObject> getRequestJsonObject(String url, RequestMethod requestMethod, Priority priority) {
+    public static Request<JSONObject> getRequestJsonObject(String url, String body, RequestMethod requestMethod) {
+        return getRequestJsonObject(url, body, requestMethod, DEFAULT_PRIORITY);
+    }
+
+    public static Request<JSONObject> getRequestJsonObject(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(SERVICE_URL, requestMethod);
-        setDefault(jsonObjectRequest, priority, url);
+        setDefault(jsonObjectRequest, priority, url, body);
         return jsonObjectRequest;
     }
 
     public static Request<JSONArray> getRequestJsonArray(String url) {
-        return getRequestJsonArray(url, DEFAULT_REQUEST_METHOD);
+        return getRequestJsonArray(url, "");
     }
 
-    public static Request<JSONArray> getRequestJsonArray(String url, RequestMethod requestMethod) {
-        return getRequestJsonArray(url, requestMethod, DEFAULT_PRIORITY);
+    public static Request<JSONArray> getRequestJsonArray(String url, String body) {
+        return getRequestJsonArray(url, body, DEFAULT_REQUEST_METHOD);
     }
 
-    public static Request<JSONArray> getRequestJsonArray(String url, RequestMethod requestMethod, Priority priority) {
+    public static Request<JSONArray> getRequestJsonArray(String url, String body, RequestMethod requestMethod) {
+        return getRequestJsonArray(url, body, requestMethod, DEFAULT_PRIORITY);
+    }
+
+    public static Request<JSONArray> getRequestJsonArray(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
         Request<JSONArray> jsonArrayRequest = NoHttp.createJsonArrayRequest(SERVICE_URL, requestMethod);
-        setDefault(jsonArrayRequest, priority, url);
+        setDefault(jsonArrayRequest, priority, url, body);
         return jsonArrayRequest;
     }
 
     public static Request<byte[]> getRequestByteArray(String url) {
-        return getRequestByteArray(url, DEFAULT_REQUEST_METHOD);
+        return getRequestByteArray(url, "");
     }
 
-    public static Request<byte[]> getRequestByteArray(String url, RequestMethod requestMethod) {
-        return getRequestByteArray(url, requestMethod, DEFAULT_PRIORITY);
+    public static Request<byte[]> getRequestByteArray(String url, String body) {
+        return getRequestByteArray(url, body, DEFAULT_REQUEST_METHOD);
     }
 
-    public static Request<byte[]> getRequestByteArray(String url, RequestMethod requestMethod, Priority priority) {
+    public static Request<byte[]> getRequestByteArray(String url, String body, RequestMethod requestMethod) {
+        return getRequestByteArray(url, body, requestMethod, DEFAULT_PRIORITY);
+    }
+
+    public static Request<byte[]> getRequestByteArray(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
         Request<byte[]> byteArrayRequest = NoHttp.createByteArrayRequest(SERVICE_URL, requestMethod);
-        setDefault(byteArrayRequest, priority, url);
+        setDefault(byteArrayRequest, priority, url, body);
         return byteArrayRequest;
     }
 
@@ -153,8 +175,8 @@ public class RestRequestUtils {
      * @param priority 优先级
      * @param url      url
      */
-    public static void setDefault(Request tRequest, Priority priority, String url) {
-        if(url.contains(SERVICE_URL)){
+    public static void setDefault(Request tRequest, Priority priority, String url, String body) {
+        if (url.contains(SERVICE_URL)) {
             if (!url.endsWith("/")) {
                 url = url.replace(SERVICE_URL + "/", "");
             } else {
@@ -175,6 +197,9 @@ public class RestRequestUtils {
         // 请求头
         for (String s : REQUEST_HEADERS.keySet()) {
             tRequest.addHeader(s, REQUEST_HEADERS.get(s));
+        }
+        if (!TextUtils.isEmpty(body)) {
+            tRequest.setDefineRequestBodyForJson(body);
         }
     }
 
@@ -199,6 +224,7 @@ public class RestRequestUtils {
 
     /**
      * 默认请求方法
+     *
      * @param requestMethod 请求方式
      * @return 请求方式
      */
