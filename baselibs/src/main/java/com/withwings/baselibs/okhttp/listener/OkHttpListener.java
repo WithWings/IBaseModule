@@ -12,8 +12,19 @@ import okhttp3.Response;
  */
 public interface OkHttpListener {
 
+    /**
+     * 联网请求成功
+     */
+    void onSuccess(Call call, Response response) throws IOException;
+
+    /**
+     * 联网成功，请求失败
+     */
     void onResponse(Call call, Response response) throws IOException;
 
+    /**
+     * 联网失败
+     */
     void onFailure(Call call, IOException e);
 
 }

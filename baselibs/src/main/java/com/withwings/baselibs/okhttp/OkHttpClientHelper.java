@@ -1,5 +1,7 @@
 package com.withwings.baselibs.okhttp;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 
 import com.withwings.baselibs.okhttp.listener.OkHttpListener;
@@ -56,17 +58,35 @@ public class OkHttpClientHelper {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (okHttpListener != null) {
-                    okHttpListener.onResponse(call, response);
-                }
+            public void onResponse(final Call call, final Response response) throws IOException {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (okHttpListener != null) {
+                            try {
+                                if (response.code() == 200) {
+                                    okHttpListener.onSuccess(call, response);
+                                } else {
+                                    okHttpListener.onResponse(call, response);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
             }
 
             @Override
-            public void onFailure(Call call, IOException e) {
-                if (okHttpListener != null) {
-                    okHttpListener.onFailure(call, e);
-                }
+            public void onFailure(final Call call, final IOException e) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (okHttpListener != null) {
+                            okHttpListener.onFailure(call, e);
+                        }
+                    }
+                });
             }
 
         });
@@ -94,17 +114,35 @@ public class OkHttpClientHelper {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (okHttpListener != null) {
-                    okHttpListener.onResponse(call, response);
-                }
+            public void onResponse(final Call call, final Response response) throws IOException {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (okHttpListener != null) {
+                            try {
+                                if (response.code() == 200) {
+                                    okHttpListener.onSuccess(call, response);
+                                } else {
+                                    okHttpListener.onResponse(call, response);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
             }
 
             @Override
-            public void onFailure(Call call, IOException e) {
-                if (okHttpListener != null) {
-                    okHttpListener.onFailure(call, e);
-                }
+            public void onFailure(final Call call, final IOException e) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (okHttpListener != null) {
+                            okHttpListener.onFailure(call, e);
+                        }
+                    }
+                });
             }
 
         });
