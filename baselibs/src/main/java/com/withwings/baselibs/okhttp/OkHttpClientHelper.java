@@ -1,9 +1,11 @@
 package com.withwings.baselibs.okhttp;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.withwings.baselibs.okhttp.listener.OkHttpByteListener;
 import com.withwings.baselibs.okhttp.listener.OkHttpListener;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * okHttp 工具类
@@ -32,18 +35,21 @@ public class OkHttpClientHelper {
     private static OkHttpClientHelper mOkHttpClientHelper;
     private static OkHttpClient mOkHttpClient;
 
+    private static Context mContext;
+
     private OkHttpClientHelper() {
         mOkHttpClient = new OkHttpClient();
     }
 
-    public static synchronized OkHttpClientHelper getInstance() {
+    public static synchronized OkHttpClientHelper getInstance(Context context) {
         if (mOkHttpClientHelper == null) {
             mOkHttpClientHelper = new OkHttpClientHelper();
+            mContext = context;
         }
         return mOkHttpClientHelper;
     }
 
-    public static void doApiPost(String url, String json, Map<String, String> params, final OkHttpListener okHttpListener) {
+    public static void doApiPost(final String url, String json, Map<String, String> params, final OkHttpListener okHttpListener) {
         RequestBody requestBody;
         if (!TextUtils.isEmpty(json)) {
             requestBody = RequestBody.create(JSON, json);
@@ -59,22 +65,83 @@ public class OkHttpClientHelper {
 
             @Override
             public void onResponse(final Call call, final Response response) throws IOException {
+                ResponseBody responseBody = response.body();
+                if(responseBody != null) {
+                    final String result = responseBody.string();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (okHttpListener != null) {
+                                try {
+                                    if (response.code() == 200) {
+                                        okHttpListener.onSuccess(call, result);
+                                    } else {
+                                        okHttpListener.onResponse(call, result);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    okHttpListener.onFailure(call, new IOException("联网请求失败。"));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call call, final IOException e) {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
                         if (okHttpListener != null) {
-                            try {
-                                if (response.code() == 200) {
-                                    okHttpListener.onSuccess(call, response);
-                                } else {
-                                    okHttpListener.onResponse(call, response);
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            okHttpListener.onFailure(call, e);
                         }
                     }
                 });
+            }
+
+        });
+    }
+
+    public static void doApiPost(final String url, String json, Map<String, String> params, final OkHttpByteListener okHttpListener) {
+        RequestBody requestBody;
+        if (!TextUtils.isEmpty(json)) {
+            requestBody = RequestBody.create(JSON, json);
+        } else {
+            FormBody.Builder rormBodyBuilder = new FormBody.Builder();
+            setGetUrl(rormBodyBuilder, params);
+            requestBody = rormBodyBuilder.build();
+        }
+        Request.Builder requestBuilder = new Request.Builder().url(url).post(requestBody);
+        setHeader(requestBuilder);
+        Request request = requestBuilder.build();
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(final Call call, final Response response) throws IOException {
+                ResponseBody responseBody = response.body();
+                if(responseBody != null) {
+                    final byte[] result = responseBody.bytes();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (okHttpListener != null) {
+                                try {
+                                    if (response.code() == 200) {
+                                        okHttpListener.onSuccess(call, result);
+                                    } else {
+                                        okHttpListener.onResponse(call, result);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    okHttpListener.onFailure(call, new IOException("联网请求失败。"));
+                }
             }
 
             @Override
@@ -111,26 +178,82 @@ public class OkHttpClientHelper {
         Request.Builder requestBuilder = new Request.Builder().url(url).get();
         setHeader(requestBuilder);
         Request request = requestBuilder.build();
+        final String finalUrl = url;
         mOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onResponse(final Call call, final Response response) throws IOException {
+                ResponseBody responseBody = response.body();
+                if(responseBody != null) {
+                    final String result = responseBody.string();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (okHttpListener != null) {
+                                try {
+                                    if (response.code() == 200) {
+                                        okHttpListener.onSuccess(call, result);
+                                    } else {
+                                        okHttpListener.onResponse(call, result);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    okHttpListener.onFailure(call, new IOException("联网请求失败。"));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call call, final IOException e) {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
                         if (okHttpListener != null) {
-                            try {
-                                if (response.code() == 200) {
-                                    okHttpListener.onSuccess(call, response);
-                                } else {
-                                    okHttpListener.onResponse(call, response);
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            okHttpListener.onFailure(call, e);
                         }
                     }
                 });
+            }
+
+        });
+    }
+
+    public static void doApiGet(String url, String actionUrl, Map<String, String> params, final OkHttpByteListener okHttpListener) {
+        url = setGetUrl(url, actionUrl, params);
+        Request.Builder requestBuilder = new Request.Builder().url(url).get();
+        setHeader(requestBuilder);
+        Request request = requestBuilder.build();
+        final String finalUrl = url;
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(final Call call, final Response response) throws IOException {
+                ResponseBody responseBody = response.body();
+                if(responseBody != null) {
+                    final byte[] result = responseBody.bytes();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (okHttpListener != null) {
+                                try {
+                                    if (response.code() == 200) {
+                                        okHttpListener.onSuccess(call, result);
+                                    } else {
+                                        okHttpListener.onResponse(call, result);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    okHttpListener.onFailure(call, new IOException("联网请求失败。"));
+                }
             }
 
             @Override
@@ -149,7 +272,7 @@ public class OkHttpClientHelper {
     }
 
     private static String setGetUrl(String url, String actionUrl, Map<String, String> params) {
-        if(params == null) {
+        if (params == null) {
             return url;
         }
         StringBuilder tempParams = new StringBuilder();

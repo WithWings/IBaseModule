@@ -101,6 +101,7 @@ android {
             def outputApkName
 
             outputApkName = appName + "_" +
+                    variant.productFlavors[0].name + "_" +
                     variant.versionName + "_" +
                     packageTime() + "_" +
                     variant.buildType.name + ".apk".toLowerCase()
