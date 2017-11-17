@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IBaseModule</string>
+    <string name="executive_operation">触发事件</string>
 </resources>
