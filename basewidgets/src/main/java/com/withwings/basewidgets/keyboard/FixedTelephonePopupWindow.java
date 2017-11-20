@@ -1,6 +1,6 @@
 package com.withwings.basewidgets.keyboard;
 
-import android.content.Context;
+import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,13 +13,14 @@ import android.widget.Toast;
 
 import com.withwings.basewidgets.BasePopupWindow;
 import com.withwings.basewidgets.R;
+import com.withwings.basewidgets.listener.OnInputResultListener;
 
 /**
  * 固定电话软键盘
  * 创建：WithWings 时间：2017/11/17.
  * Email:wangtong1175@sina.com
  */
-public class FixedTelephonePopupWindow extends BasePopupWindow implements View.OnClickListener {
+public class FixedTelephonePopupWindow extends BasePopupWindow {
 
     // 输入框
     private EditText mEtInputAreaCode;
@@ -45,8 +46,8 @@ public class FixedTelephonePopupWindow extends BasePopupWindow implements View.O
     private ImageView mIvDoneIcon;
     private TextView mTvDoneText;
 
-    public FixedTelephonePopupWindow(Context context, OnInputResultListener onInputResultListener) {
-        super(context, R.layout.popup_window_fixed_telephone);
+    public FixedTelephonePopupWindow(Activity activity, OnInputResultListener onInputResultListener) {
+        super(activity, R.layout.popup_window_fixed_telephone);
         mOnInputResultListener = onInputResultListener;
     }
 
@@ -250,8 +251,9 @@ public class FixedTelephonePopupWindow extends BasePopupWindow implements View.O
                 if (mOnInputResultListener != null) {
                     mOnInputResultListener.onConfirm(mEtInputAreaCode.getText().toString(), mEtInputPhoneNumber.getText().toString(), mEtInputExtensionNumber.getText().toString());
                 }
+                dismiss();
             } else {
-                Toast.makeText(mContext, "请输入正确的区号和电话号码！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "请输入正确的区号和电话号码！", Toast.LENGTH_SHORT).show();
             }
         } else if (i == R.id.btn_input_0 || i == R.id.btn_input_1 || i == R.id.btn_input_2
                 || i == R.id.btn_input_3 || i == R.id.btn_input_4 || i == R.id.btn_input_5
@@ -375,12 +377,11 @@ public class FixedTelephonePopupWindow extends BasePopupWindow implements View.O
                 || mEtInputAreaCode.length() < 3 || mEtInputPhoneNumber.length() < 7);
     }
 
-    /**
-     * 输入结果监听
-     */
-    public interface OnInputResultListener {
-
-        void onConfirm(String area, String phone, String extension);
-
+    @Override
+    public void onDismiss() {
+        super.onDismiss();
+        if(mOnInputResultListener != null) {
+            mOnInputResultListener.onDismiss();
+        }
     }
 }
