@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 /**
- * 权限申请结果
+ * 权限申请结果：注意只能监听到操作结果
  * 创建：WithWings 时间：2017/11/22.
  * Email:wangtong1175@sina.com
  */
