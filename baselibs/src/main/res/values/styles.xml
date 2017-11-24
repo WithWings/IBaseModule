@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <style name="NoTitleDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item><!--边框-->
         <item name="android:windowNoTitle">true</item><!--无标题-->
@@ -11,8 +10,6 @@
         <item name="android:windowIsTranslucent">false</item><!--半透明-->
         <item name="android:backgroundDimEnabled">true</item><!--模糊:效果是半透明的黑色背景-->
         <item name="android:backgroundDimAmount">0.6</item><!--模糊比例-->
-
-
     </style>
 
 </resources>

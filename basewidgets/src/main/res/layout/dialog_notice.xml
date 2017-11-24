@@ -44,42 +44,20 @@
         android:layout_height="0.5dp"
         android:background="#E5E5E5" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_positive"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_negative"
-            android:layout_width="0dp"
-            android:layout_height="46dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_popup_negative"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:textColor="#666666"
-            android:textSize="16dp"
-            tools:text="@string/app_name" />
-
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="#E5E5E5" />
-
-        <TextView
-            android:id="@+id/tv_positive"
-            android:layout_width="0dp"
-            android:layout_height="46dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_popup_positive"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:textColor="#F5A623"
-            android:textSize="16dp"
-            tools:text="@string/app_name" />
-
-    </LinearLayout>
+        android:layout_height="46dp"
+        android:background="@drawable/bg_popup_confirm"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingEnd="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingStart="20dp"
+        android:textColor="#F5A623"
+        android:textSize="16dp"
+        tools:text="@string/app_name" />
 
 </LinearLayout>
