@@ -1,6 +1,5 @@
 package com.withwings.basewidgets.dialog;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,21 +18,32 @@ public class NoticeDialog extends BaseDialog {
     private TextView mTvMessage;
     private TextView mTvPositive;
 
-    private NoticeDialog(Context context) {
-        super(context, R.layout.dialog_notice);
+    private static final String POSITIVE_TEXT = "我知道了";
+
+    private NoticeDialog(Context context, boolean defaultOrder) {
+        super(context, R.layout.dialog_notice,defaultOrder);
     }
 
     public static NoticeDialog create(Context context) {
-        return new NoticeDialog(context);
+        return create(context, true);
     }
 
+    public static NoticeDialog create(Context context, boolean defaultOrder) {
+        return new NoticeDialog(context,defaultOrder);
+    }
 
     @Override
-    protected void initView(Dialog dialog) {
-        mTvTitle = dialog.findViewById(R.id.tv_title);
+    protected void initView() {
+        mTvTitle = mDialog.findViewById(R.id.tv_title);
+        mTvMessage = mDialog.findViewById(R.id.tv_message);
+        mTvPositive = mDialog.findViewById(R.id.tv_positive);
+    }
+
+    @Override
+    protected void defaultView() {
         mTvTitle.setVisibility(View.GONE);
-        mTvMessage = dialog.findViewById(R.id.tv_message);
-        mTvPositive = dialog.findViewById(R.id.tv_positive);
+        mTvPositive.setText(POSITIVE_TEXT);
+        mTvPositive.setOnClickListener(this);
     }
 
     @Override
@@ -55,10 +65,7 @@ public class NoticeDialog extends BaseDialog {
 
     @Override
     public NoticeDialog setPositive(String positive) {
-        mTvPositive.setOnClickListener(this);
-        if (TextUtils.isEmpty(positive)) {
-            mTvPositive.setText("我知道了");
-        } else {
+        if (!TextUtils.isEmpty(positive)) {
             mTvPositive.setText(positive);
         }
         return this;

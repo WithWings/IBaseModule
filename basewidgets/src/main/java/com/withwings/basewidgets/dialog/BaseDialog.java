@@ -20,12 +20,15 @@ public abstract class BaseDialog implements View.OnClickListener {
 
     protected Context mContext;
 
+    protected boolean mDefaultOrder;
+
     protected Dialog mDialog;
 
     protected OnDialogClickListener mOnDialogClickListener;
 
-    public BaseDialog(Context context, @LayoutRes int layoutId) {
+    public BaseDialog(Context context, @LayoutRes int layoutId,boolean defaultOrder) {
         mContext = context;
+        mDefaultOrder = defaultOrder;
         View inflate = LayoutInflater.from(mContext).inflate(layoutId, null);
         mDialog = new Dialog(context, R.style.NoTitleDialog);
         mDialog.setContentView(inflate);
@@ -34,15 +37,20 @@ public abstract class BaseDialog implements View.OnClickListener {
             window.setLayout(dp2px(context, 270), LinearLayout.LayoutParams.WRAP_CONTENT);
         }
 
-        initView(mDialog);
+        initView();
+
+        defaultView();
     }
 
     /**
      * 获得Layout里的View
-     *
-     * @param dialog 弹出的Dialog对象
      */
-    protected abstract void initView(Dialog dialog);
+    protected abstract void initView();
+
+    /**
+     * 设置View的初始化参数
+     */
+    protected abstract void defaultView();
 
     public abstract BaseDialog setTitle(String title);
 
