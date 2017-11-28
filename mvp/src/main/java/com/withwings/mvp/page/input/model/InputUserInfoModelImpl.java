@@ -11,7 +11,7 @@ import com.withwings.mvp.page.input.model.listener.OnSubmitListener;
  * 创建：WithWings 时间：2017/11/27.
  * Email:wangtong1175@sina.com
  */
-public class InputUserInfoModelLogic implements InputUserInfoModel {
+public class InputUserInfoModelImpl implements InputUserInfoModel {
 
     @Override
     public void submit(@NonNull String name, @NonNull String password, @NonNull OnSubmitListener onSubmitListener, SharedPreferences sharedPreferences) {

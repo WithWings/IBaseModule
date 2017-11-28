@@ -10,7 +10,7 @@ import com.withwings.mvp.page.read.model.listener.OnReadListener;
  * 创建：WithWings 时间：2017/11/28.
  * Email:wangtong1175@sina.com
  */
-public class ReadUserInfoModelLogic implements ReadUserInfoModel {
+public class ReadUserInfoModelImpl implements ReadUserInfoModel {
 
     @Override
     public void read(@NonNull SharedPreferences sharedPreferences, @NonNull OnReadListener onReadListener) {

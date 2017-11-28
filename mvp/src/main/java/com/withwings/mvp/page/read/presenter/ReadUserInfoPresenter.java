@@ -2,7 +2,7 @@ package com.withwings.mvp.page.read.presenter;
 
 import com.withwings.mvp.R;
 import com.withwings.mvp.page.read.model.ReadUserInfoModel;
-import com.withwings.mvp.page.read.model.ReadUserInfoModelLogic;
+import com.withwings.mvp.page.read.model.ReadUserInfoModelImpl;
 import com.withwings.mvp.page.read.model.listener.OnReadListener;
 import com.withwings.mvp.page.read.view.ReadUserInfoView;
 
@@ -19,7 +19,7 @@ public class ReadUserInfoPresenter {
 
     public ReadUserInfoPresenter(ReadUserInfoView readUserInfoView) {
         mReadUserInfoView = readUserInfoView;
-        mReadUserInfoModel = new ReadUserInfoModelLogic();
+        mReadUserInfoModel = new ReadUserInfoModelImpl();
     }
 
     public void read() {

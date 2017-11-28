@@ -1,7 +1,7 @@
 package com.withwings.mvp.page.input.presenter;
 
 import com.withwings.mvp.page.input.model.InputUserInfoModel;
-import com.withwings.mvp.page.input.model.InputUserInfoModelLogic;
+import com.withwings.mvp.page.input.model.InputUserInfoModelImpl;
 import com.withwings.mvp.page.input.model.listener.OnSubmitListener;
 import com.withwings.mvp.page.input.view.InputUserInfoView;
 
@@ -19,7 +19,7 @@ public class InputUserInfoPresenter {
 
     public InputUserInfoPresenter(InputUserInfoView inputUserInfoView) {
         mInputUserInfoView = inputUserInfoView;
-        mInputUserInfoModel = new InputUserInfoModelLogic();
+        mInputUserInfoModel = new InputUserInfoModelImpl();
     }
 
     public void submit() {
