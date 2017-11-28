@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.withwings.baseutils.base.BaseActivity;
 import com.withwings.mvp.R;
-import com.withwings.mvp.base.BaseMvpActivity;
 import com.withwings.mvp.page.input.presenter.InputUserInfoPresenter;
 
 /**
@@ -16,7 +16,7 @@ import com.withwings.mvp.page.input.presenter.InputUserInfoPresenter;
  * 创建：WithWings 时间：2017/11/27.
  * Email:wangtong1175@sina.com
  */
-public class InputUserInfoActivity extends BaseMvpActivity implements InputUserInfoView {
+public class InputUserInfoActivity extends BaseActivity implements InputUserInfoView {
 
     private InputUserInfoPresenter mInputUserInfoPresenter;
     private TextView mEtInputUserName;

@@ -1,13 +1,14 @@
 package com.withwings.mvp.page.read.view;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.withwings.baseutils.base.BaseActivity;
 import com.withwings.mvp.R;
-import com.withwings.mvp.base.BaseMvpActivity;
 import com.withwings.mvp.page.read.presenter.ReadUserInfoPresenter;
 
 /**
@@ -15,7 +16,7 @@ import com.withwings.mvp.page.read.presenter.ReadUserInfoPresenter;
  * 创建：WithWings 时间：2017/11/28.
  * Email:wangtong1175@sina.com
  */
-public class ReadUserInfoActivity extends BaseMvpActivity implements ReadUserInfoView {
+public class ReadUserInfoActivity extends BaseActivity implements ReadUserInfoView {
 
     private ReadUserInfoPresenter mReadUserInfoPresenter;
     private TextView mTvShowUserName;
@@ -71,5 +72,10 @@ public class ReadUserInfoActivity extends BaseMvpActivity implements ReadUserInf
     @Override
     public void setUserPassword(@NonNull String password) {
         mTvShowUserPassword.setText(password);
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 }
