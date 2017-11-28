@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MVP</string>
+    <string name="input_user_info_title">请输入用户信息</string>
+    <string name="read_user_info_title">查看用户信息</string>
+    <string name="please_input_user_name_tips">请输入用户名</string>
+    <string name="please_input_user_password_tips">请输入用户密码</string>
+    <!-- 公用 -->
+    <string name="submit">提交</string>
 </resources>

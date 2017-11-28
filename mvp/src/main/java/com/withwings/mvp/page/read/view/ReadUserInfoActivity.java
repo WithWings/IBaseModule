@@ -1,20 +1,19 @@
-package com.withwings.mvp.page.input.view;
+package com.withwings.mvp.page.read.view;
 
 import android.view.View;
 
-import com.withwings.mvp.R;
 import com.withwings.mvp.base.BaseMvpActivity;
 
 /**
- * 用户信息输入界面
- * 创建：WithWings 时间：2017/11/27.
+ * 展示用户信息界面
+ * 创建：WithWings 时间：2017/11/28.
  * Email:wangtong1175@sina.com
  */
-public class InputUserInfoActivity extends BaseMvpActivity implements InputUserInfoView {
+public class ReadUserInfoActivity extends BaseMvpActivity {
 
     @Override
     protected int initLayout() {
-        return R.layout.activity_input_user_info;
+        return 0;
     }
 
     @Override

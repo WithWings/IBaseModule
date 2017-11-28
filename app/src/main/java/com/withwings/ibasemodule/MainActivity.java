@@ -10,7 +10,7 @@ public class MainActivity extends BaseActivity {
     private Button mBtnExecutiveOperation;
 
     @Override
-    protected int setLayout() {
+    protected int initLayout() {
         return R.layout.activity_main;
     }
 
@@ -22,6 +22,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         mBtnExecutiveOperation = findViewById(R.id.btn_executive_operation);
+    }
+
+    @Override
+    protected void syncPage() {
+
     }
 
     @Override
