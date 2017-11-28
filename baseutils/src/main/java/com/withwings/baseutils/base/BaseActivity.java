@@ -46,6 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     /**
      * 获得布局文件
+     *
      * @return 布局文件
      */
     protected abstract @LayoutRes

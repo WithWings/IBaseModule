@@ -8,6 +8,7 @@
     tools:ignore="SpUsage">
 
     <EditText
+        android:id="@+id/et_input_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -20,12 +21,14 @@
         android:textSize="15dp" />
 
     <EditText
+        android:id="@+id/et_input_user_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
         android:ellipsize="end"
         android:hint="@string/please_input_user_password_tips"
+        android:inputType="textPassword"
         android:maxLines="1"
         android:padding="10dp"
         android:textColor="@android:color/black"
@@ -33,6 +36,7 @@
         android:textSize="15dp" />
 
     <Button
+        android:id="@+id/btn_submit"
         style="@android:style/Widget.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
