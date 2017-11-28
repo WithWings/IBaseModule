@@ -1,6 +1,7 @@
 package com.withwings.mvp.page.input.model;
 
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.withwings.mvp.page.input.model.listener.OnSubmitListener;
@@ -13,29 +14,21 @@ import com.withwings.mvp.page.input.model.listener.OnSubmitListener;
 public class InputUserInfoModelLogic implements InputUserInfoModel {
 
     @Override
-    public void submit(String name, String password, OnSubmitListener onSubmitListener, SharedPreferences sharedPreferences) {
+    public void submit(@NonNull String name, @NonNull String password, @NonNull OnSubmitListener onSubmitListener, SharedPreferences sharedPreferences) {
         if (TextUtils.isEmpty(name)) {
-            if (onSubmitListener != null) {
-                onSubmitListener.onFailed("用户名不能为空！");
-            }
+            onSubmitListener.onFailed("用户名不能为空！");
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            if (onSubmitListener != null) {
-                onSubmitListener.onFailed("密码不能为空！");
-            }
+            onSubmitListener.onFailed("密码不能为空！");
             return;
         }
         if (sharedPreferences != null) {
             sharedPreferences.edit().putString("name", name).apply();
             sharedPreferences.edit().putString("password", password).apply();
-            if (onSubmitListener != null) {
-                onSubmitListener.onSuccess();
-            }
+            onSubmitListener.onSuccess();
         } else {
-            if (onSubmitListener != null) {
-                onSubmitListener.onFailed("存储失败");
-            }
+            onSubmitListener.onFailed("存储失败");
         }
     }
 

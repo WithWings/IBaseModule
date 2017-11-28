@@ -1,6 +1,7 @@
 package com.withwings.mvp.page.input.model;
 
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 import com.withwings.mvp.page.input.model.listener.OnSubmitListener;
 
@@ -11,6 +12,6 @@ import com.withwings.mvp.page.input.model.listener.OnSubmitListener;
  */
 public interface InputUserInfoModel {
 
-    void submit(String name, String password, OnSubmitListener onSubmitListener, SharedPreferences sharedPreferences);
+    void submit(@NonNull String name, @NonNull String password, @NonNull OnSubmitListener onSubmitListener, SharedPreferences sharedPreferences);
 
 }

@@ -1,6 +1,7 @@
 package com.withwings.mvp.page.input.view;
 
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -78,7 +79,7 @@ public class InputUserInfoActivity extends BaseMvpActivity implements InputUserI
     // 对外暴露更新界面的方法
 
     @Override
-    public void showToast(String toast) {
+    public void showToast(@NonNull String toast) {
         Toast.makeText(mActivity, toast, Toast.LENGTH_SHORT).show();
     }
 

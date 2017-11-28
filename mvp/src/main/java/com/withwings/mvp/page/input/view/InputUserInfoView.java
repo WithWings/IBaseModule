@@ -1,6 +1,7 @@
 package com.withwings.mvp.page.input.view;
 
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 /**
  * 界面刷新处
@@ -15,6 +16,6 @@ public interface InputUserInfoView {
 
     SharedPreferences getSharedPreferences();
 
-    void showToast(String string);
+    void showToast(@NonNull String string);
 
 }
