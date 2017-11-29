@@ -10,5 +10,6 @@
     <string name="show_country">国家：%1$s</string>
     <string name="show_province">省：%1$s</string>
     <string name="show_city">市：%1$s</string>
+    <string name="input_ip">输入要查询的 IP</string>
     <string name="check">查询</string>
 </resources>

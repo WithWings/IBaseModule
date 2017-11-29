@@ -5,6 +5,7 @@ import android.widget.Button;
 
 import com.withwings.baseutils.base.BaseActivity;
 import com.withwings.mvc.local.QueryLocalIpLocationActivity;
+import com.withwings.mvc.query.QueryInputIpLocationActivity;
 
 /**
  * 本地信息
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(QueryLocalIpLocationActivity.class);
                 break;
             case R.id.btn_query_input_ip_location:
-
+                startActivity(QueryInputIpLocationActivity.class);
                 break;
         }
     }

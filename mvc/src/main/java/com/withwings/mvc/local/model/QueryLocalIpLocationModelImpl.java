@@ -122,7 +122,7 @@ public class QueryLocalIpLocationModelImpl implements QueryLocalIpLocationModel 
         });
     }
 
-    public IPInfoBean readIpInfoFromJson(String json) {
+    private IPInfoBean readIpInfoFromJson(String json) {
         IPInfoBean ipInfoBean = null;
         if (!TextUtils.isEmpty(json)) {
             try {
