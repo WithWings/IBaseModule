@@ -121,17 +121,17 @@ public class NetWorkUtils {
 
     // Post方式请求
     public static void requestByPost(String path, OnNetWorkListener onNetWorkListener) {
-        requestByGet(path, DEFAULT_TIME_OUT, null, onNetWorkListener);
+        requestByPost(path, DEFAULT_TIME_OUT, null, onNetWorkListener);
     }
 
     // Post方式请求
     public static void requestByPost(String path, HashMap<String, String> params, OnNetWorkListener onNetWorkListener) {
-        requestByGet(path, DEFAULT_TIME_OUT, params, onNetWorkListener);
+        requestByPost(path, DEFAULT_TIME_OUT, params, onNetWorkListener);
     }
 
     // Post方式请求
     public static void requestByPost(String path, int timeout, OnNetWorkListener onNetWorkListener) {
-        requestByGet(path, timeout, null, onNetWorkListener);
+        requestByPost(path, timeout, null, onNetWorkListener);
     }
 
     // Post方式请求
