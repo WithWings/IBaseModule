@@ -1,13 +1,57 @@
 package com.withwings.mvc;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.withwings.baseutils.base.BaseActivity;
+import com.withwings.mvc.local.QueryLocalIpLocationActivity;
+
+/**
+ * 本地信息
+ * 创建：WithWings 时间：2017/11/28.
+ * Email:wangtong1175@sina.com
+ */
+public class MainActivity extends BaseActivity {
+
+    private Button mBtnQueryLocalIpLocation;
+    private Button mBtnQueryInputIpLocation;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int initLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initView() {
+        mBtnQueryLocalIpLocation = findViewById(R.id.btn_query_local_ip_location);
+        mBtnQueryInputIpLocation = findViewById(R.id.btn_query_input_ip_location);
+    }
+
+    @Override
+    protected void syncPage() {
+
+    }
+
+    @Override
+    protected void initListener() {
+        mBtnQueryLocalIpLocation.setOnClickListener(this);
+        mBtnQueryInputIpLocation.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_query_local_ip_location:
+                startActivity(QueryLocalIpLocationActivity.class);
+                break;
+            case R.id.btn_query_input_ip_location:
+
+                break;
+        }
     }
 }

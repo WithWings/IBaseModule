@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MVC</string>
+    <string name="query_local_ip_location">查询本机ip所在地</string>
+    <string name="query_input_ip_location">查询指定ip所在地</string>
+    <string name="show_ip_tips">IP：</string>
+    <string name="show_country_tips">国家：</string>
+    <string name="show_province_tips">省：</string>
+    <string name="show_ip">IP：%1$s</string>
+    <string name="show_city_tips">市：</string>
+    <string name="show_country">国家：%1$s</string>
+    <string name="show_province">省：%1$s</string>
+    <string name="show_city">市：%1$s</string>
+    <string name="check">查询</string>
 </resources>
