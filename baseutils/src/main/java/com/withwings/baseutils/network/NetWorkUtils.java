@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.withwings.baseutils.network.listener.OnNetWorkListener;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -86,15 +87,16 @@ public class NetWorkUtils {
                         urlConn.addRequestProperty("Connection", "Keep-Alive");
                         // 开始连接
                         urlConn.connect();
+                        int responseCode = urlConn.getResponseCode();
                         if (onNetWorkListener != null) {
 
                             // 判断请求是否成功
-                            if (urlConn.getResponseCode() == 200) {
+                            if (responseCode == 200) {
                                 // 获取返回的数据
                                 byte[] data = readDataFromStream(urlConn.getInputStream());
                                 onNetWorkListener.onSuccess(data);
                             } else {
-                                onNetWorkListener.onFailed(urlConn.getResponseCode());
+                                onNetWorkListener.onFailed(responseCode);
                             }
                         }
                         // 关闭连接
@@ -106,6 +108,97 @@ public class NetWorkUtils {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+            }
+        }).start();
+    }
+
+
+    // Post方式请求
+    public static void requestByPost(String path) {
+        requestByGet(path, null);
+    }
+
+    // Post方式请求
+    public static void requestByPost(String path, OnNetWorkListener onNetWorkListener) {
+        requestByGet(path, DEFAULT_TIME_OUT, null, onNetWorkListener);
+    }
+
+    // Post方式请求
+    public static void requestByPost(String path, HashMap<String, String> params, OnNetWorkListener onNetWorkListener) {
+        requestByGet(path, DEFAULT_TIME_OUT, params, onNetWorkListener);
+    }
+
+    // Post方式请求
+    public static void requestByPost(String path, int timeout, OnNetWorkListener onNetWorkListener) {
+        requestByGet(path, timeout, null, onNetWorkListener);
+    }
+
+    // Post方式请求
+    public static void requestByPost(final String path, int timeout, final HashMap<String, String> params, final OnNetWorkListener onNetWorkListener) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // 新建一个URL对象
+                    URL url = new URL(path);
+                    // 打开一个HttpURLConnection连接
+                    HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+                    // 设置连接超时时间
+                    urlConn.setConnectTimeout(5 * 1000);
+                    //设置从主机读取数据超时
+                    urlConn.setReadTimeout(5 * 1000);
+                    // Post请求必须设置允许输出 默认false
+                    urlConn.setDoOutput(true);
+                    //设置请求允许输入 默认是true
+                    urlConn.setDoInput(true);
+                    // Post请求不能使用缓存
+                    urlConn.setUseCaches(false);
+                    // 设置为Post请求
+                    urlConn.setRequestMethod("POST");
+                    //设置本次连接是否自动处理重定向
+                    urlConn.setInstanceFollowRedirects(true);
+                    // 配置请求Content-Type
+                    urlConn.setRequestProperty("Content-Type", "application/json");
+                    // 开始连接
+                    urlConn.connect();
+                    if (params != null && params.size() > 0) {
+                        //合成参数
+                        StringBuilder tempParams = new StringBuilder();
+                        int pos = 0;
+                        for (String key : params.keySet()) {
+                            if (pos > 0) {
+                                tempParams.append("&");
+                            }
+                            tempParams.append(String.format("%s=%s", key, URLEncoder.encode(params.get(key), "utf-8")));
+                            pos++;
+                        }
+                        String params = tempParams.toString();
+                        // 请求的参数转换为byte数组
+                        byte[] postData = params.getBytes();
+                        // 发送请求参数
+                        DataOutputStream dos = new DataOutputStream(urlConn.getOutputStream());
+                        dos.write(postData);
+                        dos.flush();
+                        dos.close();
+                    }
+                    // 判断请求是否成功
+                    int responseCode = urlConn.getResponseCode();
+                    if (onNetWorkListener != null) {
+
+                        // 判断请求是否成功
+                        if (responseCode == 200) {
+                            // 获取返回的数据
+                            byte[] data = readDataFromStream(urlConn.getInputStream());
+                            onNetWorkListener.onSuccess(data);
+                        } else {
+                            onNetWorkListener.onFailed(responseCode);
+                        }
+                    }
+                    // 关闭连接
+                    urlConn.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
