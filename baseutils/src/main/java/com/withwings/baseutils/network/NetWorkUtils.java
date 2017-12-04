@@ -1,5 +1,7 @@
 package com.withwings.baseutils.network;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 
 import com.withwings.baseutils.network.listener.OnNetWorkListener;
@@ -71,7 +73,7 @@ public class NetWorkUtils {
                         }
                         URL url = new URL(baseUrl);
                         // 打开一个HttpURLConnection连接
-                        HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+                        final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
                         // 设置连接主机超时时间
                         urlConn.setConnectTimeout(timeout);
                         //设置从主机读取数据超时
@@ -87,17 +89,26 @@ public class NetWorkUtils {
                         urlConn.addRequestProperty("Connection", "Keep-Alive");
                         // 开始连接
                         urlConn.connect();
-                        int responseCode = urlConn.getResponseCode();
+                        final int responseCode = urlConn.getResponseCode();
                         if (onNetWorkListener != null) {
-
-                            // 判断请求是否成功
-                            if (responseCode == 200) {
-                                // 获取返回的数据
-                                byte[] data = readDataFromStream(urlConn.getInputStream());
-                                onNetWorkListener.onSuccess(data);
-                            } else {
-                                onNetWorkListener.onFailed(responseCode);
-                            }
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 判断请求是否成功
+                                    if (responseCode == 200) {
+                                        // 获取返回的数据
+                                        byte[] data = new byte[0];
+                                        try {
+                                            data = readDataFromStream(urlConn.getInputStream());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        onNetWorkListener.onSuccess(data);
+                                    } else {
+                                        onNetWorkListener.onFailed(responseCode);
+                                    }
+                                }
+                            });
                         }
                         // 关闭连接
                         urlConn.disconnect();
@@ -143,7 +154,7 @@ public class NetWorkUtils {
                     // 新建一个URL对象
                     URL url = new URL(path);
                     // 打开一个HttpURLConnection连接
-                    HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+                    final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
                     // 设置连接超时时间
                     urlConn.setConnectTimeout(5 * 1000);
                     //设置从主机读取数据超时
@@ -183,17 +194,27 @@ public class NetWorkUtils {
                         dos.close();
                     }
                     // 判断请求是否成功
-                    int responseCode = urlConn.getResponseCode();
+                    final int responseCode = urlConn.getResponseCode();
                     if (onNetWorkListener != null) {
 
-                        // 判断请求是否成功
-                        if (responseCode == 200) {
-                            // 获取返回的数据
-                            byte[] data = readDataFromStream(urlConn.getInputStream());
-                            onNetWorkListener.onSuccess(data);
-                        } else {
-                            onNetWorkListener.onFailed(responseCode);
-                        }
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 判断请求是否成功
+                                if (responseCode == 200) {
+                                    // 获取返回的数据
+                                    byte[] data = new byte[0];
+                                    try {
+                                        data = readDataFromStream(urlConn.getInputStream());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    onNetWorkListener.onSuccess(data);
+                                } else {
+                                    onNetWorkListener.onFailed(responseCode);
+                                }
+                            }
+                        });
                     }
                     // 关闭连接
                     urlConn.disconnect();
