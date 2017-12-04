@@ -22,6 +22,9 @@ public class ControlDialog extends BaseDialog {
     private static final String POSITIVE_TEXT = "确定";
     private static final String NEGATIVE_TEXT = "取消";
 
+    /**
+     * 确认取消的位置可能是相反的，所以这里准备了开关
+     */
     private static boolean DEFAULT_ORDER = true;
 
     private ControlDialog(Context context, boolean defaultOrder) {

@@ -18,6 +18,9 @@ public class NoticeDialog extends BaseDialog {
     private TextView mTvMessage;
     private TextView mTvPositive;
 
+    /**
+     * 默认的确认文案
+     */
     private static final String POSITIVE_TEXT = "我知道了";
 
     private NoticeDialog(Context context, boolean defaultOrder) {
