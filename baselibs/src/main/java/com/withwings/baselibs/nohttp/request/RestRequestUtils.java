@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.withwings.baselibs.BuildConfig;
-import com.withwings.baselibs.nohttp.HttpConfig;
+import com.withwings.baselibs.nohttp.HttpConfigBaseUrl;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.Priority;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -215,10 +215,11 @@ public class RestRequestUtils {
     }
 
     private static String checkService() {
+        // 多环境请使用 switch(BuildConfig.BUILD_TYPE) 进行区别
         if (BuildConfig.DEBUG) {
-            return HttpConfig.TEST_SERVICE_URL;
+            return HttpConfigBaseUrl.TEST_SERVICE_URL;
         } else {
-            return HttpConfig.RELEASE_SERVICE_URL;
+            return HttpConfigBaseUrl.RELEASE_SERVICE_URL;
         }
     }
 
