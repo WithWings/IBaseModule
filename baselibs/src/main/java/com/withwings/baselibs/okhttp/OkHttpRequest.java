@@ -54,6 +54,10 @@ public class OkHttpRequest {
             pos++;
         }
         urlFormat += tempParams.toString();
+
+        if(urlFormat.endsWith("/")) {
+            urlFormat = urlFormat.substring(0,urlFormat.length() -1);
+        }
         Request.Builder requestBuilder = new Request.Builder().url(urlFormat).get();
         setHeader(requestBuilder);
         return requestBuilder.build();
@@ -64,6 +68,10 @@ public class OkHttpRequest {
         String urlFormat = getUrlFormat(url, actionUrl);
         if (!TextUtils.isEmpty(key)) {
             urlFormat = urlFormat + key + "=" + value;
+        }
+
+        if(urlFormat.endsWith("/")) {
+            urlFormat = urlFormat.substring(0,urlFormat.length() -1);
         }
         Request.Builder requestBuilder = new Request.Builder().url(urlFormat).get();
         setHeader(requestBuilder);
