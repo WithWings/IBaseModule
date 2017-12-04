@@ -37,8 +37,9 @@ dependencies {
     implementation 'com.yanzhenjie.nohttp:okhttp:1.1.4'
     // andpermission 未抽取
     implementation 'com.yanzhenjie:permission:1.1.2'
-    //
+    // okHttp3 联网
     api 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 }
 
 // 打 jar 包

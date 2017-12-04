@@ -3,6 +3,7 @@ package com.withwings.baselibs.okhttp;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.withwings.baselibs.BuildConfig;
 import com.withwings.baselibs.okhttp.listener.OkHttpEnqueueListener;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * OkHttp请求队列
@@ -25,7 +27,10 @@ public class OkHttpEnqueue {
 
     private static final long READ_TIME_OUT = 10000;
 
-    private static OkHttpClient mOkHttpClient = new OkHttpClient.Builder().readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS).build();
+    private static HttpLoggingInterceptor mLogInterceptor = new HttpLoggingInterceptor()
+            .setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.HEADERS : HttpLoggingInterceptor.Level.NONE);
+
+    private static OkHttpClient mOkHttpClient = new OkHttpClient.Builder().addInterceptor(mLogInterceptor).addNetworkInterceptor(mLogInterceptor).readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS).build();
 
     public static void newCall(Request request) {
         newCall(request, null);
@@ -36,7 +41,7 @@ public class OkHttpEnqueue {
     }
 
     public static void outTimeCall(Request request, long timeout, final OkHttpEnqueueListener okHttpEnqueueListener) {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().readTimeout(timeout, TimeUnit.MILLISECONDS).build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(mLogInterceptor).addNetworkInterceptor(mLogInterceptor).readTimeout(timeout, TimeUnit.MILLISECONDS).build();
         call(okHttpClient, request, okHttpEnqueueListener);
     }
 
