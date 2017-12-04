@@ -15,6 +15,9 @@ import com.withwings.basewidgets.BasePopupWindow;
 import com.withwings.basewidgets.R;
 import com.withwings.basewidgets.listener.OnInputResultListener;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 固定电话软键盘
  * 创建：WithWings 时间：2017/11/17.
@@ -39,6 +42,10 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
 
     // 确认按钮监听
     private OnInputResultListener mOnInputResultListener;
+
+    // 隐藏监听
+    private OnDismissListener mOnDismissListener;
+
     // 标题
     private TextView mTvTitle;
     private ImageView mIvCancelIcon;
@@ -62,6 +69,11 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
         mIvDoneIcon = mContentView.findViewById(R.id.iv_done_icon);
         mTvDoneText = mContentView.findViewById(R.id.tv_done_text);
 
+        mIvCancelIcon.setOnClickListener(this);
+        mTvCancelText.setOnClickListener(this);
+
+        mIvDoneIcon.setOnClickListener(this);
+        mTvDoneText.setOnClickListener(this);
         // 输入框
         mEtInputAreaCode = mContentView.findViewById(R.id.et_input_area_code);
         mEtInputPhoneNumber = mContentView.findViewById(R.id.et_input_phone_number);
@@ -126,6 +138,7 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
         });
 
         mEtInputAreaCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 
@@ -176,10 +189,13 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
         mContentView.findViewById(R.id.ib_delete_input).setOnClickListener(this);
 
         switchString(null);
+
+        setOnDismissListener(this);
     }
 
     /**
      * 设置标题
+     *
      * @param title 标题名
      */
     public void setTitle(String title) {
@@ -190,7 +206,8 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
 
     /**
      * 设置取消按钮
-     * @param cancel 取消文案
+     *
+     * @param cancel    取消文案
      * @param showImage 显示取消图标
      */
     public void setCancel(String cancel, boolean showImage) {
@@ -209,7 +226,8 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
 
     /**
      * 设置确认按钮
-     * @param confirm 确认文案
+     *
+     * @param confirm   确认文案
      * @param showImage 显示确认图标
      */
     public void setConfirm(String confirm, boolean showImage) {
@@ -227,6 +245,7 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
     }
 
     public void setDefaultData(String... args) {
+        mFocusIndex = AREA_CODE;
         if (args.length == 0 || TextUtils.isEmpty(args[0])) {
             switchString(null);
             return;
@@ -236,7 +255,8 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
                 break;
             }
             switchString(arg);
-            mFocusIndex++;
+            List<String> strings = Arrays.asList(args);
+            mFocusIndex = strings.indexOf(arg) + 1;
         }
         switchString(null);
     }
@@ -370,6 +390,7 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
 
     /**
      * 检查数据格式
+     *
      * @return 检查结果
      */
     private boolean checkData() {
@@ -380,8 +401,9 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
     @Override
     public void onDismiss() {
         super.onDismiss();
-        if(mOnInputResultListener != null) {
+        if (mOnInputResultListener != null) {
             mOnInputResultListener.onDismiss();
         }
     }
+
 }
