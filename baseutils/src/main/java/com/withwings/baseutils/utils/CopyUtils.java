@@ -16,6 +16,15 @@ public class CopyUtils {
     /**
      * 保存字符串到剪切板
      * @param context 上下文对象
+     * @param text 保存的字符串
+     */
+    public static void copyString(Context context, CharSequence text) {
+        copyString(context,text.toString().trim());
+    }
+
+    /**
+     * 保存字符串到剪切板
+     * @param context 上下文对象
      * @param string 保存的字符串
      */
     public static void copyString(Context context, String string) {

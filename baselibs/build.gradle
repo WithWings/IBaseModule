@@ -31,7 +31,7 @@ dependencies {
     // 压缩管理工具
     implementation 'net.lingala.zip4j:zip4j:1.3.2'
     // json 解析
-    implementation 'com.google.code.gson:gson:2.8.2'
+    api 'com.google.code.gson:gson:2.8.2'
     // noHttp 联网
     api 'com.yanzhenjie.nohttp:nohttp:1.1.4'
     implementation 'com.yanzhenjie.nohttp:okhttp:1.1.4'

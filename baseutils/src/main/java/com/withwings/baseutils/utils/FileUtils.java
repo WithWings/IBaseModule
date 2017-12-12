@@ -156,10 +156,20 @@ public class FileUtils {
         return Environment.getExternalStorageDirectory().getPath();
     }
 
+    /**
+     * 创建文件夹
+     * @param file
+     * @return
+     */
     public static boolean makeDir(File file) {
         return file.exists() && file.isDirectory() || file.mkdirs();
     }
 
+    /**
+     * 创建文件
+     * @param file 创建文件
+     * @return 创建结果
+     */
     public static boolean makeFile(File file){
         if(file.exists() && file.isFile()) {
             return true;
