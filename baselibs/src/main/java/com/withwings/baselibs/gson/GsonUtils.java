@@ -45,6 +45,13 @@ public class GsonUtils {
         return GSON.toJson(list, listType);
     }
 
+    /**
+     * 解析json需要type对象
+     * @param json json字符串
+     * @param listType  Type listType = new TypeToken<List<CityBean>>() {}.getType();
+     * @param <T> 根据type控制返回集合对象类型
+     * @return
+     */
     public static <T> List<T> fromJsonList(String json, Type listType) {
         return GSON.fromJson(json, listType);
     }
