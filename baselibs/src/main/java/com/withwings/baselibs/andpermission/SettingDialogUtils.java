@@ -35,6 +35,26 @@ public class SettingDialogUtils {
     }
 
     /**
+     * 可以根据公司情况做一个请求的样式二次抽取，方便使用。
+     * @param activity 界面
+     * @param message 提示信息
+     * @return 弹框对象
+     */
+    public static SettingDialogShow getRationaleDialog(Activity activity,String message){
+        return null;
+    }
+
+    /**
+     * 可以根据公司情况做一个请求的样式二次抽取，方便使用。
+     * @param activity 界面
+     * @param code 请求code
+     * @return 弹框对象
+     */
+    public static SettingDialogShow getSettingDialog(Activity activity,int code){
+        return null;
+    }
+
+    /**
      * 当用户勾选不再提醒时的提示框
      *
      * @param activity 提示框依赖的界面
@@ -371,6 +391,7 @@ public class SettingDialogUtils {
                         }
                     }
                 });
+                dialog.show();
             }
         };
 

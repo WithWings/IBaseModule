@@ -61,6 +61,7 @@ public class OkHttpEnqueue {
                             @Override
                             public void run() {
                                 if (code == 200) {
+                                    // 这里可以根据约定格式，将服务端给的错误吗处理成 onResponse ，不过这里因为没有格式，所以不做处理
                                     okHttpEnqueueListener.onSuccess(call, result, bytes, mediaType);
                                 } else {
                                     okHttpEnqueueListener.onResponse(call, result, bytes, mediaType);
