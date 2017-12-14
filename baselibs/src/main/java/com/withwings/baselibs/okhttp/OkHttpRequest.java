@@ -23,10 +23,7 @@ public class OkHttpRequest {
     /**
      * JSON格式
      */
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
-    // 上传文件用的，需要和服务端保持一致 请确认与服务器设置的ContentType保持一致
-    private static final MediaType MEDIA_OBJECT_STREAM = MediaType.parse("application/octet-stream");
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private OkHttpRequest() {
 
@@ -111,9 +108,25 @@ public class OkHttpRequest {
         return requestBuilder.build();
     }
 
+    /**
+     * post请求方式
+     */
     public static Request postRequest(String url, String name, File file) {
-        RequestBody fileBody = RequestBody.create(MEDIA_OBJECT_STREAM, file);
+        RequestBody fileBody = RequestBody.create(MultipartBody.FORM, file);
         RequestBody requestBody = new MultipartBody.Builder().addFormDataPart(name, file.getName(), fileBody).build();
+        Request.Builder requestBuilder = new Request.Builder().url(url).post(requestBody);
+        setHeader(requestBuilder);
+        return requestBuilder.build();
+    }
+
+    /**
+     * post请求方式
+     */
+    public static Request postRequest(String url, String name, byte[] bytes) {
+        RequestBody byteBody = RequestBody.create(MultipartBody.FORM, bytes);
+        //创建RequestBody
+        RequestBody requestBody = new MultipartBody.Builder().addFormDataPart(name, "", byteBody).build();
+        //创建Request
         Request.Builder requestBuilder = new Request.Builder().url(url).post(requestBody);
         setHeader(requestBuilder);
         return requestBuilder.build();
