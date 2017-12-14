@@ -2,6 +2,7 @@ package com.withwings.basewidgets.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import com.withwings.basewidgets.dialog.listener.OnDialogClickListener;
  * 创建：WithWings 时间：2017/11/23.
  * Email:wangtong1175@sina.com
  */
-public abstract class BaseDialog implements View.OnClickListener {
+public abstract class BaseDialog implements View.OnClickListener, DialogInterface.OnDismissListener {
 
     protected Context mContext;
 
@@ -26,7 +27,7 @@ public abstract class BaseDialog implements View.OnClickListener {
 
     protected OnDialogClickListener mOnDialogClickListener;
 
-    public BaseDialog(Context context, @LayoutRes int layoutId,boolean defaultOrder) {
+    public BaseDialog(Context context, @LayoutRes int layoutId, boolean defaultOrder) {
         mContext = context;
         mDefaultOrder = defaultOrder;
         View inflate = LayoutInflater.from(mContext).inflate(layoutId, null);
@@ -56,6 +57,8 @@ public abstract class BaseDialog implements View.OnClickListener {
 
     public abstract BaseDialog setMessage(String message);
 
+    public abstract BaseDialog setGravity(int gravity);
+
     public abstract BaseDialog setPositive(String positive);
 
     public abstract BaseDialog setNegative(String negative);
@@ -78,6 +81,7 @@ public abstract class BaseDialog implements View.OnClickListener {
 
     public void show() {
         if (mDialog != null) {
+            mDialog.setOnDismissListener(this);
             mDialog.show();
         }
     }
@@ -90,4 +94,27 @@ public abstract class BaseDialog implements View.OnClickListener {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    protected void onNegative(View view) {
+        if (mOnDialogClickListener != null) {
+            mOnDialogClickListener.onNegative(view);
+        }
+    }
+
+    protected void onPositive(View view) {
+        if (mOnDialogClickListener != null) {
+            mOnDialogClickListener.onPositive(view);
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (mOnDialogClickListener != null) {
+            mOnDialogClickListener.onDismiss(dialog);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
 }

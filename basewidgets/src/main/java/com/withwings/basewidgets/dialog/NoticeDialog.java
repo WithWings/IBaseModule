@@ -67,6 +67,12 @@ public class NoticeDialog extends BaseDialog {
     }
 
     @Override
+    public BaseDialog setGravity(int gravity) {
+        mTvMessage.setGravity(gravity);
+        return this;
+    }
+
+    @Override
     public NoticeDialog setPositive(String positive) {
         if (!TextUtils.isEmpty(positive)) {
             mTvPositive.setText(positive);

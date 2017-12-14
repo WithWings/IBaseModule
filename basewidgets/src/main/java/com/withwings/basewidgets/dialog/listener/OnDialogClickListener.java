@@ -1,5 +1,6 @@
 package com.withwings.basewidgets.dialog.listener;
 
+import android.content.DialogInterface;
 import android.view.View;
 
 /**
@@ -12,5 +13,7 @@ public interface OnDialogClickListener {
     void onPositive(View view);
 
     void onNegative(View view);
+
+    void onDismiss(DialogInterface dialog);
 
 }

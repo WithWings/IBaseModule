@@ -19,8 +19,14 @@ import java.util.List;
  */
 public class PermissionUtils {
 
+    public static final Integer DEFAULT_REQUEST_CODE = 123;
+
     private PermissionUtils() {
 
+    }
+
+    public static void checkPermission(final Context context, SettingDialogShow rationaleDialog, final AndPermissionListener andPermissionListener, String... permissions) {
+        checkPermission(context, DEFAULT_REQUEST_CODE, rationaleDialog, andPermissionListener, permissions);
     }
 
     /**
@@ -105,6 +111,11 @@ public class PermissionUtils {
                 .start();
     }
 
+    public static void mustPermission(final Activity activity, final SettingDialogShow rationaleDialog, final SettingDialogShow settingDialog, final AndPermissionListener andPermissionListener, String... permissions) {
+        mustPermission(activity, DEFAULT_REQUEST_CODE, rationaleDialog, settingDialog, andPermissionListener, permissions);
+    }
+
+
     /**
      * 用户勾选后仍然可以弹窗让用户去设置界面设置
      *
@@ -125,6 +136,12 @@ public class PermissionUtils {
                 .callback(new PermissionListener() {
                     @Override
                     public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
+
+                        // 是否有不再提示并拒绝的权限。
+                        if (settingDialog != null && AndPermission.hasAlwaysDeniedPermission(activity, grantPermissions) && !AndPermission.hasPermission(activity, grantPermissions)) {
+                            settingDialog.show();
+                        }
+
                         if (andPermissionListener != null) {
                             List<String> copyGrantPermissions = new ArrayList<>();
                             copyGrantPermissions.addAll(grantPermissions);
@@ -154,6 +171,12 @@ public class PermissionUtils {
 
                     @Override
                     public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
+
+                        // 是否有不再提示并拒绝的权限。
+                        if (settingDialog != null && AndPermission.hasAlwaysDeniedPermission(activity, deniedPermissions) && !AndPermission.hasPermission(activity,deniedPermissions)) {
+                            settingDialog.show();
+                        }
+
                         if (andPermissionListener != null) {
                             // 移除某些通知没有获得，实际已经获得的权限
                             List<String> copyDeniedPermissions = new ArrayList<>();
@@ -181,11 +204,6 @@ public class PermissionUtils {
                                     andPermissionListener.onSucceed(requestCode, grantPermissions);
                                 }
                             }
-                        }
-
-                        // 是否有不再提示并拒绝的权限。
-                        if (settingDialog != null && AndPermission.hasAlwaysDeniedPermission(activity, deniedPermissions)) {
-                            settingDialog.show();
                         }
                     }
                 })
