@@ -75,9 +75,15 @@ public class OkHttpRequest {
         return requestBuilder.build();
     }
 
+    /**
+     * 请注意  "" 与 null 是不同的
+     * @param url url
+     * @param actionUrl action
+     * @return 返回值
+     */
     private static String getUrlFormat(String url, String actionUrl) {
         String formatUrl;
-        if (TextUtils.isEmpty(actionUrl)) {
+        if (actionUrl == null) {
             if (url.endsWith("/")) {
                 formatUrl = url;
             } else {
