@@ -34,7 +34,7 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.2'
     // noHttp 联网
     api 'com.yanzhenjie.nohttp:nohttp:1.1.4'
-    implementation 'com.yanzhenjie.nohttp:okhttp:1.1.4'
+    api 'com.yanzhenjie.nohttp:okhttp:1.1.4'
     // andPermission
     api 'com.yanzhenjie:permission:1.1.2'
     // okHttp3 联网
