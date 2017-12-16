@@ -1,11 +1,11 @@
 package com.withwings.baseutils.base;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.ComponentCallbacks;
 import android.content.ComponentCallbacks2;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
  * 创建：WithWings 时间：2017/10/25.
  * Email:wangtong1175@sina.com
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
 
     // 根据是否一键退出需要判断是否要赋值
     public static final List<BaseActivity> mActivities = initExit();
