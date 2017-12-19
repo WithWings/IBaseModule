@@ -1,1 +1,4 @@
 include ':app', ':baseutils', ':baselibs', ':basewidgets', ':mvp', ':mvc'
+
+//include ':app1'
+//project (':app1').projectDir = new File('../SampleProject/app')
