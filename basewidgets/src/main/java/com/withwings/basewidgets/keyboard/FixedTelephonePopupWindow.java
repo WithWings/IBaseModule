@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -396,6 +397,10 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
     private boolean checkData() {
         return !(TextUtils.isEmpty(mEtInputAreaCode.getText()) || TextUtils.isEmpty(mEtInputPhoneNumber.getText())
                 || mEtInputAreaCode.length() < 3 || mEtInputPhoneNumber.length() < 7);
+    }
+
+    public void show(View view) {
+        showAtLocation(view, Gravity.BOTTOM, 0, 0);
     }
 
     @Override

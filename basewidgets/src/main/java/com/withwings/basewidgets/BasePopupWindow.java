@@ -69,10 +69,16 @@ public abstract class BasePopupWindow extends PopupWindow implements PopupWindow
         backgroundAlpha(0.5f);
     }
 
-    public void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
-        lp.alpha = bgAlpha; //0.0-1.0
-        mActivity.getWindow().setAttributes(lp);
+    private void backgroundAlpha(float bgAlpha) {
+        if(showBackground()) {
+            WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+            lp.alpha = bgAlpha; //0.0-1.0
+            mActivity.getWindow().setAttributes(lp);
+        }
+    }
+
+    protected boolean showBackground(){
+        return true;
     }
 
     @Override
@@ -80,8 +86,4 @@ public abstract class BasePopupWindow extends PopupWindow implements PopupWindow
         backgroundAlpha(1f);
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }
