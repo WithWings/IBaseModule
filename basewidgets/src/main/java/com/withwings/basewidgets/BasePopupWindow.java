@@ -2,6 +2,7 @@ package com.withwings.basewidgets;
 
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import android.widget.PopupWindow;
  * 创建：WithWings 时间：2017/11/17.
  * Email:wangtong1175@sina.com
  */
-public abstract class BasePopupWindow extends PopupWindow implements PopupWindow.OnDismissListener,View.OnClickListener {
+public abstract class BasePopupWindow extends PopupWindow implements View.OnClickListener {
 
     protected Activity mActivity;
     protected final View mContentView;
@@ -77,12 +78,17 @@ public abstract class BasePopupWindow extends PopupWindow implements PopupWindow
         }
     }
 
-    protected boolean showBackground(){
+    protected boolean showBackground() {
         return true;
     }
 
+    public void show(View view) {
+        showAtLocation(view, Gravity.BOTTOM, 0, 0);
+    }
+
     @Override
-    public void onDismiss() {
+    public void dismiss() {
+        super.dismiss();
         backgroundAlpha(1f);
     }
 

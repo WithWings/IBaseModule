@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ import java.util.List;
  * 创建：WithWings 时间：2017/11/17.
  * Email:wangtong1175@sina.com
  */
-public class FixedTelephonePopupWindow extends BasePopupWindow {
+public class FixedTelephonePopupWindow extends BasePopupWindow implements PopupWindow.OnDismissListener {
 
     // 输入框
     private EditText mEtInputAreaCode;
@@ -405,7 +406,6 @@ public class FixedTelephonePopupWindow extends BasePopupWindow {
 
     @Override
     public void onDismiss() {
-        super.onDismiss();
         if (mOnInputResultListener != null) {
             mOnInputResultListener.onDismiss();
         }
