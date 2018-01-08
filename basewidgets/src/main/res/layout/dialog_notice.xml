@@ -5,7 +5,7 @@
     android:layout_width="270dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/bg_popup"
+    android:background="@drawable/radius_all_white"
     android:gravity="center"
     android:orientation="vertical"
     tools:ignore="SpUsage">
@@ -48,7 +48,7 @@
         android:id="@+id/tv_positive"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:background="@drawable/bg_popup_confirm"
+        android:background="@drawable/radius_bottom"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"

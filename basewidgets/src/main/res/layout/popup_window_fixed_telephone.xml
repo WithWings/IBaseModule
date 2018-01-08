@@ -157,7 +157,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="1"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -172,7 +172,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="2"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -187,7 +187,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="3"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -210,7 +210,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="4"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -225,7 +225,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="5"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -240,7 +240,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="6"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -263,7 +263,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="7"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -278,7 +278,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="8"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -293,7 +293,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="9"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
@@ -328,7 +328,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/keyboard_item_bg"
+                android:background="@drawable/radius_null"
                 android:text="0"
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
