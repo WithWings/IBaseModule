@@ -115,6 +115,15 @@ public class BottomMenuDialog extends BottomSheetDialog implements View.OnClickL
         }
     }
 
+    public void setBtnCancel(String cancel) {
+        if (TextUtils.isEmpty(cancel)) {
+            mBtnCancel.setVisibility(View.GONE);
+        } else {
+            mBtnCancel.setVisibility(View.VISIBLE);
+            mBtnCancel.setText(cancel);
+        }
+    }
+
     class BottomMenuAdapter extends RecyclerView.Adapter<BottomMenuAdapter.BottomMenuViewHolder> {
 
         private static final int RADIUS_ALL = 0;
