@@ -51,6 +51,11 @@ android {
             signingConfig signingConfigs.release_by_keystore
             buildConfigField "boolean", "IS_DEBUG", "false"
         }
+
+//        dev {
+//            debuggable true  // 允许该模式调试
+//            signingConfig signingConfigs.release_by_keystore
+//        }
     }
 
     // 渠道包支持
