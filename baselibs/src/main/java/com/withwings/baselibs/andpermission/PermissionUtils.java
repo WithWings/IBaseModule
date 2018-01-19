@@ -52,24 +52,24 @@ public class PermissionUtils {
                         if (andPermissionListener != null) {
                             List<String> copyGrantPermissions = new ArrayList<>();
                             copyGrantPermissions.addAll(grantPermissions);
-                            for (String copyGrantPermission : copyGrantPermissions) {
+                            for (String copyGrantPermission : grantPermissions) {
                                 if (!AndPermission.hasPermission(context, copyGrantPermission)) {
-                                    grantPermissions.remove(copyGrantPermission);
+                                    copyGrantPermissions.remove(copyGrantPermission);
                                 }
                             }
-                            if (grantPermissions.size() == requestList.size()) {
-                                andPermissionListener.onAllSucceed(requestCode, grantPermissions);
-                                andPermissionListener.onSucceed(requestCode, grantPermissions);
-                            } else if (grantPermissions.size() == 0) {
+                            if (copyGrantPermissions.size() == requestList.size()) {
+                                andPermissionListener.onAllSucceed(requestCode, copyGrantPermissions);
+                                andPermissionListener.onSucceed(requestCode, copyGrantPermissions);
+                            } else if (copyGrantPermissions.size() == 0) {
                                 andPermissionListener.onAllFailed(requestCode, grantPermissions);
                                 andPermissionListener.onFailed(requestCode, grantPermissions);
                             } else {
-                                andPermissionListener.onSucceed(requestCode, grantPermissions);
+                                andPermissionListener.onSucceed(requestCode, copyGrantPermissions);
 
                                 List<String> deniedPermissions = new ArrayList<>();
                                 deniedPermissions.addAll(requestList);
                                 // 部分成功
-                                if (deniedPermissions.removeAll(grantPermissions)) {
+                                if (deniedPermissions.removeAll(copyGrantPermissions)) {
                                     andPermissionListener.onFailed(requestCode, deniedPermissions);
                                 }
                             }
@@ -82,26 +82,26 @@ public class PermissionUtils {
                             // 移除某些通知没有获得，实际已经获得的权限
                             List<String> copyDeniedPermissions = new ArrayList<>();
                             copyDeniedPermissions.addAll(deniedPermissions);
-                            for (String deniedPermission : copyDeniedPermissions) {
+                            for (String deniedPermission : deniedPermissions) {
                                 if (AndPermission.hasPermission(context, deniedPermission)) {
-                                    deniedPermissions.remove(deniedPermission);
+                                    copyDeniedPermissions.remove(deniedPermission);
                                 }
                             }
 
                             // 全部失败
-                            if (deniedPermissions.size() == requestList.size()) {
-                                andPermissionListener.onAllFailed(requestCode, deniedPermissions);
-                                andPermissionListener.onFailed(requestCode, deniedPermissions);
-                            } else if (deniedPermissions.size() == 0) {
+                            if (copyDeniedPermissions.size() == requestList.size()) {
+                                andPermissionListener.onAllFailed(requestCode, copyDeniedPermissions);
+                                andPermissionListener.onFailed(requestCode, copyDeniedPermissions);
+                            } else if (copyDeniedPermissions.size() == 0) {
                                 andPermissionListener.onAllSucceed(requestCode, requestList);
                                 andPermissionListener.onSucceed(requestCode, requestList);
                             } else {
                                 // 部分失败
-                                andPermissionListener.onFailed(requestCode, deniedPermissions);
+                                andPermissionListener.onFailed(requestCode, copyDeniedPermissions);
                                 List<String> grantPermissions = new ArrayList<>();
                                 grantPermissions.addAll(requestList);
                                 // 部分成功
-                                if (grantPermissions.removeAll(deniedPermissions)) {
+                                if (grantPermissions.removeAll(copyDeniedPermissions)) {
                                     andPermissionListener.onSucceed(requestCode, grantPermissions);
                                 }
                             }
@@ -145,24 +145,24 @@ public class PermissionUtils {
                         if (andPermissionListener != null) {
                             List<String> copyGrantPermissions = new ArrayList<>();
                             copyGrantPermissions.addAll(grantPermissions);
-                            for (String copyGrantPermission : copyGrantPermissions) {
+                            for (String copyGrantPermission : grantPermissions) {
                                 if (!AndPermission.hasPermission(activity, copyGrantPermission)) {
-                                    grantPermissions.remove(copyGrantPermission);
+                                    copyGrantPermissions.remove(copyGrantPermission);
                                 }
                             }
-                            if (grantPermissions.size() == requestList.size()) {
-                                andPermissionListener.onAllSucceed(requestCode, grantPermissions);
-                                andPermissionListener.onSucceed(requestCode, grantPermissions);
-                            } else if (grantPermissions.size() == 0) {
+                            if (copyGrantPermissions.size() == requestList.size()) {
+                                andPermissionListener.onAllSucceed(requestCode, copyGrantPermissions);
+                                andPermissionListener.onSucceed(requestCode, copyGrantPermissions);
+                            } else if (copyGrantPermissions.size() == 0) {
                                 andPermissionListener.onAllFailed(requestCode, grantPermissions);
                                 andPermissionListener.onFailed(requestCode, grantPermissions);
                             } else {
-                                andPermissionListener.onSucceed(requestCode, grantPermissions);
+                                andPermissionListener.onSucceed(requestCode, copyGrantPermissions);
 
                                 List<String> deniedPermissions = new ArrayList<>();
                                 deniedPermissions.addAll(requestList);
                                 // 部分成功
-                                if (deniedPermissions.removeAll(grantPermissions)) {
+                                if (deniedPermissions.removeAll(copyGrantPermissions)) {
                                     andPermissionListener.onFailed(requestCode, deniedPermissions);
                                 }
                             }
@@ -181,26 +181,26 @@ public class PermissionUtils {
                             // 移除某些通知没有获得，实际已经获得的权限
                             List<String> copyDeniedPermissions = new ArrayList<>();
                             copyDeniedPermissions.addAll(deniedPermissions);
-                            for (String deniedPermission : copyDeniedPermissions) {
+                            for (String deniedPermission : deniedPermissions) {
                                 if (AndPermission.hasPermission(activity, deniedPermission)) {
-                                    deniedPermissions.remove(deniedPermission);
+                                    copyDeniedPermissions.remove(deniedPermission);
                                 }
                             }
 
                             // 全部失败
-                            if (deniedPermissions.size() == requestList.size()) {
-                                andPermissionListener.onAllFailed(requestCode, deniedPermissions);
-                                andPermissionListener.onFailed(requestCode, deniedPermissions);
-                            } else if (deniedPermissions.size() == 0) {
+                            if (copyDeniedPermissions.size() == requestList.size()) {
+                                andPermissionListener.onAllFailed(requestCode, copyDeniedPermissions);
+                                andPermissionListener.onFailed(requestCode, copyDeniedPermissions);
+                            } else if (copyDeniedPermissions.size() == 0) {
                                 andPermissionListener.onAllSucceed(requestCode, requestList);
                                 andPermissionListener.onSucceed(requestCode, requestList);
                             } else {
                                 // 部分失败
-                                andPermissionListener.onFailed(requestCode, deniedPermissions);
+                                andPermissionListener.onFailed(requestCode, copyDeniedPermissions);
                                 List<String> grantPermissions = new ArrayList<>();
                                 grantPermissions.addAll(requestList);
                                 // 部分成功
-                                if (grantPermissions.removeAll(deniedPermissions)) {
+                                if (grantPermissions.removeAll(copyDeniedPermissions)) {
                                     andPermissionListener.onSucceed(requestCode, grantPermissions);
                                 }
                             }
