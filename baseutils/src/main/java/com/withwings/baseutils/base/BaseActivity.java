@@ -1,7 +1,9 @@
 package com.withwings.baseutils.base;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -11,6 +13,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 基本 Activity 封装
@@ -22,6 +27,8 @@ import android.widget.EditText;
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
     protected Activity mActivity;
+
+    private Map<Integer, Dialog> mDialogMap;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -185,6 +192,47 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         if (BaseApplication.mActivities != null) {
             for (BaseActivity activity : BaseApplication.mActivities) {
                 activity.finish();
+            }
+        }
+    }
+
+    protected void showNetDialog(final int tag) {
+        if(mDialogMap == null) {
+            mDialogMap = new HashMap<>();
+        }
+        Dialog dialog;
+        if(mDialogMap.containsKey(tag)) {
+            dialog = mDialogMap.get(tag);
+        } else {
+            // 自定义的 Dialog 加在这里
+            dialog = new Dialog(mActivity);
+            mDialogMap.put(tag, dialog);
+        }
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                int key = -1;
+                for (Map.Entry<Integer, Dialog> entry : mDialogMap.entrySet()) {
+                    if(dialog.equals(entry.getValue())) {
+                        key = entry.getKey();
+                        break;
+                    }
+                }
+                dismissNetDialog(key);
+            }
+        });
+        dialog.show();
+    }
+
+    protected void dismissNetDialog(int tag) {
+        if(mDialogMap != null) {
+            Dialog dialog = mDialogMap.get(tag);
+            if(dialog != null) {
+                dialog.dismiss();
+                mDialogMap.remove(tag);
+            }
+            if(mDialogMap.size() == 0) {
+                mDialogMap = null;
             }
         }
     }
