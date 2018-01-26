@@ -24,6 +24,6 @@
         tools:text="@string/app_name"
         android:textColor="@android:color/white"
         android:textSize="16dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </RelativeLayout>
