@@ -20,6 +20,8 @@ public class HaveConfirmNumberPopupWindow extends BasePopupWindow {
 
     private EditText mEditText;
 
+    private int mMaxLength = 8;
+
     public HaveConfirmNumberPopupWindow(Activity activity, EditText editText) {
         super(activity, R.layout.popup_window_have_confirm_number);
         mEditText = editText;
@@ -61,11 +63,18 @@ public class HaveConfirmNumberPopupWindow extends BasePopupWindow {
     private void switchDelete() {
         int index = mEditText.getSelectionStart();
         Editable editable = mEditText.getText();
-        editable.delete(index-1, index);
+        if(editable.length() > 0) {
+            editable.delete(index - 1, index);
+        }
     }
 
     private void switchString(String string) {
         Editable editable = mEditText.getText();
+        if(mMaxLength > 0) {
+            if(editable.length() == mMaxLength) {
+                return;
+            }
+        }
         int index = mEditText.getSelectionStart();
         editable.insert(index, string);
     }
