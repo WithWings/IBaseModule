@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="SpUsage, HardcodedText">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:textColor="#333333"
+            android:textSize="18dp"
+            tools:text="@string/app_name" />
+
+
+        <LinearLayout
+            android:id="@+id/title_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingStart="16dp">
+
+            <ImageView
+                android:id="@+id/title_left_left_image"
+                android:layout_width="9dp"
+                android:layout_height="17dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:contentDescription="取消"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/title_left_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:visibility="gone"
+                tools:text="取消" />
+
+            <ImageView
+                android:id="@+id/title_left_right_image"
+                android:layout_width="9dp"
+                android:layout_height="17dp"
+                android:contentDescription="取消"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingStart="16dp"
+            tools:ignore="RelativeOverlap">
+
+            <ImageView
+                android:id="@+id/title_right_left_image"
+                android:layout_width="9dp"
+                android:layout_height="17dp"
+                android:contentDescription="确定"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/title_right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                android:visibility="gone"
+                tools:text="确定" />
+
+            <ImageView
+                android:id="@+id/title_right_right_image"
+                android:layout_width="9dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="确定"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#E5E5E5" />
+
+</LinearLayout>

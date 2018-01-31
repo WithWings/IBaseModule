@@ -1,18 +1,22 @@
 package com.withwings.baseutils.base;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewStub;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.withwings.baseutils.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,23 +28,63 @@ import java.util.Map;
  * 创建：WithWings 时间：2017/10/25.
  * Email:wangtong1175@sina.com
  */
-public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-
-    protected Activity mActivity;
+public abstract class BaseActivity extends BaseOpenActivity implements View.OnClickListener {
 
     private Map<Integer, Dialog> mDialogMap;
+
+    private ViewStub mVsLoadMainLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mActivity = this;
-
         if (BaseApplication.mActivities != null) {
             BaseApplication.mActivities.add(this);
         }
 
-        setContentView(initLayout());
+        setContentView(R.layout.activity_base);
+        mVsLoadMainLayout = findViewById(R.id.vs_load_main_layout);
+
+        // Title
+        LinearLayout titleLeft = findViewById(R.id.title_left);
+        LinearLayout titleRight = findViewById(R.id.title_right);
+        titleLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLeftClick();
+            }
+        });
+        titleRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRightClick();
+            }
+        });
+    }
+
+    protected void setLayout(@LayoutRes int layout, String title, String left, String right) {
+        mVsLoadMainLayout.setLayoutResource(layout);
+        mVsLoadMainLayout.inflate();
+        if(!TextUtils.isEmpty(title)) {
+            TextView titleText = findViewById(R.id.title_text);
+            titleText.setText(title);
+        }
+        if(!TextUtils.isEmpty(left)) {
+            TextView titleLeftText = findViewById(R.id.title_left_text);
+            titleLeftText.setVisibility(View.VISIBLE);
+            titleLeftText.setText(left);
+        }
+        if(!TextUtils.isEmpty(right)) {
+            TextView titleRightText = findViewById(R.id.title_right_text);
+            titleRightText.setVisibility(View.VISIBLE);
+            titleRightText.setText(right);
+        }
+
+        init();
+    }
+
+    private void init() {
+
 
         initData();
 
@@ -50,14 +94,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
         initListener();
     }
-
-    /**
-     * 获得布局文件
-     *
-     * @return 布局文件
-     */
-    protected abstract @LayoutRes
-    int initLayout();
 
     /**
      * 初始化数据
@@ -105,8 +141,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
+            if (event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom) {
                 // 点击的是输入框区域，保留点击EditText的事件
                 System.out.println("Click int！");
                 return false;
@@ -122,62 +157,18 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     public abstract void onClick(View v);
 
-    /**
-     * 打开某个界面 singleTask 效果
-     *
-     * @param activityClass 界面
-     */
-    protected void startActivityForOnlyOne(Class<? extends Activity> activityClass) {
-        startActivityForOnlyOne(activityClass, 0, false);
-    }
-
-    /**
-     * 打开某个界面 singleTask 效果 获得打开界面返回值
-     *
-     * @param activityClass 界面
-     * @param requestCode   请求标记
-     */
-    protected void startActivityForOnlyOne(Class<? extends Activity> activityClass, int requestCode) {
-        startActivityForOnlyOne(activityClass, requestCode, true);
-    }
-
-    private void startActivityForOnlyOne(Class<? extends Activity> activityClass, int requestCode, boolean forResult) {
-        Intent intent = new Intent(mActivity, activityClass);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        if (forResult) {
-            startActivityForResult(intent, requestCode);
-        } else {
-            startActivity(intent);
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
+            onLeftClick();
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * 打开一个界面
-     *
-     * @param activityClass 界面
-     */
-    protected void startActivity(Class<? extends Activity> activityClass) {
-        startActivity(activityClass, 0, false);
-    }
+    protected abstract void onLeftClick();
 
-    /**
-     * 打开一个界面 获得打开界面返回值
-     *
-     * @param activityClass 界面
-     * @param requestCode   请求标记
-     */
-    protected void startActivityForResult(Class<? extends Activity> activityClass, int requestCode) {
-        startActivity(activityClass, requestCode, true);
-    }
-
-    private void startActivity(Class<? extends Activity> activityClass, int requestCode, boolean forResult) {
-        Intent intent = new Intent(mActivity, activityClass);
-        if (forResult) {
-            startActivityForResult(intent, requestCode);
-        } else {
-            startActivity(intent);
-        }
-    }
+    protected abstract void onRightClick();
 
     @Override
     protected void onDestroy() {
@@ -197,11 +188,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
     protected void showNetDialog(final int tag) {
-        if(mDialogMap == null) {
+        if (mDialogMap == null) {
             mDialogMap = new HashMap<>();
         }
         Dialog dialog;
-        if(mDialogMap.containsKey(tag)) {
+        if (mDialogMap.containsKey(tag)) {
             dialog = mDialogMap.get(tag);
         } else {
             // 自定义的 Dialog 加在这里
@@ -213,7 +204,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             public void onDismiss(DialogInterface dialog) {
                 int key = -1;
                 for (Map.Entry<Integer, Dialog> entry : mDialogMap.entrySet()) {
-                    if(dialog.equals(entry.getValue())) {
+                    if (dialog.equals(entry.getValue())) {
                         key = entry.getKey();
                         break;
                     }
@@ -225,13 +216,13 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
     protected void dismissNetDialog(int tag) {
-        if(mDialogMap != null) {
+        if (mDialogMap != null) {
             Dialog dialog = mDialogMap.get(tag);
-            if(dialog != null) {
+            if (dialog != null) {
                 dialog.dismiss();
                 mDialogMap.remove(tag);
             }
-            if(mDialogMap.size() == 0) {
+            if (mDialogMap.size() == 0) {
                 mDialogMap = null;
             }
         }
