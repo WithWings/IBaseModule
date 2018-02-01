@@ -1,17 +1,21 @@
 package com.withwings.ibasemodule;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
 import com.withwings.baseutils.base.BaseActivity;
+import com.withwings.baseutils.utils.ToastUtils;
 
 public class MainActivity extends BaseActivity {
 
     private Button mBtnExecutiveOperation;
 
     @Override
-    protected int initLayout() {
-        return R.layout.activity_main;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setLayout(R.layout.activity_main, "首页", "取消", "确定");
     }
 
     @Override
@@ -41,5 +45,15 @@ public class MainActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+    @Override
+    protected void onLeftClick() {
+        ToastUtils.showToast(mActivity, "取消");
+    }
+
+    @Override
+    protected void onRightClick() {
+        ToastUtils.showToast(mActivity, "确定");
     }
 }
