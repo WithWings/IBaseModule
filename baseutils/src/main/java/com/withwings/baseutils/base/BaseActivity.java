@@ -85,7 +85,6 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
 
     private void init() {
 
-
         initData();
 
         initView();
