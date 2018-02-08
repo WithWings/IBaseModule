@@ -3,9 +3,13 @@ package com.withwings.baseutils.base;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -13,7 +17,8 @@ import android.view.View;
 import android.view.ViewStub;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.withwings.baseutils.R;
@@ -46,8 +51,8 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         mVsLoadMainLayout = findViewById(R.id.vs_load_main_layout);
 
         // Title
-        LinearLayout titleLeft = findViewById(R.id.title_left);
-        LinearLayout titleRight = findViewById(R.id.title_right);
+        RelativeLayout titleLeft = findViewById(R.id.title_left);
+        RelativeLayout titleRight = findViewById(R.id.title_right);
         titleLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,25 +67,78 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         });
     }
 
-    protected void setLayout(@LayoutRes int layout, String title, String left, String right) {
+    protected void setLayout(@LayoutRes int layout) {
         mVsLoadMainLayout.setLayoutResource(layout);
         mVsLoadMainLayout.inflate();
+
+        init();
+    }
+
+    protected void setTitleText(@StringRes int title) {
+        setTitleText(getString(title));
+    }
+
+    protected void setTitleText(String title) {
         if(!TextUtils.isEmpty(title)) {
             TextView titleText = findViewById(R.id.title_text);
             titleText.setText(title);
         }
+    }
+
+    protected void setLeftTag(@DrawableRes int left) {
+        if(left != 0) {
+            setLeftTag(ContextCompat.getDrawable(this, left));
+        }
+    }
+
+    protected void setLeftTag(Drawable left) {
+        if(left != null) {
+            ImageView titleLeftImage = findViewById(R.id.title_left_image);
+            titleLeftImage.setVisibility(View.VISIBLE);
+            titleLeftImage.setImageDrawable(left);
+        }
+    }
+
+    protected void setLeftText(@StringRes int left) {
+        if(left != 0) {
+            setLeftText(mActivity.getString(left));
+        }
+    }
+
+    protected void setLeftText(String left) {
         if(!TextUtils.isEmpty(left)) {
             TextView titleLeftText = findViewById(R.id.title_left_text);
             titleLeftText.setVisibility(View.VISIBLE);
             titleLeftText.setText(left);
         }
+    }
+
+    protected void setRightTag(@DrawableRes int right) {
+        if(right != 0) {
+            setRightTag(ContextCompat.getDrawable(this, right));
+        }
+    }
+
+    protected void setRightTag(Drawable right) {
+        if(right != null) {
+            ImageView titleRightImage = findViewById(R.id.title_right_image);
+            titleRightImage.setVisibility(View.VISIBLE);
+            titleRightImage.setImageDrawable(right);
+        }
+    }
+
+    protected void setRightText(@StringRes int right) {
+        if(right != 0) {
+            setRightText(getString(right));
+        }
+    }
+
+    protected void setRightText(String right) {
         if(!TextUtils.isEmpty(right)) {
             TextView titleRightText = findViewById(R.id.title_right_text);
             titleRightText.setVisibility(View.VISIBLE);
             titleRightText.setText(right);
         }
-
-        init();
     }
 
     private void init() {
@@ -92,6 +150,7 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         syncPage();
 
         initListener();
+
     }
 
     /**

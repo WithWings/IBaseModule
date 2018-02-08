@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.withwings.baseutils.base.BaseActivity;
-import com.withwings.baseutils.utils.ToastUtils;
 
 public class MainActivity extends BaseActivity {
 
@@ -15,7 +14,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayout(R.layout.activity_main, "首页", "取消", "确定");
+        setLayout(R.layout.activity_main);
+        setTitleText("首页");
     }
 
     @Override
@@ -49,11 +49,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onLeftClick() {
-        ToastUtils.showToast(mActivity, "取消");
+//        ToastUtils.showToast(mActivity, "取消");
     }
 
     @Override
     protected void onRightClick() {
-        ToastUtils.showToast(mActivity, "确定");
+//        ToastUtils.showToast(mActivity, "确定");
     }
 }

@@ -1,13 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-
-
+    compileSdkVersion Integer.parseInt(ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion Integer.parseInt(ANDROID_BUILD_MIN_SDK)
+        targetSdkVersion Integer.parseInt(ANDROID_BUILD_TARGET_SDK)
         versionCode 1
         versionName "1.0"
 
@@ -25,9 +24,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-
-    api 'com.android.support:design:26.1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:' + ANDROID_BUILD_TOOLS_VERSION
+    api 'com.android.support:design:' + ANDROID_BUILD_TOOLS_VERSION
 }
