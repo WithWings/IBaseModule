@@ -10,6 +10,7 @@ import java.util.Locale;
  * 创建：WithWings 时间：2017/11/2.
  * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class DateUtils {
 
     /**

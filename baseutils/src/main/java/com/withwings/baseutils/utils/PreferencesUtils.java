@@ -3,6 +3,12 @@ package com.withwings.baseutils.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * SP存储
+ * 创建：WithWings 时间 2018/2/9
+ * Email:wangtong1175@sina.com
+ */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class PreferencesUtils {
 
     public static String PREFERENCE_KEY = "WithWings";

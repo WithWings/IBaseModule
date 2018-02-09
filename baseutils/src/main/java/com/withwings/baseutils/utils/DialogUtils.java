@@ -9,7 +9,14 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.view.WindowManager;
 
+/**
+ * dialog工具类
+ * 创建：WithWings 时间 2018/2/9
+ * Email:wangtong1175@sina.com
+ */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class DialogUtils {
+
     /**
      * 显示一个对话框
      *

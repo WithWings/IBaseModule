@@ -15,6 +15,7 @@ import com.withwings.baseutils.utils.toasty.Toasty;
  * 创建：WithWings 时间：2017/10/30.
  * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class ToastUtils {
 
     private static Toast mToast;

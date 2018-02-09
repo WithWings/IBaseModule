@@ -11,6 +11,7 @@ import android.net.Uri;
  * 创建：WithWings 时间 2017/12/11
  * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class CopyUtils {
 
     /**

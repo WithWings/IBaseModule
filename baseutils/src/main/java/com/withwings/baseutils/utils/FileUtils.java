@@ -28,9 +28,18 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * 文件工具类
+ * 创建：WithWings 时间 2018/2/9
+ * Email:wangtong1175@sina.com
+ */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class FileUtils {
+
     public final String TAG = "LAZY";
+
     public final static String FILE_EXTENSION_SEPARATOR = ".";
+
     /** URI类型：file */
     public static final String URI_TYPE_FILE = "file";
 
@@ -158,8 +167,8 @@ public class FileUtils {
 
     /**
      * 创建文件夹
-     * @param file
-     * @return
+     * @param file 文件对象
+     * @return 是否是文件夹/如果没有会自动创建
      */
     public static boolean makeDir(File file) {
         return file.exists() && file.isDirectory() || file.mkdirs();

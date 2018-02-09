@@ -2,17 +2,22 @@ package com.withwings.baseutils.utils;
 
 import android.text.TextUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 格式效验
  * 创建：WithWings 时间：2017/11/17.
  * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue", "SimplifiableIfStatement"})
 public class FormatCheckingUtils {
 
     /**
      * 手机号验证
-     * @param number
-     * @return
+     *
+     * @param number 手机号字符串
+     * @return 是否是手机号
      */
     public static boolean isMobile(String number) {
     /*
@@ -33,11 +38,12 @@ public class FormatCheckingUtils {
 
     // 邮箱验证
     public static boolean isEmail(String strEmail) {
-        String strPattern = "^[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
-        if (TextUtils.isEmpty(strPattern)) {
+        Pattern pattern = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+        if (TextUtils.isEmpty(strEmail)) {
             return false;
         } else {
-            return strEmail.matches(strPattern);
+            Matcher matcher = pattern.matcher(strEmail);
+            return matcher.matches();
         }
     }
 
@@ -67,12 +73,7 @@ public class FormatCheckingUtils {
         private static int DATE_ERROR = 4;
         private static int CHECK_BIT_ERROR = 5;
 
-        private String[] errMsg = new String[]{"身份证完全正确！",
-                "身份证为空！",
-                "身份证长度不正确！",
-                "身份证有非法字符！",
-                "身份证中出生日期不合法！",
-                "身份证校验位错误！"};
+        private String[] errMsg = new String[]{"身份证完全正确！", "身份证为空！", "身份证长度不正确！", "身份证有非法字符！", "身份证中出生日期不合法！", "身份证校验位错误！"};
 
         private int error = 0;
 

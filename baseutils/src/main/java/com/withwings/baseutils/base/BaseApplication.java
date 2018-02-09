@@ -32,12 +32,20 @@ public class BaseApplication extends MultiDexApplication {
 
         initRegister();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                backRegister();
+            }
+        }).start();
+
         initData();
 
         registerComponent();
 
         registerActivityLifecycle();
     }
+
     /**
      * TODO 第三方库初始化
      */
@@ -50,6 +58,13 @@ public class BaseApplication extends MultiDexApplication {
          * 2.OnLowMemory() =  OnTrimMemory(int level) 中的TRIM_MEMORY_COMPLETE级别
          * 3.若想兼容Android 4.0前，请使用OnLowMemory()；否则直接使用OnTrimMemory(int level)即可
          */
+    }
+
+    /**
+     * TODO 第三方库初始化(子线程)
+     */
+    private void backRegister() {
+
     }
 
     /**
@@ -144,7 +159,7 @@ public class BaseApplication extends MultiDexApplication {
 
     /**
      * 注册 ComponentCallbacks2回调接口
-     * @param callback
+     * @param callback 回调对象
      */
     @Override
     public void registerComponentCallbacks(ComponentCallbacks callback) {
@@ -153,7 +168,7 @@ public class BaseApplication extends MultiDexApplication {
 
     /**
      * 注销 ComponentCallbacks2回调接口
-     * @param callback
+     * @param callback 回调对象
      */
     @Override
     public void unregisterComponentCallbacks(ComponentCallbacks callback) {
@@ -202,7 +217,7 @@ public class BaseApplication extends MultiDexApplication {
 
     /**
      * 注册 应用程序内 所有Activity的生命周期监听
-     * @param callback
+     * @param callback 回调对象
      */
     @Override
     public void registerActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
@@ -211,7 +226,7 @@ public class BaseApplication extends MultiDexApplication {
 
     /**
      * 注销 应用程序内 所有Activity的生命周期监听
-     * @param callback
+     * @param callback 回调对象
      */
     @Override
     public void unregisterActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {

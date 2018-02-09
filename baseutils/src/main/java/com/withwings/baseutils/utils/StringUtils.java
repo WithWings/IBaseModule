@@ -8,6 +8,12 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 字符串工具类
+ * 创建：WithWings 时间 2018/2/9
+ * Email:wangtong1175@sina.com
+ */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class StringUtils {
 
     private StringUtils() {

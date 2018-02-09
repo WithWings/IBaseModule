@@ -50,6 +50,11 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         setContentView(R.layout.activity_base);
         mVsLoadMainLayout = findViewById(R.id.vs_load_main_layout);
 
+        mVsLoadMainLayout.setLayoutResource(initLayout());
+        mVsLoadMainLayout.inflate();
+
+        init();
+
         // Title
         RelativeLayout titleLeft = findViewById(R.id.title_left);
         RelativeLayout titleRight = findViewById(R.id.title_right);
@@ -67,12 +72,13 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         });
     }
 
-    protected void setLayout(@LayoutRes int layout) {
-        mVsLoadMainLayout.setLayoutResource(layout);
-        mVsLoadMainLayout.inflate();
-
-        init();
-    }
+    /**
+     * 获得布局文件
+     *
+     * @return 布局文件
+     */
+    protected abstract @LayoutRes
+    int initLayout();
 
     protected void setTitleText(@StringRes int title) {
         setTitleText(getString(title));

@@ -14,8 +14,11 @@ import java.util.List;
 
 /**
  * 操作应用商店
+ * 创建：WithWings 时间 2018/2/9
+ * Email:wangtong1175@sina.com
  */
-public class ScoreUtils {
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
+public class AppShopUtils {
 
     /**
      * 获取已安装应用商店的包名列表

@@ -14,8 +14,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayout(R.layout.activity_main);
         setTitleText("首页");
+    }
+
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_main;
     }
 
     @Override

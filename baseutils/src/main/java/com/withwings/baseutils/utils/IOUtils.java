@@ -5,6 +5,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * 数据操作工具类
+ * 创建：WithWings 时间 2018/2/9
+ * Email:wangtong1175@sina.com
+ */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class IOUtils {
 
     private IOUtils() {

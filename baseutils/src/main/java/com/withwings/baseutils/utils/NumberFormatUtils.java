@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
  * 创建：WithWings 时间 2018/1/19
  * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class NumberFormatUtils {
 
     /**

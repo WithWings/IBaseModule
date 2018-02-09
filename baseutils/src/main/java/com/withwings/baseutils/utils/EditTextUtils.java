@@ -1,5 +1,6 @@
 package com.withwings.baseutils.utils;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
@@ -11,6 +12,7 @@ import android.widget.EditText;
  * 创建：WithWings 时间 2018/1/16
  * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class EditTextUtils {
 
     public static void longClickClear(final EditText editText) {
@@ -34,6 +36,7 @@ public class EditTextUtils {
                 return false;
             }
 
+            @SuppressLint("HandlerLeak")
             class EditTextHandler extends Handler {
 
                 private EditText mEditText;

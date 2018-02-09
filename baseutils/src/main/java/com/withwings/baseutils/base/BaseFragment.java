@@ -1,14 +1,17 @@
 package com.withwings.baseutils.base;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+
+import com.withwings.baseutils.R;
 
 /**
  * Fragment 基础类
@@ -19,6 +22,9 @@ import android.view.ViewGroup;
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 
     protected Activity mActivity;
+
+    // 布局文件嵌入位置
+    private ViewStub mVsLoadMainLayout;
 
     /**
      * 关于使用
@@ -36,13 +42,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
         View layout = inflater.inflate(initLayout(), container, false);
 
-        initData();
+        mVsLoadMainLayout = layout.findViewById(R.id.vs_load_main_layout);
 
-        initView();
+        mVsLoadMainLayout.setLayoutResource(initLayout());
+        mVsLoadMainLayout.inflate();
 
-        syncPage();
-
-        initListener();
+        init();
 
         return layout;
     }
@@ -54,6 +59,18 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      */
     protected abstract @LayoutRes
     int initLayout();
+
+    private void init() {
+
+        initData();
+
+        initView();
+
+        syncPage();
+
+        initListener();
+
+    }
 
     /**
      * 初始化数据

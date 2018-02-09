@@ -1,6 +1,7 @@
 package com.withwings.baseutils.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,29 +18,31 @@ import android.graphics.drawable.Drawable;
  * 创建：WithWings 时间：2017/11/20.
  * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class BitmapUtils {
 
     /**
      * 矩形将图片的四角圆化
+     *
      * @param bitmap 传入Bitmap对象
      * @return bitmap 对象
      */
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
-        return getRoundedCornerBitmap(bitmap,50);
+        return getRoundedCornerBitmap(bitmap, 50);
     }
 
     /**
      * 矩形将图片的四角圆化
-     * @param bitmap 传入Bitmap对象
+     *
+     * @param bitmap  传入Bitmap对象
      * @param roundPx 圆角度数
      * @return bitmap 对象
      */
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap,float roundPx) {
-        if(bitmap == null) {
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
+        if (bitmap == null) {
             return null;
         }
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         // 得到画布
         Canvas canvas = new Canvas(output);
         // 将画布的四角圆化
@@ -66,7 +69,7 @@ public class BitmapUtils {
      * @return bitmap 对象
      */
     public static Bitmap toRoundBitmap(Bitmap bitmap) {
-        if(bitmap == null) {
+        if (bitmap == null) {
             return null;
         }
         int width = bitmap.getWidth();
@@ -103,10 +106,8 @@ public class BitmapUtils {
 
         final int color = 0xff424242;
         final Paint paint = new Paint();
-        final Rect src = new Rect((int) left, (int) top, (int) right,
-                (int) bottom);
-        final Rect dst = new Rect((int) dst_left, (int) dst_top,
-                (int) dst_right, (int) dst_bottom);
+        final Rect src = new Rect((int) left, (int) top, (int) right, (int) bottom);
+        final Rect dst = new Rect((int) dst_left, (int) dst_top, (int) dst_right, (int) dst_bottom);
         final RectF rectF = new RectF(dst);
 
         paint.setAntiAlias(true);// 设置画笔无锯齿
@@ -127,16 +128,13 @@ public class BitmapUtils {
 
     /**
      * Drawable 转 Bitmap
+     *
      * @param drawable 数据
      * @return 结果
      */
     public static Bitmap drawableToBitmap(Drawable drawable) {
 
-        Bitmap bitmap = Bitmap.createBitmap(
-                drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(),
-                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                        : Bitmap.Config.RGB_565);
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
         Canvas canvas = new Canvas(bitmap);
         //canvas.setBitmap(bitmap);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
@@ -146,11 +144,43 @@ public class BitmapUtils {
 
     /**
      * Bitmap 转 Drawable
+     *
      * @param bitmap 数据
      * @return 结果
      */
     public static Drawable bitmapToDrawable(Bitmap bitmap) {
         return new BitmapDrawable(bitmap);
+    }
+
+    /**
+     * 根据文件路径获得Bitmap对象
+     *
+     * @param srcPath 文件路径
+     * @param width   宽
+     * @param height  高
+     * @return 压缩后获得的图片：防止大图片OOM
+     */
+    public static Bitmap getBitmap(String srcPath, float width, float height) {
+        BitmapFactory.Options newOpts = new BitmapFactory.Options();
+        // 开始是先把newOpts.inJustDecodeBounds 设回true了
+        newOpts.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(srcPath, newOpts); // 此时返回bitmap为null
+
+        newOpts.inJustDecodeBounds = false;
+        int w = newOpts.outWidth;
+        int h = newOpts.outHeight;
+        // 以800*480分辨率为例
+        // 缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
+        int scale = 1;  // be=1表示不缩放
+        if (w > h && w > width) {  // 如果宽度大的话根据宽度固定大小缩放
+            scale = (int) (newOpts.outWidth / width);
+        } else if (w < h && h > height) { // 如果高度高的话根据宽度固定大小缩放
+            scale = (int) (newOpts.outHeight / height);
+        }
+        if (scale <= 0)
+            scale = 1;
+        newOpts.inSampleSize = scale; // 设置缩放比例 // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
+        return BitmapFactory.decodeFile(srcPath, newOpts);
     }
 
 }

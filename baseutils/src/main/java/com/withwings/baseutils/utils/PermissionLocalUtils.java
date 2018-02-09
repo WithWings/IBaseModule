@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
  * 创建：WithWings 时间 2017/12/16
  * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class PermissionLocalUtils {
 
     public static void needPermission(Activity activity, String permission) {

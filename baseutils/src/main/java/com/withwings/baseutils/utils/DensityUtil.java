@@ -3,8 +3,11 @@ package com.withwings.baseutils.utils;
 import android.content.Context;
 
 /**
- * 尺寸转换器
+ * 尺寸工具类
+ * 创建：WithWings 时间 2018/2/9
+ * Email:wangtong1175@sina.com
  */
+@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class DensityUtil {
   /**
    * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
