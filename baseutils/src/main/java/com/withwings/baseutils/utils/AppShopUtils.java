@@ -30,9 +30,8 @@ public class AppShopUtils {
         ArrayList<String> pkgs = new ArrayList<>();
         if (context == null)
             return pkgs;
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.MAIN");
-        intent.addCategory("android.intent.category.APP_MARKET");
+        Uri uri = Uri.parse("market://details");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, 0);
         if (resolveInfos == null || resolveInfos.size() == 0)
