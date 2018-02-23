@@ -60,4 +60,14 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    protected void onLeftClick() {
+
+    }
+
+    @Override
+    protected void onRightClick() {
+
+    }
 }

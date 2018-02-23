@@ -68,6 +68,16 @@ public class QueryLocalIpLocationActivity extends BaseActivity implements OnQuer
     }
 
     @Override
+    protected void onLeftClick() {
+
+    }
+
+    @Override
+    protected void onRightClick() {
+
+    }
+
+    @Override
     public void onSuccess(IPInfoBean ipInfoBean) {
         mTvShowCountry.setText(getString(R.string.show_country, ipInfoBean.getCountry()));
         mTvShowProvince.setText(getString(R.string.show_province, ipInfoBean.getProvince()));

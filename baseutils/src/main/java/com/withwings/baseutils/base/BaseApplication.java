@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+import com.wanjian.sak.SAK;
+import com.withwings.baseutils.BuildConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,11 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if(!BuildConfig.BUILD_TYPE.equals("release")) {
+            // 非正式环境开启界面调试功能
+            SAK.init(this);
+        }
 
         initRegister();
 

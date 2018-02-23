@@ -32,4 +32,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:' + ANDROID_BUILD_TOOLS_VERSION
     implementation 'com.android.support:multidex:1.0.2'
+
+    // 界面调试工具
+    implementation 'com.wanjian:sak:0.3.2'
 }
