@@ -82,7 +82,7 @@ public class StatusBarUtils {
         }
 
 //        builderProgress.setProgress(100, progress, false);
-//        builderProgress.cancel(2  );
+//        builderProgress.cancel(2);
         return builderProgress;
     }
 
