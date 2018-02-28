@@ -25,7 +25,7 @@ public class AppUtils {
 
     @SuppressLint("PrivateApi")
     private static Application getInitialApplication() {
-        Application application = null;
+        Application application;
         Class<?> activityThreadClass;
         try {
             activityThreadClass = Class.forName("android.app.ActivityThread");
@@ -61,8 +61,9 @@ public class AppUtils {
         return application;
     }
 
+    @SuppressLint("PrivateApi")
     private static Application getThreadApplication() {
-        Application application = null;
+        Application application;
         Class<?> activityThreadClass;
         try {
             activityThreadClass = Class.forName("android.app.ActivityThread");
