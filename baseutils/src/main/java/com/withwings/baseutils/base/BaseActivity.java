@@ -267,6 +267,9 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
             @Override
             public void onDismiss(DialogInterface dialog) {
                 int key = -1;
+                if(mDialogMap == null) {
+                    return;
+                }
                 for (Map.Entry<Integer, Dialog> entry : mDialogMap.entrySet()) {
                     if (dialog.equals(entry.getValue())) {
                         key = entry.getKey();
