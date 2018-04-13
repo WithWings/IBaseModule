@@ -43,11 +43,6 @@ import java.util.Map;
 public class RestRequestUtils {
 
     /**
-     * 服务器地址
-     */
-    public static String SERVICE_URL = checkService();
-
-    /**
      * 默认请求方式
      */
     private static final RequestMethod DEFAULT_REQUEST_METHOD = RequestMethod.POST;
@@ -86,8 +81,8 @@ public class RestRequestUtils {
 
     public static Request<String> getRequestString(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
-        Request<String> stringRequest = NoHttp.createStringRequest(SERVICE_URL, requestMethod);
-        setDefault(stringRequest, priority, url, body);
+        Request<String> stringRequest = NoHttp.createStringRequest(url, requestMethod);
+        setDefault(stringRequest, priority, body);
         return stringRequest;
     }
 
@@ -105,8 +100,8 @@ public class RestRequestUtils {
 
     public static Request<Bitmap> getRequestBitmap(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
-        Request<Bitmap> imageRequest = NoHttp.createImageRequest(SERVICE_URL, requestMethod);
-        setDefault(imageRequest, priority, url, body);
+        Request<Bitmap> imageRequest = NoHttp.createImageRequest(url, requestMethod);
+        setDefault(imageRequest, priority, body);
         return imageRequest;
     }
 
@@ -125,8 +120,8 @@ public class RestRequestUtils {
 
     public static Request<JSONObject> getRequestJsonObject(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
-        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(SERVICE_URL, requestMethod);
-        setDefault(jsonObjectRequest, priority, url, body);
+        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(url, requestMethod);
+        setDefault(jsonObjectRequest, priority, body);
         return jsonObjectRequest;
     }
 
@@ -144,8 +139,8 @@ public class RestRequestUtils {
 
     public static Request<JSONArray> getRequestJsonArray(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
-        Request<JSONArray> jsonArrayRequest = NoHttp.createJsonArrayRequest(SERVICE_URL, requestMethod);
-        setDefault(jsonArrayRequest, priority, url, body);
+        Request<JSONArray> jsonArrayRequest = NoHttp.createJsonArrayRequest(url, requestMethod);
+        setDefault(jsonArrayRequest, priority, body);
         return jsonArrayRequest;
     }
 
@@ -163,8 +158,8 @@ public class RestRequestUtils {
 
     public static Request<byte[]> getRequestByteArray(String url, String body, RequestMethod requestMethod, Priority priority) {
         requestMethod = checkMethod(requestMethod);
-        Request<byte[]> byteArrayRequest = NoHttp.createByteArrayRequest(SERVICE_URL, requestMethod);
-        setDefault(byteArrayRequest, priority, url, body);
+        Request<byte[]> byteArrayRequest = NoHttp.createByteArrayRequest(url, requestMethod);
+        setDefault(byteArrayRequest, priority, body);
         return byteArrayRequest;
     }
 
@@ -173,23 +168,13 @@ public class RestRequestUtils {
      *
      * @param tRequest 请求
      * @param priority 优先级
-     * @param url      url
      */
-    public static void setDefault(Request tRequest, Priority priority, String url, String body) {
-        if (url.contains(SERVICE_URL)) {
-            if (!url.endsWith("/")) {
-                url = url.replace(SERVICE_URL + "/", "");
-            } else {
-                url = url.replace(SERVICE_URL, "");
-            }
-
-        }
+    public static void setDefault(Request tRequest, Priority priority, String body) {
         if (priority == null) {
             priority = DEFAULT_PRIORITY;
         }
         tRequest.setPriority(priority);
         tRequest.setCacheMode(DEFAULT_CACHE_MODE);
-        tRequest.path(url);
         // 请求体
         for (String s : REQUEST_PARAMS.keySet()) {
             tRequest.add(s, REQUEST_PARAMS.get(s));

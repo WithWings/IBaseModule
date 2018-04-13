@@ -14,6 +14,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -71,7 +72,7 @@ public class FileUtils {
         return SDPath;
     }
 
-    public static void requestSDCardPermission(Activity activity,int requestCode) {
+    public static void requestSDCardPermission(Activity activity, int requestCode) {
         activity.startActivityForResult(new Intent("android.intent.action.OPEN_DOCUMENT_TREE"),requestCode);
     }
 
@@ -80,7 +81,7 @@ public class FileUtils {
      * @param resultCode 返回的请求码 判断requestCode 符合调用该方法处理
      * @return 获得的sd uri，如果为空则代表未获得
      */
-    public static DocumentFile checkSDCardPermission(Context context, int resultCode, Intent data, String  filePath){
+    public static DocumentFile checkSDCardPermission(Context context, int resultCode, Intent data, String filePath){
         if (resultCode == RESULT_OK) {
             Uri treeUri = data.getData();
             if(treeUri == null){
@@ -103,7 +104,7 @@ public class FileUtils {
      * @param createDirectories 新建还是删除文件操作
      * @return File对象
      */
-    public static DocumentFile getDocumentFilePath(Context context,Uri uri, String path, boolean createDirectories) {
+    public static DocumentFile getDocumentFilePath(Context context, Uri uri, String path, boolean createDirectories) {
         DocumentFile document = DocumentFile.fromTreeUri(context, uri);
 
         String[] parts = path.split("/");
@@ -227,7 +228,7 @@ public class FileUtils {
         } catch (IOException e) {
             throw new RuntimeException("IOException occurred. ", e);
         } finally {
-            IOUtils.close(reader);
+            close(reader);
         }
     }
 
@@ -241,7 +242,7 @@ public class FileUtils {
      */
     public static boolean writeFile(String filePath, String content, boolean append) {
 
-        if (StringUtils.isEmpty(content)) {
+        if (TextUtils.isEmpty(content)) {
             return false;
         }
 
@@ -255,7 +256,7 @@ public class FileUtils {
         } catch (IOException e) {
             throw new RuntimeException("IOException occurred. ", e);
         } finally {
-            IOUtils.close(fileWriter);
+            close(fileWriter);
         }
     }
 
@@ -291,7 +292,7 @@ public class FileUtils {
         } catch (IOException e) {
             throw new RuntimeException("IOException occurred. ", e);
         } finally {
-            IOUtils.close(fileWriter);
+            close(fileWriter);
         }
     }
 
@@ -393,8 +394,8 @@ public class FileUtils {
         } catch (IOException e) {
             throw new RuntimeException("IOException occurred. ", e);
         } finally {
-            IOUtils.close(o);
-            IOUtils.close(stream);
+            close(o);
+            close(stream);
         }
     }
 
@@ -482,7 +483,7 @@ public class FileUtils {
         } catch (IOException e) {
             throw new RuntimeException("IOException occurred. ", e);
         } finally {
-            IOUtils.close(reader);
+            close(reader);
         }
     }
 
@@ -495,7 +496,7 @@ public class FileUtils {
     public static String getFileNameWithoutExtension(String filePath) {
 
 
-        if (StringUtils.isEmpty(filePath)) {
+        if (TextUtils.isEmpty(filePath)) {
             return filePath;
         }
 
@@ -537,7 +538,7 @@ public class FileUtils {
      */
     public static String getFileName(String filePath) {
 
-        if (StringUtils.isEmpty(filePath)) {
+        if (TextUtils.isEmpty(filePath)) {
             return filePath;
         }
 
@@ -570,7 +571,7 @@ public class FileUtils {
     public static String getFolderName(String filePath) {
 
 
-        if (StringUtils.isEmpty(filePath)) {
+        if (TextUtils.isEmpty(filePath)) {
             return filePath;
         }
 
@@ -602,7 +603,7 @@ public class FileUtils {
      */
     public static String getFileExtension(String filePath) {
 
-        if (StringUtils.isBlank(filePath)) {
+        if (TextUtils.isEmpty(filePath)) {
             return filePath;
         }
 
@@ -623,7 +624,7 @@ public class FileUtils {
     public static boolean makeDirs(String filePath) {
 
         String folderName = getFolderName(filePath);
-        if (StringUtils.isEmpty(folderName)) {
+        if (TextUtils.isEmpty(folderName)) {
             return false;
         }
 
@@ -649,7 +650,7 @@ public class FileUtils {
      * @return  是否存在这个文件
      */
     public static boolean isFileExist(String filePath) {
-        if (StringUtils.isBlank(filePath)) {
+        if (TextUtils.isEmpty(filePath)) {
             return false;
         }
 
@@ -666,7 +667,7 @@ public class FileUtils {
      */
     public static boolean isFolderExist(String directoryPath) {
 
-        if (StringUtils.isBlank(directoryPath)) {
+        if (TextUtils.isEmpty(directoryPath)) {
             return false;
         }
 
@@ -682,7 +683,7 @@ public class FileUtils {
      */
     public static boolean deleteFile(String path) {
 
-        if (StringUtils.isBlank(path)) {
+        if (TextUtils.isEmpty(path)) {
             return true;
         }
 
@@ -715,7 +716,7 @@ public class FileUtils {
      */
     public static long getFileSize(String path) {
 
-        if (StringUtils.isBlank(path)) {
+        if (TextUtils.isEmpty(path)) {
             return -1;
         }
 
@@ -819,7 +820,7 @@ public class FileUtils {
      * @return String 返回文本文件的内容
      */
     public static String readFileContent(String filePathAndName, String encoding, String sep, int bufLen)
-           {
+    {
         if (filePathAndName == null || filePathAndName.equals("")) {
             return "";
         }
@@ -906,10 +907,10 @@ public class FileUtils {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setDataAndType(Uri.fromFile(file), MimeTypeMap.getSingleton()
-                                                                 .getMimeTypeFromExtension(
-                                                                         MimeTypeMap
-                                                                                 .getFileExtensionFromUrl(
-                                                                                         file.getPath())));
+                    .getMimeTypeFromExtension(
+                            MimeTypeMap
+                                    .getFileExtensionFromUrl(
+                                            file.getPath())));
             context.startActivity(intent);
         } catch (Exception ex) {
             Toast.makeText(context, "打开失败.", Toast.LENGTH_SHORT).show();
@@ -1052,7 +1053,7 @@ public class FileUtils {
                 return uri.getPath();
             }
             cursor = context.getContentResolver()
-                            .query(uri, null, null, null, null);
+                    .query(uri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 return cursor.getString(cursor.getColumnIndex(
                         MediaStore.Images.Media.DATA)); //图片文件路径
@@ -1147,6 +1148,23 @@ public class FileUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Close closable object and wrap {@link IOException} with {@link
+     * RuntimeException}
+     *
+     * @param closeable closeable object
+     */
+    public static void close(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (IOException e) {
+                throw new RuntimeException("IOException occurred. ", e);
+            }
         }
     }
 }

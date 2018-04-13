@@ -3,8 +3,6 @@ package com.withwings.baselibs.nohttp.request;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import com.withwings.baselibs.BuildConfig;
-import com.withwings.baselibs.nohttp.HttpConfigBaseUrl;
 import com.yanzhenjie.nohttp.Priority;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.download.DownloadRequest;
@@ -19,11 +17,6 @@ import java.util.Map;
  * Email:wangtong1175@sina.com
  */
 public class DownloadRequestUtils {
-
-    /**
-     * 服务器地址
-     */
-    public static String SERVICE_URL = checkService();
 
     /**
      * 默认请求方式
@@ -94,25 +87,16 @@ public class DownloadRequestUtils {
 
         DownloadRequest downloadRequest;
         if (TextUtils.isEmpty(filename)) {
-            downloadRequest = new DownloadRequest(SERVICE_URL, requestMethod, fileFolder, isRange, isDeleteOld);
+            downloadRequest = new DownloadRequest(url, requestMethod, fileFolder, isRange, isDeleteOld);
         } else {
-            downloadRequest = new DownloadRequest(SERVICE_URL, requestMethod, fileFolder, filename, isRange, isDeleteOld);
+            downloadRequest = new DownloadRequest(url, requestMethod, fileFolder, filename, isRange, isDeleteOld);
         }
         downloadRequest.setPriority(priority);
-        setDefault(downloadRequest, url);
+        setDefault(downloadRequest);
         return downloadRequest;
     }
 
-    private static void setDefault(DownloadRequest downloadRequest, String url) {
-        if (url.contains(SERVICE_URL)) {
-            if (!url.endsWith("/")) {
-                url = url.replace(SERVICE_URL + "/", "");
-            } else {
-                url = url.replace(SERVICE_URL, "");
-            }
-
-        }
-        downloadRequest.path(url);
+    private static void setDefault(DownloadRequest downloadRequest) {
         // 请求体
         for (String s : REQUEST_PARAMS.keySet()) {
             downloadRequest.add(s, REQUEST_PARAMS.get(s));
@@ -132,15 +116,6 @@ public class DownloadRequestUtils {
     public static void defaultParams(Map<String, String> params, Map<String, String> headers) {
         REQUEST_PARAMS.putAll(params);
         REQUEST_HEADERS.putAll(headers);
-    }
-
-    private static String checkService() {
-        // 多环境请使用 switch(BuildConfig.BUILD_TYPE) 进行区别
-        if (BuildConfig.DEBUG) {
-            return HttpConfigBaseUrl.TEST_SERVICE_URL;
-        } else {
-            return HttpConfigBaseUrl.RELEASE_SERVICE_URL;
-        }
     }
 
 }
