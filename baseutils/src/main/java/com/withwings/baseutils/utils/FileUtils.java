@@ -37,8 +37,6 @@ import static android.app.Activity.RESULT_OK;
 @SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class FileUtils {
 
-    public final String TAG = "LAZY";
-
     public final static String FILE_EXTENSION_SEPARATOR = ".";
 
     /** URI类型：file */

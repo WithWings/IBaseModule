@@ -44,7 +44,7 @@ public class ActivityUtils {
      * @param context       上下文
      * @param activityClass 跳转界面
      */
-    protected void startActivityForOnlyOne(Context context, Class<? extends Activity> activityClass) {
+    public void startActivityForOnlyOne(Context context, Class<? extends Activity> activityClass) {
         Intent intent = new Intent(context, activityClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
@@ -57,7 +57,7 @@ public class ActivityUtils {
      * @param activityClass 跳转界面
      * @param bundle        信息类
      */
-    protected void startActivityForOnlyOne(Context context, Class<? extends Activity> activityClass, Bundle bundle) {
+    public void startActivityForOnlyOne(Context context, Class<? extends Activity> activityClass, Bundle bundle) {
         Intent intent = new Intent(context, activityClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (bundle != null) {

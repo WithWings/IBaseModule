@@ -132,7 +132,7 @@ public class BitmapUtils {
      * @param drawable 数据
      * @return 结果
      */
-    public static Bitmap drawableToBitmap(Drawable drawable) {
+    public static Bitmap drawable2Bitmap(Drawable drawable) {
 
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
         Canvas canvas = new Canvas(bitmap);
@@ -148,7 +148,7 @@ public class BitmapUtils {
      * @param bitmap 数据
      * @return 结果
      */
-    public static Drawable bitmapToDrawable(Bitmap bitmap) {
+    public static Drawable bitmap2Drawable(Bitmap bitmap) {
         return new BitmapDrawable(bitmap);
     }
 

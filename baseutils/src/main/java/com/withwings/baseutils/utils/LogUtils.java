@@ -19,7 +19,7 @@ public class LogUtils {
     private static String mTag;
 
     private LogUtils() {
-        mShowLog = BuildConfig.show_log;
+        mShowLog = BuildConfig.DEBUG;
     }
 
     public static LogUtils getInstance(){
