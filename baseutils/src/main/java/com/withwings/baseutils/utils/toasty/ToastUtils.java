@@ -1,4 +1,4 @@
-package com.withwings.baseutils.utils;
+package com.withwings.baseutils.utils.toasty;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,8 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
-
-import com.withwings.baseutils.utils.toasty.Toasty;
 
 /**
  * 自定义 Toast Utils
