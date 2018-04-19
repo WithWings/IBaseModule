@@ -42,7 +42,6 @@ public class StatusBarUtils {
      *                    NotificationManager.IMPORTANCE_HIGH ：发出提示音显示在状态栏并在屏幕上弹出通知
      *                    NotificationManager.IMPORTANCE_UNSPECIFIED ：未指定，无法使用
      */
-    @TargetApi(Build.VERSION_CODES.O)
     public static void createNotificationChannel(Context context, String channelId, String channelName, int importance) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
@@ -59,11 +58,12 @@ public class StatusBarUtils {
      * @param context   上下文
      * @param channelId 渠道Id
      */
-    @TargetApi(Build.VERSION_CODES.O)
     public static void deleteNotificationChannel(Context context, String channelId) {
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (manager != null) {
-            manager.deleteNotificationChannel(channelId);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager != null) {
+                manager.deleteNotificationChannel(channelId);
+            }
         }
     }
 

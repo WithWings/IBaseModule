@@ -1,6 +1,5 @@
 package com.withwings.baseutils.utils;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
@@ -15,7 +14,6 @@ import java.util.List;
  * Email:wangtong1175@sina.com
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-@TargetApi(android.os.Build.VERSION_CODES.N_MR1)
 public class ShortcutUtils {
 
     private ShortcutUtils() {
@@ -86,14 +84,16 @@ public class ShortcutUtils {
      * @param context 上下文
      */
     public static void disableManifestShortcuts(Context context) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> allManifestShortcuts = shortcutManager.getManifestShortcuts();
-            List<String> allManifestShortcutIds = new ArrayList<>();
-            for (ShortcutInfo manifestShortcut : allManifestShortcuts) {
-                allManifestShortcutIds.add(manifestShortcut.getId());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> allManifestShortcuts = shortcutManager.getManifestShortcuts();
+                List<String> allManifestShortcutIds = new ArrayList<>();
+                for (ShortcutInfo manifestShortcut : allManifestShortcuts) {
+                    allManifestShortcutIds.add(manifestShortcut.getId());
+                }
+                disableManifestShortcuts(context, allManifestShortcutIds);
             }
-            disableManifestShortcuts(context, allManifestShortcutIds);
         }
     }
 
@@ -116,10 +116,12 @@ public class ShortcutUtils {
      * @param manifestShortcutIds 指定的菜单 id
      */
     public static void disableManifestShortcuts(Context context, List<String> manifestShortcutIds) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> manifestShortcuts = shortcutManager.getManifestShortcuts();
-            disableShortcuts(context, manifestShortcuts, manifestShortcutIds);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> manifestShortcuts = shortcutManager.getManifestShortcuts();
+                disableShortcuts(context, manifestShortcuts, manifestShortcutIds);
+            }
         }
     }
 
@@ -129,14 +131,16 @@ public class ShortcutUtils {
      * @param context 上下文
      */
     public static void enableManifestShortcuts(Context context) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> allManifestShortcuts = shortcutManager.getManifestShortcuts();
-            List<String> allManifestShortcutIds = new ArrayList<>();
-            for (ShortcutInfo manifestShortcut : allManifestShortcuts) {
-                allManifestShortcutIds.add(manifestShortcut.getId());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> allManifestShortcuts = shortcutManager.getManifestShortcuts();
+                List<String> allManifestShortcutIds = new ArrayList<>();
+                for (ShortcutInfo manifestShortcut : allManifestShortcuts) {
+                    allManifestShortcutIds.add(manifestShortcut.getId());
+                }
+                enableManifestShortcuts(context, allManifestShortcutIds);
             }
-            enableManifestShortcuts(context, allManifestShortcutIds);
         }
     }
 
@@ -159,10 +163,12 @@ public class ShortcutUtils {
      * @param manifestShortcutIds 指定的菜单 id
      */
     public static void enableManifestShortcuts(Context context, List<String> manifestShortcutIds) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> manifestShortcuts = shortcutManager.getManifestShortcuts();
-            enableShortcuts(context, manifestShortcuts, manifestShortcutIds);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> manifestShortcuts = shortcutManager.getManifestShortcuts();
+                enableShortcuts(context, manifestShortcuts, manifestShortcutIds);
+            }
         }
     }
 
@@ -183,20 +189,20 @@ public class ShortcutUtils {
      *                     .setIntents(intents)
      *                     .build();
      */
-    @TargetApi(Build.VERSION_CODES.O)
     public static void registerPinnedShortcuts(Context context, ShortcutInfo shortcutInfo) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            String shortcutInfoId = shortcutInfo.getId();
-            for (ShortcutInfo info : shortcutManager.getPinnedShortcuts()) {
-                if (info.getId().equals(shortcutInfoId) && !info.isEnabled()) {
-                    List<String> shortcutInfoIds = new ArrayList<>();
-                    shortcutInfoIds.add(shortcutInfoId);
-                    shortcutManager.enableShortcuts(shortcutInfoIds);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                String shortcutInfoId = shortcutInfo.getId();
+                for (ShortcutInfo info : shortcutManager.getPinnedShortcuts()) {
+                    if (info.getId().equals(shortcutInfoId) && !info.isEnabled()) {
+                        List<String> shortcutInfoIds = new ArrayList<>();
+                        shortcutInfoIds.add(shortcutInfoId);
+                        shortcutManager.enableShortcuts(shortcutInfoIds);
+                    }
                 }
+                shortcutManager.requestPinShortcut(shortcutInfo, null);
             }
-            shortcutManager.requestPinShortcut(shortcutInfo, null);
-
         }
     }
 
@@ -206,14 +212,16 @@ public class ShortcutUtils {
      * @param context 上下文
      */
     public static void disablePinnedShortcuts(Context context) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> allPinnedShortcuts = shortcutManager.getPinnedShortcuts();
-            List<String> allPinnedShortcutIds = new ArrayList<>();
-            for (ShortcutInfo manifestShortcut : allPinnedShortcuts) {
-                allPinnedShortcutIds.add(manifestShortcut.getId());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> allPinnedShortcuts = shortcutManager.getPinnedShortcuts();
+                List<String> allPinnedShortcutIds = new ArrayList<>();
+                for (ShortcutInfo manifestShortcut : allPinnedShortcuts) {
+                    allPinnedShortcutIds.add(manifestShortcut.getId());
+                }
+                disableManifestShortcuts(context, allPinnedShortcutIds);
             }
-            disableManifestShortcuts(context, allPinnedShortcutIds);
         }
     }
 
@@ -236,10 +244,12 @@ public class ShortcutUtils {
      * @param pinnedShortcutIds 指定的图标 Id
      */
     public static void disablePinnedShortcuts(Context context, List<String> pinnedShortcutIds) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> pinnedShortcuts = shortcutManager.getPinnedShortcuts();
-            disableShortcuts(context, pinnedShortcuts, pinnedShortcutIds);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> pinnedShortcuts = shortcutManager.getPinnedShortcuts();
+                disableShortcuts(context, pinnedShortcuts, pinnedShortcutIds);
+            }
         }
     }
 
@@ -249,14 +259,16 @@ public class ShortcutUtils {
      * @param context 上下文
      */
     public static void enablePinnedShortcuts(Context context) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> allPinnedShortcuts = shortcutManager.getPinnedShortcuts();
-            List<String> allPinnedShortcutIds = new ArrayList<>();
-            for (ShortcutInfo pinnedShortcut : allPinnedShortcuts) {
-                allPinnedShortcutIds.add(pinnedShortcut.getId());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> allPinnedShortcuts = shortcutManager.getPinnedShortcuts();
+                List<String> allPinnedShortcutIds = new ArrayList<>();
+                for (ShortcutInfo pinnedShortcut : allPinnedShortcuts) {
+                    allPinnedShortcutIds.add(pinnedShortcut.getId());
+                }
+                enablePinnedShortcuts(context, allPinnedShortcutIds);
             }
-            enablePinnedShortcuts(context, allPinnedShortcutIds);
         }
     }
 
@@ -279,10 +291,12 @@ public class ShortcutUtils {
      * @param pinnedShortcutIds 指定的图标 Id
      */
     public static void enablePinnedShortcuts(Context context, List<String> pinnedShortcutIds) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> pinnedShortcuts = shortcutManager.getPinnedShortcuts();
-            enableShortcuts(context, pinnedShortcuts, pinnedShortcutIds);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> pinnedShortcuts = shortcutManager.getPinnedShortcuts();
+                enableShortcuts(context, pinnedShortcuts, pinnedShortcutIds);
+            }
         }
     }
 
@@ -302,11 +316,13 @@ public class ShortcutUtils {
      *                     .build();
      */
     public static void registerDynamicShortcuts(Context context, ShortcutInfo shortcutInfo) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> shortcutInfos = new ArrayList<>();
-            shortcutInfos.add(shortcutInfo);
-            shortcutManager.setDynamicShortcuts(shortcutInfos);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> shortcutInfos = new ArrayList<>();
+                shortcutInfos.add(shortcutInfo);
+                shortcutManager.setDynamicShortcuts(shortcutInfos);
+            }
         }
     }
 
@@ -316,14 +332,16 @@ public class ShortcutUtils {
      * @param context 上下文
      */
     public static void disableDynamicShortcuts(Context context) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> dynamicShortcuts = shortcutManager.getDynamicShortcuts();
-            List<String> dynamicShortcutsIds = new ArrayList<>();
-            for (ShortcutInfo dynamicShortcut : dynamicShortcuts) {
-                dynamicShortcutsIds.add(dynamicShortcut.getId());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> dynamicShortcuts = shortcutManager.getDynamicShortcuts();
+                List<String> dynamicShortcutsIds = new ArrayList<>();
+                for (ShortcutInfo dynamicShortcut : dynamicShortcuts) {
+                    dynamicShortcutsIds.add(dynamicShortcut.getId());
+                }
+                disableDynamicShortcuts(context, dynamicShortcutsIds);
             }
-            disableDynamicShortcuts(context, dynamicShortcutsIds);
         }
     }
 
@@ -346,10 +364,12 @@ public class ShortcutUtils {
      * @param dynamicShortcutsIds 指定的图标 Id
      */
     public static void disableDynamicShortcuts(Context context, List<String> dynamicShortcutsIds) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> dynamicShortcuts = shortcutManager.getDynamicShortcuts();
-            disableShortcuts(context, dynamicShortcuts, dynamicShortcutsIds);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> dynamicShortcuts = shortcutManager.getDynamicShortcuts();
+                disableShortcuts(context, dynamicShortcuts, dynamicShortcutsIds);
+            }
         }
     }
 
@@ -359,14 +379,16 @@ public class ShortcutUtils {
      * @param context 上下文
      */
     public static void enableDynamicShortcuts(Context context) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> dynamicShortcuts = shortcutManager.getDynamicShortcuts();
-            List<String> dynamicShortcutsIds = new ArrayList<>();
-            for (ShortcutInfo dynamicShortcut : dynamicShortcuts) {
-                dynamicShortcutsIds.add(dynamicShortcut.getId());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> dynamicShortcuts = shortcutManager.getDynamicShortcuts();
+                List<String> dynamicShortcutsIds = new ArrayList<>();
+                for (ShortcutInfo dynamicShortcut : dynamicShortcuts) {
+                    dynamicShortcutsIds.add(dynamicShortcut.getId());
+                }
+                enableDynamicShortcuts(context, dynamicShortcutsIds);
             }
-            enableDynamicShortcuts(context, dynamicShortcutsIds);
         }
     }
 
@@ -389,11 +411,12 @@ public class ShortcutUtils {
      * @param dynamicShortcutsIds 指定的图标 Id
      */
     public static void enableDynamicShortcuts(Context context, List<String> dynamicShortcutsIds) {
-
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<ShortcutInfo> dynamicShortcuts = shortcutManager.getDynamicShortcuts();
-            enableShortcuts(context, dynamicShortcuts, dynamicShortcutsIds);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<ShortcutInfo> dynamicShortcuts = shortcutManager.getDynamicShortcuts();
+                enableShortcuts(context, dynamicShortcuts, dynamicShortcutsIds);
+            }
         }
     }
 
@@ -410,16 +433,18 @@ public class ShortcutUtils {
      * @param disableShortcutIds 要显示的菜单项
      */
     public static void disableShortcuts(Context context, List<ShortcutInfo> allShortcuts, List<String> disableShortcutIds) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<String> needDisableShortcutIds = new ArrayList<>();
-            for (ShortcutInfo shortcut : allShortcuts) {
-                if (disableShortcutIds.contains(shortcut.getId())) {
-                    needDisableShortcutIds.add(shortcut.getId());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<String> needDisableShortcutIds = new ArrayList<>();
+                for (ShortcutInfo shortcut : allShortcuts) {
+                    if (disableShortcutIds.contains(shortcut.getId())) {
+                        needDisableShortcutIds.add(shortcut.getId());
+                    }
                 }
+                shortcutManager.disableShortcuts(needDisableShortcutIds);
+                // shortcutManager.disableShortcuts(needDisableShortcutIds, "已停用");
             }
-            shortcutManager.disableShortcuts(needDisableShortcutIds);
-            // shortcutManager.disableShortcuts(needDisableShortcutIds, "已停用");
         }
     }
 
@@ -431,15 +456,17 @@ public class ShortcutUtils {
      * @param enableShortcutIds 要显示的菜单项
      */
     public static void enableShortcuts(Context context, List<ShortcutInfo> allShortcuts, List<String> enableShortcutIds) {
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        if (shortcutManager != null) {
-            List<String> needEnableShortcutIds = new ArrayList<>();
-            for (ShortcutInfo shortcut : allShortcuts) {
-                if (enableShortcutIds.contains(shortcut.getId())) {
-                    needEnableShortcutIds.add(shortcut.getId());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                List<String> needEnableShortcutIds = new ArrayList<>();
+                for (ShortcutInfo shortcut : allShortcuts) {
+                    if (enableShortcutIds.contains(shortcut.getId())) {
+                        needEnableShortcutIds.add(shortcut.getId());
+                    }
                 }
+                shortcutManager.enableShortcuts(needEnableShortcutIds);
             }
-            shortcutManager.enableShortcuts(needEnableShortcutIds);
         }
     }
 }
