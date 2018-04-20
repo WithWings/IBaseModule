@@ -27,6 +27,18 @@ public class SensorUtils {
      * SensorManager..unregisterListener(SensorEventListener sensorEventListener);
      *
      * @param context              上下文
+     * @param levelAndFlags        用来控制获取的WakeLock对象的类型
+     *                             <p>
+     *                             PowerManager.PARTIAL_WAKE_LOCK : CPU处于运行状态，而屏幕和键盘背光将可以熄灭。
+     *                             <p>
+     *                             PowerManager.SCREEN_DIM_WAKE_LOCK : 在Android4.2(API 17)后被废弃，使用FLAG_KEEP_SCREEN_ON代替。屏幕微亮,键盘暗
+     *                             <p>
+     *                             PowerManager.SCREEN_BRIGHT_WAKE_LOCK : 在Android3.2(API 13)后被废弃，使用FLAG_KEEP_SCREEN_ON代替。屏幕亮,键盘暗
+     *                             <p>
+     *                             PowerManager.FULL_WAKE_LOCK : 在Android4.2(API 17)后被废弃，建议采用FLAG_KEEP_SCREEN_ON代替。全亮
+     *                             <p>
+     *                             PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK : 随着用户接近会息屏
+     *                             <p>
      * @param type                 根据 type 设置监听什么
      *                             <p>
      *                             Sensor.TYPE_ACCELEROMETER ： 加速度感应检测
@@ -45,7 +57,6 @@ public class SensorUtils {
      *                             <p>
      *                             Sensor.TYPE_PROXIMITY ： 接近感应检测
      *                             <p>
-     * @param iSensorEventListener 监听器
      * @param samplingPeriodUs     延迟时间的精度密度
      *                             <p>
      *                             SensorManager.SENSOR_DELAY_FASTEST : 0ms
@@ -56,18 +67,19 @@ public class SensorUtils {
      *                             <p>
      *                             SensorManager.SENSOR_DELAY_NORMAL : 200ms
      *                             <p>
+     * @param iSensorEventListener 监听器
      * @return 管理器
      * if (mSensorManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
      * mSensorManager.unregisterListener(SensorEventListener sensorEventListener);
      * mSensorManager = null;
      * }
      */
-    public static SensorManager startPSensor(Context context, int type, int samplingPeriodUs, final ISensorEventListener iSensorEventListener) {
+    public static SensorManager startPSensor(Context context, int levelAndFlags, int type, int samplingPeriodUs, final ISensorEventListener iSensorEventListener) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             final SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             if (powerManager != null && sensorManager != null) {
-                PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, LOG_TAG);
+                PowerManager.WakeLock wakeLock = powerManager.newWakeLock(levelAndFlags, LOG_TAG);
                 wakeLock.acquire(10 * 60 * 1000L /*10 minutes*/);
                 sensorManager.registerListener(new SensorEventListener() {
                     @Override
