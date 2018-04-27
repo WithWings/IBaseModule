@@ -285,7 +285,7 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
     protected void dismissNetDialog(int tag) {
         if (mDialogMap != null) {
             Dialog dialog = mDialogMap.get(tag);
-            if (dialog != null) {
+            if (dialog != null && dialog.isShowing() && mActivity != null && !mActivity.isFinishing()) {
                 dialog.dismiss();
                 mDialogMap.remove(tag);
             }

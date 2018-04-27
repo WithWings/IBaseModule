@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * Application 工具类
+ * Application 工具类:Android 4.2.2 少数机型存在反射后空指针的现象，目前来说两个方法已经尽量兼容到各种情况了
  * 创建：WithWings 时间 2018/2/28
  * Email:wangtong1175@sina.com
  */
@@ -57,6 +57,9 @@ public class AppUtils {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
             return null;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
         }
         return application;
     }
@@ -89,6 +92,9 @@ public class AppUtils {
             e.printStackTrace();
             return null;
         } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
+        } catch (NullPointerException e) {
             e.printStackTrace();
             return null;
         }
