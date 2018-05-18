@@ -91,7 +91,7 @@ public class FileWebChromeClient extends WebChromeClient {
     private void takePhoto() {
         mImageUri = Uri.fromFile(mFileUri);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mImageUri = FileProvider.getUriForFile(mActivity, mActivity.getPackageName() + ".fileProvider", mFileUri);//通过FileProvider创建一个content类型的Uri
+            mImageUri = FileProvider.getUriForFile(mActivity, mActivity.getPackageName() + ".webFileProvider", mFileUri);//通过FileProvider创建一个content类型的Uri
         }
         takePicture();
     }
@@ -146,7 +146,7 @@ public class FileWebChromeClient extends WebChromeClient {
 
 
 
-
+// TODO 在 Activity 处理返回结果
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
