@@ -1,24 +1,19 @@
 package com.withwings.basewidgets.webview;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
-import java.util.HashMap;
+import com.withwings.basewidgets.webview.client.UrlWebChromeClient;
+import com.withwings.basewidgets.webview.client.UrlWebViewClient;
+
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 自定义WebView
@@ -89,20 +84,29 @@ public class CustomWebView extends RelativeLayout {
         settings.setUserAgentString("");
 
         //设置缓存
-        settings.setDomStorageEnabled(false);
+        settings.setDomStorageEnabled(true);
+
+        // 是否可访问Content Provider的资源，默认值 true
+        settings.setAllowContentAccess(true);
+
+        // 是否可访问本地文件，默认值 true
+        settings.setAllowFileAccess(true);
+
         // 是否使用缓存
         settings.setAppCacheEnabled(false);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        // 允许访问文件
-        settings.setAllowFileAccess(true);
 
-        // 支持缩放
+        // 设置支持缩放 出现缩放工具
         settings.setSupportZoom(true);
 
-        // 设置出现缩放工具
-        settings.setSupportZoom(true);
+        // 设置自适应屏幕
         settings.setUseWideViewPort(true);
         settings.setBuiltInZoomControls(true);
+
+        // 是否允许通过file url加载的Javascript读取本地文件，默认值 false
+        settings.setAllowFileAccessFromFileURLs(false);
+        // 是否允许通过file url加载的Javascript读取全部资源(包括文件,http,https)，默认值 false
+        settings.setAllowUniversalAccessFromFileURLs(false);
 
         // 自适应屏幕
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
@@ -114,70 +118,8 @@ public class CustomWebView extends RelativeLayout {
         settings.setSupportMultipleWindows(true);
 
 
-        mWebView.setWebViewClient(new WebViewClient() {//网页相关回调
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                // 界面加载开始
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                // 界面加载完毕
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                String url = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    url = request.getUrl().toString();
-                }
-                return filterSpecialUrl(view, url);
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return filterSpecialUrl(view, url);
-            }
-
-            private boolean filterSpecialUrl(WebView view, String url) {
-                Log.d("地址", url);
-                if (TextUtils.isEmpty(url)) {
-                    return super.shouldOverrideUrlLoading(view, url);
-                }
-                Uri uri = Uri.parse(url);
-                // 如果url的协议 = 预先约定的 js 协议
-                // 就解析往下解析参数
-                if (uri.getScheme().equals("jscall")) {
-
-                    // 如果 authority  = 预先约定协议里的 webview，即代表都符合约定的协议
-                    // 所以拦截url,下面JS开始调用Android需要的方法
-                    if (uri.getAuthority().equals("location")) {
-                        if (uri.getPath().equals("/path")) {
-                            //  步骤3：
-                            // 执行JS所需要调用的逻辑
-                            System.out.println("js调用了Android的方法");
-                            // 可以在协议上带有参数并传递到Android上
-                            HashMap<String, String> params = new HashMap<>();
-                            Set<String> collection = uri.getQueryParameterNames();
-
-                            for (String s : collection) {
-                                params.put(s, uri.getQueryParameter(s));
-                            }
-                            // 处理协议
-                            // switchJsAgreement(params);
-                        }
-
-                    }
-
-                    return true;
-                }
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-
-        });
+        mWebView.setWebViewClient(new UrlWebViewClient());
+        mWebView.setWebChromeClient(new UrlWebChromeClient());
     }
 
     public void loadUrl(String url) {
