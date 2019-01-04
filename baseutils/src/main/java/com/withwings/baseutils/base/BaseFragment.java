@@ -38,7 +38,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
         initData();
 
-        initView();
+        initView(layout);
 
         syncPage();
 
@@ -62,8 +62,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     /**
      * 初始化界面
+     * @param layout 布局文件对象
      */
-    protected abstract void initView();
+    protected abstract void initView(View layout);
 
     /**
      * 根据数据同步界面
