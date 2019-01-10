@@ -64,6 +64,7 @@ public abstract class BaseSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /**
      * 该方法是当没有数据库存在才会执行 用以创建 数据库:该方法不会在对象创建后自动执行  而是在 getWritableDatabase 或 getReadableDatabase 的时候执行
+     * 这里可以创建多个表 当然  在 onUpgrade 里面创建也可以
      * @param db 数据库操作对象 用以执行语句
      */
     @Override
