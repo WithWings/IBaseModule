@@ -1,14 +1,26 @@
 package com.withwings.baseutils.base;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+
+import com.withwings.baseutils.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Fragment 基础类
@@ -19,6 +31,12 @@ import android.view.ViewGroup;
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 
     protected Activity mActivity;
+
+    private Map<Integer, Dialog> mDialogMap;
+
+    private ViewStub mVsLoadMainLayout;
+    private View mTitleBar;
+    private View mLayout;
 
     /**
      * 关于使用
@@ -34,17 +52,64 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mActivity = getActivity();
 
-        View layout = inflater.inflate(initLayout(), container, false);
+        mLayout = inflater.inflate(R.layout.fragment_base, container, false);
+        mTitleBar = mLayout.findViewById(R.id.title_bar);
+        mVsLoadMainLayout = mLayout.findViewById(R.id.vs_load_main_layout);
+
+        // Title
+        LinearLayout titleLeft = mLayout.findViewById(R.id.title_left);
+        LinearLayout titleRight = mLayout.findViewById(R.id.title_right);
+        titleLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLeftClick();
+            }
+        });
+        titleRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRightClick();
+            }
+        });
+
+        setLayout(initLayout(), titleText(), leftText(), rightText());
+        return mLayout;
+    }
+
+    private void setLayout(@LayoutRes int layout, String title, String left, String right) {
+        mVsLoadMainLayout.setLayoutResource(layout);
+        mVsLoadMainLayout.inflate();
+        if (!TextUtils.isEmpty(title)) {
+            TextView titleText = mLayout.findViewById(R.id.title_text);
+            titleText.setText(title);
+        }
+        if (!TextUtils.isEmpty(left)) {
+            TextView titleLeftText = mLayout.findViewById(R.id.title_left_text);
+            titleLeftText.setVisibility(View.VISIBLE);
+            titleLeftText.setText(left);
+        }
+        if (!TextUtils.isEmpty(right)) {
+            TextView titleRightText = mLayout.findViewById(R.id.title_right_text);
+            titleRightText.setVisibility(View.VISIBLE);
+            titleRightText.setText(right);
+        }
+
+        init();
+    }
+
+    protected void hideTitle(boolean hide) {
+        mTitleBar.setVisibility(hide ? View.GONE : View.VISIBLE);
+    }
+
+    private void init() {
 
         initData();
 
-        initView(layout);
+        initView(mLayout);
 
         syncPage();
 
         initListener();
-
-        return layout;
     }
 
     /**
@@ -54,6 +119,18 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      */
     protected abstract @LayoutRes
     int initLayout();
+
+    protected String titleText() {
+        return null;
+    }
+
+    protected String leftText() {
+        return null;
+    }
+
+    protected String rightText() {
+        return null;
+    }
 
     /**
      * 初始化数据
@@ -133,6 +210,59 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             startActivityForResult(intent, requestCode);
         } else {
             startActivity(intent);
+        }
+    }
+
+    protected abstract void onLeftClick();
+
+    protected abstract void onRightClick();
+
+    protected void exitApp() {
+        if (BaseApplication.mActivities != null) {
+            for (BaseActivity activity : BaseApplication.mActivities) {
+                activity.finish();
+            }
+        }
+    }
+
+    protected void showNetDialog(final int tag) {
+        if (mDialogMap == null) {
+            mDialogMap = new HashMap<>();
+        }
+        Dialog dialog;
+        if (mDialogMap.containsKey(tag)) {
+            dialog = mDialogMap.get(tag);
+        } else {
+            // 自定义的 Dialog 加在这里
+            dialog = new Dialog(mActivity);
+            mDialogMap.put(tag, dialog);
+        }
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                int key = -1;
+                for (Map.Entry<Integer, Dialog> entry : mDialogMap.entrySet()) {
+                    if (dialog.equals(entry.getValue())) {
+                        key = entry.getKey();
+                        break;
+                    }
+                }
+                dismissNetDialog(key);
+            }
+        });
+        dialog.show();
+    }
+
+    protected void dismissNetDialog(int tag) {
+        if (mDialogMap != null) {
+            Dialog dialog = mDialogMap.get(tag);
+            if (dialog != null) {
+                dialog.dismiss();
+                mDialogMap.remove(tag);
+            }
+            if (mDialogMap.size() == 0) {
+                mDialogMap = null;
+            }
         }
     }
 }

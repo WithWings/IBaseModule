@@ -13,9 +13,23 @@ public class MainActivity extends BaseActivity {
     private Button mBtnExecutiveOperation;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setLayout(R.layout.activity_main, "首页", "取消", "确定");
+    protected int initLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected String titleText() {
+        return "首页";
+    }
+
+    @Override
+    protected String leftText() {
+        return "取消";
+    }
+
+    @Override
+    protected String rightText() {
+        return "确定";
     }
 
     @Override

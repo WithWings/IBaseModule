@@ -31,10 +31,11 @@ public class ToastUtils {
     @SuppressLint("ShowToast")
     public static void showToast(Context context, String string) {
         if (mToast == null) {
-            mToast = Toast.makeText(context, string, Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(context, string, Toast.LENGTH_LONG);
         }
         else {
-            mToast.setText(string);
+            mToast.cancel();
+            mToast = Toast.makeText(context, string, Toast.LENGTH_LONG);
         }
         mToast.show();
     }

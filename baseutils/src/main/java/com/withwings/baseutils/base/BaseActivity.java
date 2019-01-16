@@ -33,6 +33,7 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
     private Map<Integer, Dialog> mDialogMap;
 
     private ViewStub mVsLoadMainLayout;
+    private View mTitleBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         }
 
         setContentView(R.layout.activity_base);
+        mTitleBar = findViewById(R.id.title_bar);
         mVsLoadMainLayout = findViewById(R.id.vs_load_main_layout);
 
         // Title
@@ -60,9 +62,11 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
                 onRightClick();
             }
         });
+
+        setLayout(initLayout(), titleText(), leftText(), rightText());
     }
 
-    protected void setLayout(@LayoutRes int layout, String title, String left, String right) {
+    private void setLayout(@LayoutRes int layout, String title, String left, String right) {
         mVsLoadMainLayout.setLayoutResource(layout);
         mVsLoadMainLayout.inflate();
         if(!TextUtils.isEmpty(title)) {
@@ -83,6 +87,10 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         init();
     }
 
+    protected void hideTitle(boolean hide) {
+        mTitleBar.setVisibility(hide ? View.GONE : View.VISIBLE);
+    }
+
     private void init() {
 
         initData();
@@ -92,6 +100,26 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         syncPage();
 
         initListener();
+    }
+
+    /**
+     * 获得布局文件
+     *
+     * @return 布局文件
+     */
+    protected abstract @LayoutRes
+    int initLayout();
+
+    protected String titleText() {
+        return null;
+    }
+
+    protected String leftText() {
+        return null;
+    }
+
+    protected String rightText() {
+        return null;
     }
 
     /**
@@ -178,7 +206,7 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         }
     }
 
-    public void exitApp() {
+    protected void exitApp() {
         if (BaseApplication.mActivities != null) {
             for (BaseActivity activity : BaseApplication.mActivities) {
                 activity.finish();
