@@ -1,17 +1,26 @@
 package com.withwings.baseutils.base;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.withwings.baseutils.R;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Fragment 基础类
@@ -23,8 +32,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     protected Activity mActivity;
 
+
+    private Map<Integer, Dialog> mDialogMap;
     // 布局文件嵌入位置
     private ViewStub mVsLoadMainLayout;
+    private View mTitleBar;
+    private View mLayout;
 
     /**
      * 关于使用
@@ -40,16 +53,64 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mActivity = getActivity();
 
-        View layout = inflater.inflate(initLayout(), container, false);
+        mLayout = inflater.inflate(R.layout.fragment_base, container, false);
+        mTitleBar = mLayout.findViewById(R.id.title_bar);
+        mVsLoadMainLayout = mLayout.findViewById(R.id.vs_load_main_layout);
+
+        // Title
+        LinearLayout titleLeft = mLayout.findViewById(R.id.title_left);
+        LinearLayout titleRight = mLayout.findViewById(R.id.title_right);
+        titleLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLeftClick();
+            }
+        });
+        titleRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRightClick();
+            }
+        });
+
+        setLayout(initLayout(), titleText(), leftText(), rightText());
+        return mLayout;
+    }
+
+    private void setLayout(@LayoutRes int layout, String title, String left, String right) {
+        mVsLoadMainLayout.setLayoutResource(layout);
+        mVsLoadMainLayout.inflate();
+        if (!TextUtils.isEmpty(title)) {
+            TextView titleText = mLayout.findViewById(R.id.title_text);
+            titleText.setText(title);
+        }
+        if (!TextUtils.isEmpty(left)) {
+            TextView titleLeftText = mLayout.findViewById(R.id.title_left_text);
+            titleLeftText.setVisibility(View.VISIBLE);
+            titleLeftText.setText(left);
+        }
+        if (!TextUtils.isEmpty(right)) {
+            TextView titleRightText = mLayout.findViewById(R.id.title_right_text);
+            titleRightText.setVisibility(View.VISIBLE);
+            titleRightText.setText(right);
+        }
+
+        init();
+    }
+
+    protected void hideTitle(boolean hide) {
+        mTitleBar.setVisibility(hide ? View.GONE : View.VISIBLE);
+    }
+
+    private void init() {
 
         mVsLoadMainLayout = layout.findViewById(R.id.vs_load_main_layout);
 
-        mVsLoadMainLayout.setLayoutResource(initLayout());
-        mVsLoadMainLayout.inflate();
+        initView(mLayout);
 
-        init();
+        syncPage();
 
-        return layout;
+        initListener();
     }
 
     /**
@@ -60,16 +121,16 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected abstract @LayoutRes
     int initLayout();
 
-    private void init() {
+    protected String titleText() {
+        return null;
+    }
 
-        initData();
+    protected String leftText() {
+        return null;
+    }
 
-        initView();
-
-        syncPage();
-
-        initListener();
-
+    protected String rightText() {
+        return null;
     }
 
     /**
@@ -79,8 +140,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     /**
      * 初始化界面
+     *
+     * @param layout 布局文件对象
      */
-    protected abstract void initView();
+    protected abstract void initView(View layout);
 
     /**
      * 根据数据同步界面
@@ -149,6 +212,59 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             startActivityForResult(intent, requestCode);
         } else {
             startActivity(intent);
+        }
+    }
+
+    protected abstract void onLeftClick();
+
+    protected abstract void onRightClick();
+
+    protected void exitApp() {
+        if (BaseApplication.mActivities != null) {
+            for (BaseActivity activity : BaseApplication.mActivities) {
+                activity.finish();
+            }
+        }
+    }
+
+    protected void showNetDialog(final int tag) {
+        if (mDialogMap == null) {
+            mDialogMap = new HashMap<>();
+        }
+        Dialog dialog;
+        if (mDialogMap.containsKey(tag)) {
+            dialog = mDialogMap.get(tag);
+        } else {
+            // 自定义的 Dialog 加在这里
+            dialog = new Dialog(mActivity);
+            mDialogMap.put(tag, dialog);
+        }
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                int key = -1;
+                for (Map.Entry<Integer, Dialog> entry : mDialogMap.entrySet()) {
+                    if (dialog.equals(entry.getValue())) {
+                        key = entry.getKey();
+                        break;
+                    }
+                }
+                dismissNetDialog(key);
+            }
+        });
+        dialog.show();
+    }
+
+    protected void dismissNetDialog(int tag) {
+        if (mDialogMap != null) {
+            Dialog dialog = mDialogMap.get(tag);
+            if (dialog != null) {
+                dialog.dismiss();
+                mDialogMap.remove(tag);
+            }
+            if (mDialogMap.size() == 0) {
+                mDialogMap = null;
+            }
         }
     }
 }

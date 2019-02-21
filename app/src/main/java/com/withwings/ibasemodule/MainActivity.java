@@ -1,7 +1,5 @@
 package com.withwings.ibasemodule;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,14 +10,23 @@ public class MainActivity extends BaseActivity {
     private Button mBtnExecutiveOperation;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitleText("首页");
+    protected int initLayout() {
+        return R.layout.activity_main;
     }
 
     @Override
-    protected int initLayout() {
-        return R.layout.activity_main;
+    protected String titleText() {
+        return "首页";
+    }
+
+    @Override
+    protected String leftText() {
+        return "取消";
+    }
+
+    @Override
+    protected String rightText() {
+        return "确定";
     }
 
     @Override
