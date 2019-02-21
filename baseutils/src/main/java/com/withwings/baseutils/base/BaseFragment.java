@@ -104,7 +104,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     private void init() {
 
-        mVsLoadMainLayout = layout.findViewById(R.id.vs_load_main_layout);
+        initData();
 
         initView(mLayout);
 
