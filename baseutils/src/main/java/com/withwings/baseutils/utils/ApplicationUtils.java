@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
  * 创建：WithWings 时间 2018/2/28
  * Email:wangtong1175@sina.com
  */
-public class AppUtils {
+public class ApplicationUtils {
 
     public static Application getApp() {
         Application application = getInitialApplication();

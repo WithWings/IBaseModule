@@ -37,14 +37,56 @@ import static android.app.Activity.RESULT_OK;
 @SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
 public class FileUtils {
 
+    private static final String ROOT_FILE_NAME = "withwings";
+
     public final static String FILE_EXTENSION_SEPARATOR = ".";
 
     /** URI类型：file */
     public static final String URI_TYPE_FILE = "file";
 
+    /**
+     * APP保存根目录
+     */
+    public static final int FILE_TYPE_ROOT = 0;
+
+    /**
+     * 图片文件
+     */
+    public static final int FILE_TYPE_IMAGE = 1;
+
+    /**
+     * 视频文件
+     */
+    public static final int FILE_TYPE_VIDEO = 2;
 
     private FileUtils() {
         throw new AssertionError();
+    }
+
+    /**
+     * 获取项目根存储目录
+     */
+    public static String getAppUseFile() {
+        return getAppUseFile(FILE_TYPE_ROOT);
+    }
+
+    /**
+     * 获取指定类型的存储目录
+     * @param fileType 目录类型
+     * @return 目录地址
+     */
+    public static String getAppUseFile(int fileType) {
+        String rootPath = FileUtils.getSDCardPath() + File.separator + ROOT_FILE_NAME + File.separator;
+        switch (fileType) {
+            case FILE_TYPE_ROOT:
+                return rootPath;
+            case FILE_TYPE_IMAGE:
+                return rootPath + "image" + File.separator;
+            case FILE_TYPE_VIDEO:
+                return rootPath + "video" + File.separator;
+            default:
+                return rootPath;
+        }
     }
 
     /**
