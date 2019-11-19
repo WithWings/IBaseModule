@@ -52,8 +52,7 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
         mTitleBar = findViewById(R.id.title_bar);
         mVsLoadMainLayout = findViewById(R.id.vs_load_main_layout);
 
-        mVsLoadMainLayout.setLayoutResource(initLayout());
-        mVsLoadMainLayout.inflate();
+        setLayout(initLayout(), titleText(), leftText(), rightText());
 
         init();
 
@@ -72,8 +71,6 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
                 onRightClick();
             }
         });
-
-        setLayout(initLayout(), titleText(), leftText(), rightText());
     }
 
     private void setLayout(@LayoutRes int layout, String title, String left, String right) {
