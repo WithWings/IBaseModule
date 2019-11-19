@@ -8,12 +8,12 @@ import android.content.SharedPreferences;
  * 创建：WithWings 时间 2018/2/9
  * Email:wangtong1175@sina.com
  */
-@SuppressWarnings({"unused", "WeakerAccess", "ConstantConditions", "SameParameterValue", "SuspiciousNameCombination", "UnusedReturnValue"})
-public class PreferencesUtils {
+@SuppressWarnings({"unused", "WeakerAccess", "SameParameterValue", "UnusedReturnValue"})
+public class SPUtils {
 
     public static String PREFERENCE_KEY = "WithWings";
 
-    private PreferencesUtils() {
+    private SPUtils() {
         throw new AssertionError();
     }
 
