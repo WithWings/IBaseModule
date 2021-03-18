@@ -60,6 +60,16 @@ public class ReadUserInfoActivity extends BaseActivity implements ReadUserInfoVi
     }
 
     @Override
+    protected void onLeftClick() {
+
+    }
+
+    @Override
+    protected void onRightClick() {
+
+    }
+
+    @Override
     public SharedPreferences getSharedPreferences() {
         return getSharedPreferences("user_info", MODE_PRIVATE);
     }

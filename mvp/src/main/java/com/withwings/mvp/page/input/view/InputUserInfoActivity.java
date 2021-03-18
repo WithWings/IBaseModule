@@ -66,6 +66,16 @@ public class InputUserInfoActivity extends MvpBaseActivity<InputUserInfoActivity
         }
     }
 
+    @Override
+    protected void onLeftClick() {
+
+    }
+
+    @Override
+    protected void onRightClick() {
+
+    }
+
     // 对外暴露获取数据的方法
 
     @Override

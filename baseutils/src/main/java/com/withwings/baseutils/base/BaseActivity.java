@@ -78,7 +78,7 @@ public abstract class BaseActivity extends BaseOpenActivity implements View.OnCl
 
     private void setLayout(@LayoutRes int layout, String title, String left, String right) {
         mVsLoadMainLayout.setLayoutResource(layout);
-        mVsLoadMainLayout.inflate();
+//        mVsLoadMainLayout.inflate();
         if(!TextUtils.isEmpty(title)) {
             TextView titleText = findViewById(R.id.title_text);
             titleText.setText(title);
