@@ -16,6 +16,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,15 +62,20 @@ public class FileUtils {
      */
     public static final int FILE_TYPE_VIDEO = 2;
 
+    /**
+     * APK文件
+     */
+    public static final int FILE_TYPE_APK = 3;
+
     private FileUtils() {
         throw new AssertionError();
     }
 
     /**
-     * 获取项目根存储目录
+     * 获取项目根存储目录: 因为SD卡文件夹乱用问题，请根据实际情况调用  getOpenFile  getOpenCacheFile  getInsideFile  getInsideCacheFile  getSDCardPath
      */
-    public static String getAppUseFile() {
-        return getAppUseFile(FILE_TYPE_ROOT);
+    public static String getAppUseFile(String path) {
+        return getAppUseFile(path, FILE_TYPE_ROOT);
     }
 
     /**
@@ -77,26 +83,84 @@ public class FileUtils {
      * @param fileType 目录类型
      * @return 目录地址
      */
-    public static String getAppUseFile(int fileType) {
-        String rootPath = FileUtils.getSDCardPath() + File.separator + ROOT_FILE_NAME + File.separator;
+    public static String getAppUseFile(String path, int fileType) {
+        String rootPath = path + File.separator;
         switch (fileType) {
             case FILE_TYPE_ROOT:
                 return rootPath;
             case FILE_TYPE_IMAGE:
-                return rootPath + "image" + File.separator;
+                String imagePath = rootPath + "image" + File.separator;
+                File imageFile = new File(imagePath);
+                if (!imageFile.exists()) {
+                    imageFile.mkdirs();
+                }
+                return imagePath;
             case FILE_TYPE_VIDEO:
-                return rootPath + "video" + File.separator;
+                String videoPath = rootPath + "video" + File.separator;
+                File videoFile = new File(videoPath);
+                if (!videoFile.exists()) {
+                    videoFile.mkdirs();
+                }
+                return videoPath;
+            case FILE_TYPE_APK:
+                String apkPath = rootPath + "apk" + File.separator;
+                File apkFile = new File(apkPath);
+                if (!apkFile.exists()) {
+                    apkFile.mkdirs();
+                }
+                return apkPath;
             default:
                 return rootPath;
         }
     }
 
     /**
+     * 获取对外开放的文件夹
+     * /sdcard/Android/data/包名/files
+     * @param context 上下文
+     * @return 路径
+     */
+    public static String getOpenFile(Context context) {
+        return context.getExternalFilesDir("").getAbsolutePath();
+    }
+
+    /**
+     * 获取对外开放的缓存文件夹
+     * /sdcard/Android/data/包名/cache
+     * @param context 上下文
+     * @return 路径
+     */
+    public static String getOpenCacheFile(Context context) {
+        return context.getExternalCacheDir().getAbsolutePath();
+    }
+
+    /**
+     * 获取内部的文件夹
+     * /data/data/包名/files
+     * @param context 上下文
+     * @return 路径
+     */
+    public static String getInsideFile(Context context) {
+        return context.getFilesDir().getAbsolutePath();
+    }
+
+    /**
+     * 获取内部的缓存文件夹
+     * /data/data/包名/cache
+     * @param context 上下文
+     * @return 路径
+     */
+    public static String getInsideCacheFile(Context context) {
+        return context.getCacheDir().getAbsolutePath();
+    }
+
+    /**
      * 获得SD 卡路径，如果没有则获取内存卡路径
+     * /storage/emulated/0 + / + ROOT_FILE_NAME
      * @return 路径
      */
     public static String getSDCardPath() {
-        return getSDCardPath(false);
+        return getSDCardPath(false) + File.separator + ROOT_FILE_NAME;
     }
 
     /**
@@ -424,7 +488,7 @@ public class FileUtils {
         try {
             makeDirs(file.getAbsolutePath());
             o = new FileOutputStream(file, append);
-            byte data[] = new byte[1024];
+            byte[] data = new byte[1024];
             int length;
             while ((length = stream.read(data)) != -1) {
                 o.write(data, 0, length);
@@ -1208,6 +1272,19 @@ public class FileUtils {
                 throw new RuntimeException("IOException occurred. ", e);
             }
         }
+    }
+
+    //把文件转换成字节数组
+    public static byte[] getBytes(File f) throws Exception {
+        FileInputStream in = new FileInputStream(f);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] b = new byte[1024];
+        int n;
+        while ((n = in.read(b)) != -1) {
+            out.write(b, 0, n);
+        }
+        in.close();
+        return out.toByteArray();
     }
 
     /**
