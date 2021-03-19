@@ -83,10 +83,12 @@ public class FileUtils {
      * @param fileType 目录类型
      * @return 目录地址
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static String getAppUseFile(String path, int fileType) {
         String rootPath = path + File.separator;
         switch (fileType) {
             case FILE_TYPE_ROOT:
+                //noinspection DuplicateBranchesInSwitch
                 return rootPath;
             case FILE_TYPE_IMAGE:
                 String imagePath = rootPath + "image" + File.separator;
@@ -117,7 +119,7 @@ public class FileUtils {
     /**
      * 获取对外开放的文件夹
      * /sdcard/Android/data/包名/files
-     * @param context 上下文
+     * @param context 上下文 getExternalFilesDir 预设了一些文件夹类型  如：Environment.DIRECTORY_PICTURES
      * @return 路径
      */
     public static String getOpenFile(Context context) {
@@ -269,7 +271,7 @@ public class FileUtils {
      * @return 路径
      */
     public static String getPhonePath(){
-        return Environment.getExternalStorageDirectory().getPath();
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
     /**
@@ -313,7 +315,7 @@ public class FileUtils {
     public static StringBuilder readFile(String filePath, String charsetName) {
 
         File file = new File(filePath);
-        StringBuilder fileContent = new StringBuilder("");
+        StringBuilder fileContent = new StringBuilder();
         if (!file.isFile()) {
             return null;
         }
@@ -936,7 +938,7 @@ public class FileUtils {
         if (!new File(filePathAndName).exists()) {
             return "";
         }
-        StringBuilder str = new StringBuilder("");
+        StringBuilder str = new StringBuilder();
         FileInputStream fs = null;
         InputStreamReader isr = null;
         BufferedReader br = null;
@@ -1016,7 +1018,7 @@ public class FileUtils {
                     .getMimeTypeFromExtension(
                             MimeTypeMap
                                     .getFileExtensionFromUrl(
-                                            file.getPath())));
+                                            file.getAbsolutePath())));
             context.startActivity(intent);
         } catch (Exception ex) {
             Toast.makeText(context, "打开失败.", Toast.LENGTH_SHORT).show();
@@ -1288,10 +1290,10 @@ public class FileUtils {
     }
 
     /**
-     * 刚方法需要配置 FileProvider
-     * @param context
-     * @param file
-     * @return
+     * 该方法需要配置 FileProvider
+     * @param context 上下文
+     * @param file 文件对象
+     * @return 格式化后的Uri
      */
     public static Uri getUriForFile(Context context, File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
