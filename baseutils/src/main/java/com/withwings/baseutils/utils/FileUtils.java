@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v4.provider.DocumentFile;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
@@ -1205,6 +1207,20 @@ public class FileUtils {
             } catch (IOException e) {
                 throw new RuntimeException("IOException occurred. ", e);
             }
+        }
+    }
+
+    /**
+     * 刚方法需要配置 FileProvider
+     * @param context
+     * @param file
+     * @return
+     */
+    public static Uri getUriForFile(Context context, File file) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return FileProvider.getUriForFile(context, context.getPackageName() + ".webFileProvider", file);//通过FileProvider创建一个content类型的Uri
+        } else {
+            return Uri.fromFile(file);
         }
     }
 }
