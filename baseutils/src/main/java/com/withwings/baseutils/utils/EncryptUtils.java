@@ -1,6 +1,6 @@
 package com.withwings.baseutils.utils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.FileInputStream;
 import java.io.IOException;

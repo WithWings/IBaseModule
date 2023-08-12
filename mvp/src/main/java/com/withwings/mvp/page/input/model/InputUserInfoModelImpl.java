@@ -1,7 +1,7 @@
 package com.withwings.mvp.page.input.model;
 
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.withwings.mvp.base.MvpBaseModel;

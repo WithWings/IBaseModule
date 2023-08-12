@@ -2,15 +2,12 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion Integer.parseInt(ANDROID_BUILD_SDK_VERSION)
-    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion Integer.parseInt(ANDROID_BUILD_MIN_SDK)
         targetSdkVersion Integer.parseInt(ANDROID_BUILD_TARGET_SDK)
-        versionCode 1
-        versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
     }
 
@@ -25,13 +22,14 @@ android {
             buildConfigField "boolean", "show_log", "false"
         }
     }
+    namespace 'com.withwings.baseutils'
 
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:' + ANDROID_BUILD_TOOLS_VERSION
-    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.0'
 
     // 界面调试工具
     implementation 'com.wanjian:sak:0.3.2'

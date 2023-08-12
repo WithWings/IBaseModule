@@ -1,6 +1,6 @@
 package com.withwings.baseutils.utils.thread.priority;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public abstract class PriorityRunnable implements Runnable, Comparable<PriorityRunnable> {
 

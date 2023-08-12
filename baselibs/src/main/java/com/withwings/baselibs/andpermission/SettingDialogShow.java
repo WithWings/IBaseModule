@@ -1,7 +1,7 @@
 package com.withwings.baselibs.andpermission;
 
 import android.app.Dialog;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.yanzhenjie.permission.RationaleListener;
 import com.yanzhenjie.permission.SettingDialog;

@@ -1,6 +1,6 @@
 package com.withwings.mvp.page.input.presenter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.withwings.mvp.base.MvpBasePresenter;
 import com.withwings.mvp.page.input.model.InputUserInfoModelImpl;

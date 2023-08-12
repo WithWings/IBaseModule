@@ -6,8 +6,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
 import android.view.WindowManager;
+
+import androidx.core.app.ActivityCompat;
 
 /**
  * dialog工具类

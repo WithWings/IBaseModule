@@ -1,7 +1,7 @@
 package com.withwings.mvp.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.withwings.baseutils.base.BaseActivity;
 

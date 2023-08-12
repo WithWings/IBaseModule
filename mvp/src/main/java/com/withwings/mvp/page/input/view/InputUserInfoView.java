@@ -1,7 +1,7 @@
 package com.withwings.mvp.page.input.view;
 
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * 界面刷新处

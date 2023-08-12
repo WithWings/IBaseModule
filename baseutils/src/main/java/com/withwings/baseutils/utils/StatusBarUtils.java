@@ -16,8 +16,9 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
+
+import androidx.core.app.NotificationCompat;
 
 /**
  * 状态栏工具类:已适配 8.0 通知栏 如果使用请确保 targetSdkVersion 已经指定到了26或者更高

@@ -2,7 +2,8 @@ package com.withwings.baseutils.utils;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
+
+import androidx.core.app.ActivityCompat;
 
 /**
  * 手动申请权限

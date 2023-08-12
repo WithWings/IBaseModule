@@ -2,7 +2,7 @@ package com.withwings.baselibs.andpermission;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.withwings.baselibs.andpermission.listener.AndPermissionListener;
 import com.yanzhenjie.permission.AndPermission;

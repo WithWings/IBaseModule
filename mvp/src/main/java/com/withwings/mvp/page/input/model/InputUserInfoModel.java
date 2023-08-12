@@ -1,7 +1,7 @@
 package com.withwings.mvp.page.input.model;
 
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.withwings.mvp.page.input.model.listener.OnSubmitListener;
 

@@ -2,7 +2,7 @@ package com.withwings.mvp.page.read.view;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * View
